@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 19 Jun, 2018 10:51:25 AM by Hibernate Tools 5.2.8.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.TblDesignation" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_Designation">
+        <id name="designationId" type="java.lang.Integer">
+            <column name="DesignationId"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="designation" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="Designation"/>
+        </property>
+        <property generated="never" lazy="false" name="department" optimistic-lock="true" type="string" unique="false">
+            <column length="55" name="department"/>
+        </property>
+        <property generated="never" lazy="false" name="fromdate" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="fromdate"/>
+        </property>
+        <property generated="never" lazy="false" name="todate" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="todate"/>
+        </property>
+        <property generated="never" lazy="false" name="activestate" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="activestate"/>
+        </property>
+    </class>
+</hibernate-mapping>

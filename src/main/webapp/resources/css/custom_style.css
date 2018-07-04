@@ -1,0 +1,147 @@
+ul.tabelaction {
+position: absolute;
+   list-style: none;
+	margin: -13px;
+}
+
+.actiontabel
+{
+	width:20px;
+	
+}
+
+.topbar {
+background: #fff;
+
+
+
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+
+
+border-radius: 4px;
+
+margin-bottom: 30px;
+   
+}
+
+.pagetitle 
+{	
+	padding: 10px;
+font-size: 20px;
+}
+
+.custom-overlay
+{
+	background:#fff;
+	z-index: 0;
+	
+}
+
+
+
+
+.input-group-addon .material-icons {
+    font-size: 32px;
+    vertical-align: middle;
+}
+.padding_col
+{
+padding:0px;
+	    padding-right: 5px;
+	
+}
+.search_leav
+{
+padding:10px;
+}
+.custom_title h2
+{
+	font-size:19px;
+	
+}
+.custom_line
+{
+	
+border-bottom: 1px dashed #d0d0d0;	
+}
+.attenedance_check_red
+{
+	
+color:#ff0000;	
+}
+.attenedance_check_green
+{
+	
+color:#16e900;	
+}
+
+.attenedance_check_darkgrey
+{
+	
+color:#A9A9A9;	
+}
+
+.emp_top_btn
+{
+border:none;
+background:none;	
+	
+}
+.emp_top_btn .icon-display{
+	
+	font-size:34px;
+	
+}
+.userprofile img
+{
+	    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    text-align: center;
+    margin: 0 auto;
+	
+	
+}
+.userprofile_title
+{
+	font-size:15px;
+	font-weight:bold;
+	text-align:center;
+	
+}
+.userprofile_sub
+{
+	font-size:10px;
+	text-align:center;
+	
+	
+}
+.card .body .col-xs-6, .card .body .col-sm-6, .card .body .col-md-6, .card .body .col-lg-6 {
+    margin-bottom: 4px; 
+}
+.hideOverflow
+{
+    overflow:hidden;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
+.profiletitlewidth
+{
+	    width: 120px;
+    display: inline;
+	
+	}
+.colorred
+{
+	color: #E42800 !important;
+	border: 1px solid #E42800;
+	}
+	.colorgreen
+{
+	color: #3AC701 !important;
+	border: 1px solid #3AC701;
+	}
+	
+

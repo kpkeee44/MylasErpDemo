@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+<security:http  pattern="register" security="none"/>
+<security:http pattern="/forgot-password" security="none"/>
+<security:http pattern="/regester" security="none"/>
+	<security:http auto-config="true">
+			<security:csrf disabled="true"/>
+			
+			<security:intercept-url pattern="/"	access="hasAnyAuthority('ADMIN_ROLE','MANAGER_ROLE','EMPLOYEE_ROLE')" />
+			<!-- <security:intercept-url pattern="/" access="hasAuthority('MANAGER_ROLE')" />
+			<security:intercept-url pattern="/"	access="hasAuthority('EMPLOYEE_ROLE')" /> -->
+			<security:intercept-url pattern="/admin" access="hasAuthority('ADMIN_ROLE')" />
+			<security:intercept-url pattern="/admin/**"	access="hasAuthority('ADMIN_ROLE')" />
+			<security:intercept-url pattern="/manager/**" access="hasAuthority('MANAGER_ROLE')"/>
+			<security:intercept-url pattern="/employee/**" access="hasAuthority('EMPLOYEE_ROLE')"/>
+			<security:form-login login-page="/login" 
+			default-target-url="/"
+			username-parameter="username"
+			password-parameter="password"
+			authentication-failure-url="/login?error=true"/>
+			<security:access-denied-handler error-page="/403"/>
+			<!-- <security:remember-me remember-me-parameter="rememberme"/> -->
+			<security:logout invalidate-session="true" logout-url="/login?logout"/>
+			<security:session-management>
+			<security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" expired-url="/signout"/>
+			</security:session-management>
+			
+	</security:http>
+
+	<security:authentication-manager erase-credentials="true">
+		<security:authentication-provider
+			ref="customAuthenticationProvider" />
+	</security:authentication-manager>
+</beans>

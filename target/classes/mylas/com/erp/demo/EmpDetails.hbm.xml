@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14 Jun, 2018 2:22:36 PM by Hibernate Tools 5.2.8.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.EmpDetails" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="emp_details">
+        <id name="id" type="java.lang.Integer">
+            <column name="id"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="compName" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="compName"/>
+        </property>
+        <property generated="never" lazy="false" name="cpswd" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="cpswd"/>
+        </property>
+        <property generated="never" lazy="false" name="designation" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="designation"/>
+        </property>
+        <property generated="never" lazy="false" name="eid" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="eid" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="email"/>
+        </property>
+        <property generated="never" lazy="false" name="fname" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="fname"/>
+        </property>
+        <property generated="never" lazy="false" name="jdate" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="jdate"/>
+        </property>
+        <property generated="never" lazy="false" name="lname" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="lname"/>
+        </property>
+        <property generated="never" lazy="false" name="loginStatus" optimistic-lock="true" type="boolean" unique="false">
+            <column name="login_status" not-null="true"/>
+        </property>
+        <property generated="never" lazy="false" name="phone" optimistic-lock="true" type="string" unique="false">
+            <column length="10" name="phone"/>
+        </property>
+        <property generated="never" lazy="false" name="pswd" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="pswd"/>
+        </property>
+        <property generated="never" lazy="false" name="role" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="role"/>
+        </property>
+        <property generated="never" lazy="false" name="uname" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="uname" not-null="true" unique="true"/>
+        </property>
+        <property generated="never" lazy="false" name="managerid" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="managerid"/>
+        </property>
+        <property generated="never" lazy="false" name="department" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="department"/>
+        </property>
+        <property generated="never" lazy="false" name="mantrans" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="mantrans"/>
+        </property>
+        <property generated="never" lazy="false" name="lastworkingday" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="lastworkingday"/>
+        </property>
+    </class>
+</hibernate-mapping>
