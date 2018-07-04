@@ -17,15 +17,15 @@ import javax.persistence.UniqueConstraint;
 		@UniqueConstraint(columnNames = "eid"), @UniqueConstraint(columnNames = "uname") })
 public class EmpDetails implements java.io.Serializable {
 
-	private Integer id;
+	public Integer id;
 	private String compName;
 	private String cpswd;
 	private String designation;
 	private String eid;
 	private String email;
-	private String fname;
+	public String fname;
 	private String jdate;
-	private String lname;
+	public String lname;
 	private boolean loginStatus;
 	private String phone;
 	private String pswd;

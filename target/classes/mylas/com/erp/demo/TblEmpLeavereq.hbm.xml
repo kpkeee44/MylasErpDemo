@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 14 Jun, 2018 1:44:46 PM by Hibernate Tools 5.2.8.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 27 Jun, 2018 11:42:51 AM by Hibernate Tools 5.2.8.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="TblEmpLeavereq" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_emp_leavereq">
+    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.TblEmpLeavereq" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_emp_leavereq">
         <id name="id" type="java.lang.Integer">
             <column name="id"/>
             <generator class="identity"/>
@@ -35,6 +35,9 @@
         </property>
         <property generated="never" lazy="false" name="mantrans" optimistic-lock="true" type="string" unique="false">
             <column length="50" name="mantrans"/>
+        </property>
+        <property generated="never" lazy="false" name="referenceid" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="referenceid"/>
         </property>
     </class>
 </hibernate-mapping>

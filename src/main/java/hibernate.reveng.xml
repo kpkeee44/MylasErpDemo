@@ -3,6 +3,6 @@
 
 <hibernate-reverse-engineering>
   <!-- <table-filter match-catalog="mylasfyt_krishna" match-schema="krishna" match-name="tbl_emp_attendance_new"/> -->
- <table-filter match-catalog="mylasfyt_krishna" match-schema="krishna" match-name="tbl_employee"/>
+ <!-- <table-filter match-catalog="mylasfyt_krishna" match-schema="krishna" match-name="holidays"/> -->
  <!--   <table-filter match-catalog="mylasfyt_krishna" match-schema="krishna" match-name="tblempattendance"/> -->
 </hibernate-reverse-engineering>

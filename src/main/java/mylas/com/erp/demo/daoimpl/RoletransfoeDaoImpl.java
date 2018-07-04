@@ -117,30 +117,41 @@ return "Save Failed";
 		return null;
 	}
 
-	@Override
-	public String changeMainManager(String frommanid, String tomanid) {
-		List<EmpDetails> employees = client.getByManid(frommanid);
-		List<TblEmpAttendanceNew> attrequests = empattreq.viewbymanagerid(frommanid);
-		List<TblEmpLeavereq> leaverequests = empleavereq.viewbyManagerid(frommanid);
-		
-		if(employees != null) {
-			for(EmpDetails employee : employees) {
-				client.ChangeManager(employee.getId());
-			}
-		}
-		if(attrequests != null) {
-			for(TblEmpAttendanceNew att : attrequests) {
-				empattreq.ChangeManager(att.getId());
-			}
-		}
-		if(leaverequests != null) {
-			for(TblEmpLeavereq employee : leaverequests) {
-				empleavereq.ChangeManager(employee.getId());
-			}
-		}
-		return null;
-	}
 	
+	@Override
+	 public String changeMainManager(String frommanid, String tomanid, int id) {
+	  List<EmpDetails> employees = client.getByManid(frommanid);
+	  List<TblEmpAttendanceNew> attrequests = empattreq.viewbymanagerid(frommanid);
+	  List<TblEmpLeavereq> leaverequests = empleavereq.viewbyManagerid(frommanid);
+	  
+	  if(employees != null) {
+	   for(EmpDetails employee : employees) {
+	    
+	    client.ChangeTransManager(employee.getId(),tomanid);
+	   }
+	  }
+	  if(attrequests != null) {
+	   for(TblEmpAttendanceNew att : attrequests) {
+	    
+	    empattreq.updatetransManager(att.getId(),tomanid);
+	   }
+	  }
+	  if(leaverequests != null) {
+	   for(TblEmpLeavereq employee : leaverequests) {
+	    
+	    empleavereq.updatetransManager(employee.getId(),tomanid);
+	   }
+	  }
+	  Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+	  session.beginTransaction();
+
+	  TblManRoleTransfer roletransfer = session.load(TblManRoleTransfer.class,id);
+
+	  roletransfer.setStatus(false);
+	  session.update(roletransfer);
+	  session.getTransaction().commit();
+	  return null;
+	 }
 	
 
 }

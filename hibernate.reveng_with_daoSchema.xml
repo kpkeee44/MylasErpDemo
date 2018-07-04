@@ -3,11 +3,11 @@
 
 <hibernate-reverse-engineering>
 
-  <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_Designation"/>
-  <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_Department"/>
+  <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="Email"/>
+ <!--  <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_Department"/> -->
   <!-- <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="emp_details"/>
-  <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_emp_attendance_new"/>
-  <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_emp_leavereq"/>
-  <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_man_role_transfer"/> 
+  <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_emp_attendance_new"/> -->
+  <!-- <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_emp_leavereq"/> -->
+  <!-- <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="tbl_man_role_transfer"/> 
   <table-filter match-catalog="mylasfyt_krishna" match-schema="dbo" match-name="holidays"/> -->
 </hibernate-reverse-engineering>

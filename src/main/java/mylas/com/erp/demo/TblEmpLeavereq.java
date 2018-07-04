@@ -1,4 +1,6 @@
 package mylas.com.erp.demo;
+// Generated 27 Jun, 2018 11:42:51 AM by Hibernate Tools 5.2.8.Final
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,12 +26,13 @@ public class TblEmpLeavereq implements java.io.Serializable {
 	private String todate;
 	private String reason;
 	private String mantrans;
+	private Integer referenceid;
 
 	public TblEmpLeavereq() {
 	}
 
 	public TblEmpLeavereq(Integer count, String employeeid, String fromdate, String leavereason, String leavetype,
-			String managerid, Boolean status, String todate, String reason, String mantrans) {
+			String managerid, Boolean status, String todate, String reason, String mantrans, Integer referenceid) {
 		this.count = count;
 		this.employeeid = employeeid;
 		this.fromdate = fromdate;
@@ -40,6 +43,7 @@ public class TblEmpLeavereq implements java.io.Serializable {
 		this.todate = todate;
 		this.reason = reason;
 		this.mantrans = mantrans;
+		this.referenceid = referenceid;
 	}
 
 	@Id
@@ -142,6 +146,15 @@ public class TblEmpLeavereq implements java.io.Serializable {
 
 	public void setMantrans(String mantrans) {
 		this.mantrans = mantrans;
+	}
+
+	@Column(name = "referenceid")
+	public Integer getReferenceid() {
+		return this.referenceid;
+	}
+
+	public void setReferenceid(Integer referenceid) {
+		this.referenceid = referenceid;
 	}
 
 }

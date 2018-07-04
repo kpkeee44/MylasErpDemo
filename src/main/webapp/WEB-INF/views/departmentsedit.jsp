@@ -116,9 +116,11 @@
 				<div class="col-md-12 card">
 					<div class="custom_title">
 						<h2>Edit Department</h2>
+						<p style="color: red;" align="center">${msg}</p>
+
 					</div>
 					<form
-						action="${contextRoot}/admin/empdep/edit/${depdetailsforedit.getDepartmentId()}">
+						action="${contextRoot}/admin/departments/edit/${depdetailsforedit.getDepartmentId()}" method="post">
 						<hr class="custom_line">
 						<div class="body">
 							<div class="col-md-5">
@@ -127,7 +129,7 @@
 										<div class="form-line">
 											<label>Department Name</label> <input type="text"
 												name="departmentname" id="departmentname"
-												class="form-control" placeholder="Department Name">
+												class="form-control">
 										</div>
 									</div>
 								</div>

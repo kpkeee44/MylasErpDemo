@@ -2,16 +2,13 @@ package mylas.com.erp.demo.service;
 
 import java.util.List;
 
+import javax.persistence.PersistenceException;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
-import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.appservices.GetSession;
 import mylas.com.erp.demo.dao.DepartmentDao;
@@ -23,13 +20,27 @@ public class DepartmentService implements DepartmentDao {
 	
 	
 	@Override
-	public void saveDepartment(TblDepartment tbl) {
-		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+	 public String saveDepartment(TblDepartment tbl) {
+	  Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+	  try {
+	   session.beginTransaction();
+	   int num = (Integer) session.save(tbl);
 
-		Integer num = (Integer) session.save(tbl);
-		session.getTransaction().commit();
-		
+	   if(num!=0) {
+	    System.out.println("Department added successfully!....");
+	    session.getTransaction().commit();
+	    return "Department added successfully!....";
+	   }else {
+	   
+	    /*   session.getTransaction().commit();
+	     */   return "Department already exists";
+	   }
+
+	  }catch(ConstraintViolationException e) {
+	   System.out.println("Duplicate Entry");
+	   session.getTransaction().rollback();
+	   return "Department already exists";
+	  }
 	}
 
 	@Override
@@ -73,24 +84,28 @@ public class DepartmentService implements DepartmentDao {
 	 }
 	
 	@Override
-	 public void updateDetails(int id,String newDep,String toDate) {
-	  Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-	  session.beginTransaction();
-	  TblDepartment deptdel = session.load(TblDepartment.class, id);
-	  deptdel.setDepartment(newDep);
-	  if(toDate!="") {
-		  deptdel.setTodate(toDate);
-		  deptdel.setActivestate(false);
-
-	  }
-	  
-	  session.saveOrUpdate(deptdel);
-	  session.getTransaction().commit();
-	 }
-
-
-
-
-
-
+	  public String updateDetails(int id,String newDep,String toDate) {
+	   Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+	   try {
+	   session.beginTransaction();
+	   TblDepartment deptdel = session.load(TblDepartment.class, id);
+	     deptdel.setDepartment(newDep);
+	     if(toDate!="") {
+	      deptdel.setTodate(toDate);
+	      deptdel.setActivestate(false);}
+	   session.saveOrUpdate(deptdel);
+	   System.out.println("saveor updated");
+	   session.getTransaction().commit();
+	   System.out.println("commited");
+	   return "Department UpDated Successfully";
+	   }catch(ConstraintViolationException e) {
+	    System.out.println("exception");
+	    session.getTransaction().rollback();
+	    return "Department is Already Exists.Please try Again";
+	   }catch(PersistenceException e){                                                       
+	    System.out.println("this is PersistenceException exception throw");   
+	    session.getTransaction().rollback();
+	    return "Department is Already Exists.Please try Again";
+	          }
+	}
 }

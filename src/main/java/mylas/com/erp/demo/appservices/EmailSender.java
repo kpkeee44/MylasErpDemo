@@ -18,7 +18,7 @@ public class EmailSender {
 	public JavaMailSender javaMailService(String Username,String Password,String managerEmail, String Message, String Subject) {
 	JavaMailSenderImpl sender = new JavaMailSenderImpl();
 	SimpleMailMessage message = new SimpleMailMessage();
-    sender.setHost("smtp.gmail.com");
+    sender.setHost("outlook.office365.com");
     sender.setPort(587);
     sender.setUsername(Username);
     sender.setPassword(Password);
@@ -28,7 +28,7 @@ public class EmailSender {
     properties.setProperty("mail.smtp.auth", Boolean.toString(true));
     properties.setProperty("mail.smtp.starttls.enable", Boolean.toString(true));
     properties.setProperty("mail.debug", Boolean.toString(true));
-    properties.setProperty("mail.smtp.port", Integer.toString(465));
+    properties.setProperty("mail.smtp.port", Integer.toString(995));
     properties.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
     sender.setJavaMailProperties(properties);
     sender.send(new MimeMessagePreparator() {

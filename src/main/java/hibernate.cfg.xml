@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-	<session-factory>
-		<property name="hibernate.bytecode.use_reflection_optimizer">false</property>
-		<property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-		<property name="hibernate.connection.password">Asg97?h8</property>
-		<property name="hibernate.connection.url">jdbc:sqlserver://mylastech.net:1433;databaseName=mylasfyt_krishna</property>
-		<property name="hibernate.connection.username">krishna</property>
-		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
-		<property name="hibernate.search.autoregister_listeners">true</property>
-		<property name="hibernate.validator.apply_to_ddl">false</property>
-		<!-- <property name="hibernate.current_session_context_class">thread</property> -->
-		<!--<property name="hibernate.current_session_context_class">org.hibernate.engine.transaction.jta.platform.spi.JtaPlatform</property> -->
-		<property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
-		<!-- <property name="hibernate.transaction.auto_close_session">true</property> -->
-		<mapping class="mylas.com.erp.demo.EmpDetails" />
-		<mapping class="mylas.com.erp.demo.TblDesignation" />
-		<mapping class="mylas.com.erp.demo.TblDepartment" />
-		<mapping class="mylas.com.erp.demo.TblEmpLeavereq" />
-		<mapping class="mylas.com.erp.demo.TblEmpAttendanceNew" />
-		<mapping class="mylas.com.erp.demo.TblManRoleTransfer" />
-		<mapping class="mylas.com.erp.demo.Holidays" />
-
-		
-	<!--  	<mapping class="mylas.com.erp.demo.TblEmpAttendanceNewId" />-->
-		
-		<!-- <mapping resource="mylas/com/erp/demo/TblEmpLeavereq.hbm.xml"/> -->
-	</session-factory>
-	</hibernate-configuration>
+ <session-factory>
+  <property name="hibernate.bytecode.use_reflection_optimizer">false</property>
+  <property name="hibernate.connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+  <property name="hibernate.connection.password">Asg97?h8</property>
+  <property name="hibernate.connection.url">jdbc:sqlserver://mylastech.net:1433;databaseName=mylasfyt_krishna</property>
+  <property name="hibernate.connection.username">krishna</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+  <property name="hibernate.search.autoregister_listeners">true</property>
+  <property name="hibernate.validator.apply_to_ddl">false</property>
+  <!-- <property name="hibernate.current_session_context_class">thread</property> -->
+  <!--<property name="hibernate.current_session_context_class">org.hibernate.engine.transaction.jta.platform.spi.JtaPlatform</property> -->
+  <property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
+  <!-- <property name="hibernate.transaction.auto_close_session">true</property> -->
+  <mapping class="mylas.com.erp.demo.EmpDetails" />
+  <mapping class="mylas.com.erp.demo.TblDesignation" />
+  <mapping class="mylas.com.erp.demo.TblDepartment" />
+  <mapping class="mylas.com.erp.demo.TblEmpLeavereq" />
+  <mapping class="mylas.com.erp.demo.TblEmpAttendanceNew" />
+  <mapping class="mylas.com.erp.demo.TblManRoleTransfer" />
+  <mapping class="mylas.com.erp.demo.Holidays" />
+  <!-- <mapping class="mylas.com.erp.demo.Email"/> -->
+  
+ <!--   <mapping class="mylas.com.erp.demo.TblEmpAttendanceNewId" />-->
+  
+  <mapping resource="mylas/com/erp/demo/Email.hbm.xml"/>
+ </session-factory>
+</hibernate-configuration>

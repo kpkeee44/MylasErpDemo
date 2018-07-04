@@ -1,5 +1,10 @@
 package mylas.com.erp.demo.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import mylas.com.erp.demo.EmpDetails;
@@ -25,6 +31,7 @@ import mylas.com.erp.demo.TblDesignation;
 import mylas.com.erp.demo.TblEmpAttendanceNew;
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblManRoleTransfer;
+import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.appservices.UserServiceImpl;
 import mylas.com.erp.demo.dao.DepartmentDao;
 import mylas.com.erp.demo.dao.DesignationDao;
@@ -36,11 +43,10 @@ import mylas.com.erp.demo.dao.HolidayDao;
 import mylas.com.erp.demo.dao.ManagerServicesDao;
 import mylas.com.erp.demo.dao.RoleTrasforDao;
 import mylas.com.erp.demo.dao.ServicesDao;
+import mylas.com.erp.demo.daoimpl.EmailDaoImpl;
 import mylas.com.erp.demo.daoimpl.EmpAttendanceDaoImpl;
-import mylas.com.erp.demo.daoimpl.RoletransfoeDaoImpl;
 import mylas.com.erp.demo.exceptions.UserBlockedException;
 import mylas.com.erp.demo.operations.LoginOperations;
-import mylas.com.erp.demo.service.Client;
 import mylas.com.erp.demo.service.DepartmentService;
 import mylas.com.erp.demo.service.DesignationService;
 
@@ -86,7 +92,9 @@ public class PageController<JavaMailSender> {
 	EmpLeaveRequestDao ers;
 
 
+	EmailSender emailsender = new EmailSender();
 
+	static String emailToRecipient, emailSubject, emailMessage;
 
 	/*
 	 * Slide Bar Page Handlers Start
@@ -107,7 +115,7 @@ public class PageController<JavaMailSender> {
 		List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
-		
+
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
@@ -185,7 +193,7 @@ public class PageController<JavaMailSender> {
 		List<Holidays> holidays = himpl.viewAll();
 		mav.addObject("HolidaysList",holidays);
 		mav.addObject("services", servicesdao.list());
-
+		mav.addObject("User",user);
 		return mav;		
 	}
 
@@ -210,7 +218,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("Role",role);
 
 		List<TblEmpLeavereq> leavereq =  empleavereq.view();
-	
+
 		mav.addObject("employees", emp1);
 		mav.addObject("empleave", leavereq);
 		mav.addObject("services", servicesdao.list());
@@ -240,7 +248,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("Role",role);
 		List<TblEmpAttendanceNew> attendances =  empattreq.getDetails();
 		mav.addObject("User",user);
-	
+
 		mav.addObject("employees", emp1);
 		mav.addObject("attendancelist",attendances);
 		return mav;		
@@ -273,7 +281,7 @@ public class PageController<JavaMailSender> {
 		List<TblDepartment> depts1 = deptdao.getDetails();
 		mav.addObject("departments", depts1);
 		mav.addObject("Role",role);
-
+		mav.addObject("User",user);
 		return mav;		
 	}
 	/*
@@ -291,7 +299,7 @@ public class PageController<JavaMailSender> {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		EmpDetails emp = new EmpDetails(null, request.getParameter("cpswd"), null, request.getParameter("empid"), request.getParameter("email"), request.getParameter("firstname"), null, request.getParameter("lastname"), false, null, request.getParameter("pswd"), null, request.getParameter("uname"), null, null,null,null);
+		EmpDetails emp = new EmpDetails(null, request.getParameter("cpswd"), null, request.getParameter("empid"), request.getParameter("email"), request.getParameter("firstname1"), null, request.getParameter("lastname1"), false, null, request.getParameter("pswd"), null, request.getParameter("uname"), null, null,null,null);
 
 		emp.setLoginStatus(UserServiceImpl.Login_Status_Active);
 		emp.setRole("MANAGER_ROLE");
@@ -329,9 +337,9 @@ public class PageController<JavaMailSender> {
 
 		String role = user.getRole();
 		mav.addObject("Role",role);
-		
+
 		mav.addObject("employees", emp1);
-		
+
 
 		mav.addObject("dupmsg", mesg);
 		mav.addObject("User",user);
@@ -339,7 +347,7 @@ public class PageController<JavaMailSender> {
 
 		return mav;		
 	}
-
+/*
 	@RequestMapping(value="/admin/allemp/delete/{id}")
 	public ModelAndView deleteEmpPage(HttpServletRequest request, HttpServletResponse response,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/admin/allemp/register");
@@ -348,7 +356,7 @@ public class PageController<JavaMailSender> {
 		return mav;
 
 	}
-
+*/
 	@RequestMapping(value="/admin/empdep/register", method=RequestMethod.POST)
 	public ModelAndView addEmpDepartmentPage(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("departments");
@@ -372,11 +380,12 @@ public class PageController<JavaMailSender> {
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		DepartmentService depserv = new DepartmentService();
-		depserv.saveDepartment(tbldep);
+		String msg=depserv.saveDepartment(tbldep);
 		List<TblDepartment> depts = depserv.getDetails();
 		mav.addObject("departments", depts);
 		mav.addObject("services", servicesdao.list());
 		mav.addObject("User", user);
+		mav.addObject("msg",msg);
 		return mav;		
 	}
 
@@ -387,7 +396,7 @@ public class PageController<JavaMailSender> {
 		tbldes.setFromdate(request.getParameter("fromdate"));
 		tbldes.setActivestate(true);
 		DesignationService depdetails = new DesignationService();
-		depdetails.saveDetails(tbldes);
+		
 		List<TblDesignation> depts = depdetails.getDetails();
 		mav.addObject("designations", depts);
 		mav.addObject("services", servicesdao.list());
@@ -401,12 +410,16 @@ public class PageController<JavaMailSender> {
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
 		List<EmpDetails> emp1 = userDetails.getDetails();
+		List<TblDepartment> depts1 = deptdao.getDetails();
+		String dgmsg=depdetails.saveDetails(tbldes);
+		mav.addObject("departments", depts1);
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
 		mav.addObject("TransferRoleList", transferrole);
 		String role = user.getRole();
 		mav.addObject("Role",role);
+		mav.addObject("dgmsg",dgmsg);
 		return mav;		
 	}
 
@@ -434,6 +447,7 @@ public class PageController<JavaMailSender> {
 		Edetails = userDetails.getById(id);
 		mav.addObject("empID", id);
 		mav.addObject("employee",Edetails);
+		mav.addObject("User", user);
 		mav.addObject("services", servicesdao.list());
 		return mav;		
 	}
@@ -577,7 +591,13 @@ public class PageController<JavaMailSender> {
 		ModelAndView mav = new ModelAndView("redirect:/admin/employeetimesheets/register");
 		String reason = "Approved";
 		boolean status = true;
-		empattreq.update(status, id);		
+		empattreq.update(status, id);
+		emailSubject = "New Time Sheet For:";
+		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
+		emailToRecipient = "kaparapu.praveen@gmail.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+		
 		return mav;
 	}
 	@RequestMapping(value= "/admin/attendance/decline/{id}")
@@ -586,6 +606,12 @@ public class PageController<JavaMailSender> {
 		String reason = "Decline";
 		boolean status = false;
 		empattreq.update(status, id);
+		emailSubject = "New Time Sheet For:";
+		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
+		emailToRecipient = "kaparapu.praveen@gmail.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+		
 		return mav;
 	}
 	@RequestMapping(value= "/admin/leave/approve/{id}")
@@ -598,7 +624,12 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empleave", leavereq);
 		mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());	
-
+		emailSubject = "New Time Sheet For:";
+		emailMessage = "A new LeaveRequest For Approval has Been Sent to :"+"On: "+new Date();
+		emailToRecipient = "kaparapu.praveen@gmail.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+		
 		return mav;
 	}
 	@RequestMapping(value= "/admin/leave/decline/{id}")
@@ -611,24 +642,21 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empleave", leavereq);
 		mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());	
-
+		emailSubject = "New Time Sheet For:";
+		emailMessage = "A new LeaveRequest For Approval has Been Sent to :"+"On: "+new Date();
+		emailToRecipient = "kaparapu.praveen@gmail.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+		
 		return mav;
 	}
-	@RequestMapping(value= "/mytest")
+	@RequestMapping("/mytest")
 	public ModelAndView testmyPage() {
-		ModelAndView mav = new ModelAndView("500");
-		System.out.println("inside mytest");
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		EmpDetails user=null;
-		if (principal instanceof EmpDetails) {
-			user = ((EmpDetails)principal);
-		}
-		List<EmpDetails> emp1 = userDetails.getDetails();
-		String role = user.getRole();
-		mav.addObject("Role",role);
-		mav.addObject("employees", emp1);
-
-
+		System.out.println("ASDF");
+		ModelAndView mav = new ModelAndView("adminindex");
+		EmailDaoImpl email=new EmailDaoImpl();
+		System.out.println(email.getMail());
+	
 		return mav;
 	}
 
@@ -652,13 +680,14 @@ public class PageController<JavaMailSender> {
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		String dt=request.getParameter("hdate");
-		String[]sdt=dt.split("-");		
+		/*String[]sdt=dt.split("-");	*/	
 		String name=request.getParameter("holiday");
-		Holidays hday=new Holidays(name, sdt[2], sdt[1], sdt[0]);
-		himpl.saveHoliday(hday);
+		Holidays hday=new Holidays(name,dt);
+		String msg=himpl.saveHoliday(hday);
 		List<Holidays> holidays = himpl.viewAll();
 		mav.addObject("HolidaysList",holidays);
 		mav.addObject("services", servicesdao.list());
+		mav.addObject("msg",msg);
 		return mav;
 	}
 
@@ -682,6 +711,7 @@ public class PageController<JavaMailSender> {
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
 		List<EmpDetails> emp1 = userDetails.getDetails();
 		mav.addObject("empattendances",empattendances);
+		mav.addObject("User",user);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
 		mav.addObject("TransferRoleList", transferrole);
@@ -694,14 +724,44 @@ public class PageController<JavaMailSender> {
 	}
 	@RequestMapping(value= "/holidays/edit/{id}", method=RequestMethod.POST)
 	public ModelAndView updateHoliday(HttpServletRequest request,@PathVariable("id") int id) {
-		ModelAndView mav = new ModelAndView("redirect:/admin/empholidays/register");
-
+		ModelAndView mav = new ModelAndView();
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
+		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		List<TblEmpLeavereq> allempleave = empleavereq.view();
+		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
+		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
+		List<EmpDetails> emp1 = userDetails.getDetails();
 		String dt=request.getParameter("hdate");
 		String[]sdt=dt.split("-");		
 		String name=request.getParameter("holiday");
-		Holidays hday=new Holidays(name, sdt[2], sdt[1], sdt[0]);
-		himpl.updateHOliday(id, hday);
+		Holidays hday=new Holidays(name, dt);
+		String msg=himpl.updateHOliday(id, hday);
+		if(msg.equalsIgnoreCase("HoliDay UpDated Successfully")) {
+			mav = new ModelAndView("redirect:/admin/empholidays/register");
+			return mav;
+		}else if(msg.equalsIgnoreCase("HoliDay is Already Exists.Please try Again")) {
+			mav = new ModelAndView("holidaysedit");
+			mav.addObject("empattendances",empattendances);
+			mav.addObject("User",user);
+			mav.addObject("allempleave", allempleave);
+			mav.addObject("count",count);
+			mav.addObject("TransferRoleList", transferrole);
+			String role = user.getRole();
+			mav.addObject("Role",role);
+			Holidays holidays = himpl.getHolidayById(id);
+			mav.addObject("Holiday",holidays);
+			mav.addObject("services", servicesdao.list());
+			mav.addObject("msg",msg);
+			return mav;
+		}
+		mav.addObject("msg", "Unable to Update");
 		return mav;
+		
+		
 	}
 	@RequestMapping(value="/admin/departments/edit/{id}")
 	public ModelAndView editAdminDepartments(HttpServletRequest request, HttpServletResponse response,@PathVariable("id") int id) {
@@ -728,34 +788,66 @@ public class PageController<JavaMailSender> {
 		return mav;
 
 	}
-	@RequestMapping(value="/admin/empdep/edit/{id}")
-	public ModelAndView updateAdminDepartments(HttpServletRequest request,@PathVariable("id") int id) {
-
-		//Integer id = (Integer) request.getAttribute("DepId");
-		ModelAndView mav = new ModelAndView("redirect:/admin/empdep/register");
-		deptdao.updateDetails(id, request.getParameter("departmentname"),request.getParameter("todate")); 
-		return mav;
-
-	}
+	@RequestMapping(value="/admin/departments/edit/{id}",method=RequestMethod.POST)
+	 public ModelAndView updateAdminDepartments(HttpServletRequest request,@PathVariable("id") int id) {
+	  ModelAndView mav = new ModelAndView();
+	  Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	  EmpDetails user=null;
+	  if (principal instanceof EmpDetails) {
+	   user = ((EmpDetails)principal);
+	  }
+	  List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	  List<TblEmpLeavereq> allempleave = empleavereq.view();
+	  int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
+	  List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
+	  List<EmpDetails> emp1 = userDetails.getDetails();
+	  List<TblDepartment> depts = deptdao.getDetails();
+	  String msg=deptdao.updateDetails(id, request.getParameter("departmentname"),request.getParameter("todate"));
+	  System.out.println(msg);
+	  if(msg.equalsIgnoreCase("Department UpDated Successfully")) {
+	   mav = new ModelAndView("redirect:/admin/empdep/register");
+	   return mav;
+	  }
+	  else if(msg.equalsIgnoreCase("Department is Already Exists.Please try Again")) {
+	   mav = new ModelAndView("departmentsedit");
+	   mav.addObject("empattendances",empattendances);
+	   mav.addObject("allempleave", allempleave);
+	   mav.addObject("count",count);
+	   mav.addObject("TransferRoleList", transferrole);
+	   String role = user.getRole();
+	   mav.addObject("Role",role);
+	   mav.addObject("User", user);
+	   mav.addObject("emp1",emp1);
+	   mav.addObject("departments", depts);
+	   mav.addObject("services", servicesdao.list());
+	   mav.addObject("msg", msg);
+	   TblDepartment editdep = deptdao.getById(id);
+	   mav.addObject("depdetailsforedit",editdep);
+	   return mav;
+	  }
+	  mav.addObject("msg", "Unable to Update");
+	  return mav;
+	 
+	 }
 
 	@RequestMapping(value="/admin/designation/edit/{id}")
 	public ModelAndView editAdminDesignation(HttpServletResponse response,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("designationsedit");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		
+
 		EmpDetails user=null;
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
 		String role = user.getRole();
 		mav.addObject("Role",role);
-		
+
 		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
 		List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
 		List<EmpDetails> emp1 = userDetails.getDetails();
-		
+
 		mav.addObject("User",user);
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
@@ -769,13 +861,56 @@ public class PageController<JavaMailSender> {
 		return mav;
 
 	}
-	@RequestMapping(value="/admin/empdesignation/edit/{id}", method=RequestMethod.POST)
+	/*@RequestMapping(value="/admin/empdesignation/edit/{id}", method=RequestMethod.POST)
 	public ModelAndView updateAdmindesignation(HttpServletRequest request,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/admin/empdesig/register");
 		designationImpl.updateDetails(id, request.getParameter("designationname"),request.getParameter("department"),request.getParameter("todate"));
 		return mav;
 
-	}
+	}*/
+	 @RequestMapping(value="/admin/designation/edit/{id}",method=RequestMethod.POST)
+	 public ModelAndView updateAdmindesignation(HttpServletRequest request,@PathVariable("id") int id) {
+	  ModelAndView mav = new ModelAndView();
+	  Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	  EmpDetails user=null;
+	  if (principal instanceof EmpDetails) {
+	   user = ((EmpDetails)principal);
+	  }
+	  List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	  List<TblEmpLeavereq> allempleave = empleavereq.view();
+	  int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
+	  List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
+	  List<EmpDetails> emp1 = userDetails.getDetails();
+	  List<TblDesignation> design = designationImpl.getDetails();
+	  String dsmsg=designationImpl.updateDetails(id, request.getParameter("designationname"),request.getParameter("department"),request.getParameter("todate"));
+	  System.out.println(dsmsg);
+	  if(dsmsg.equalsIgnoreCase("Designation UpDated Successfully")) {
+	   mav = new ModelAndView("redirect:/admin/empdesig/register");
+	   return mav;
+	  }
+	  else if(dsmsg.equalsIgnoreCase("Designation already exists.Please try Again")) {
+	   mav = new ModelAndView("designationsedit");
+	   mav.addObject("empattendances",empattendances);
+	   mav.addObject("allempleave", allempleave);
+	   mav.addObject("count",count);
+	   mav.addObject("TransferRoleList", transferrole);
+	   String role = user.getRole();
+	   mav.addObject("Role",role);
+	   mav.addObject("User", user);
+	   mav.addObject("emp1",emp1);
+	   mav.addObject("designations", design);
+	   mav.addObject("services", servicesdao.list());
+	   mav.addObject("dsmsg", dsmsg);
+	   List<TblDepartment> depts1 = deptdao.getDetails();
+		mav.addObject("departments", depts1);
+	   TblDesignation editdesign = designationImpl.getById(id);
+	   mav.addObject("depdetailsforedit",editdesign);
+	   return mav;
+	  }
+	  mav.addObject("msg", "Unable to Update");
+	  return mav;
+	 
+	 }
 
 	@RequestMapping(value="/admin/search/register")
 	public ModelAndView empLeaveSearch(HttpServletRequest request) {
@@ -800,7 +935,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("Role",role);
 
 
-		List<TblEmpLeavereq> leavereq =  empleavereq.viewSearch(request.getParameter("uname"), request.getParameter("month"), request.getParameter("status"));
+		List<TblEmpLeavereq> leavereq =  empleavereq.viewSearch(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("month"), request.getParameter("status"));
 		mav.addObject("employees", emp1);
 		mav.addObject("empleave", leavereq);
 		mav.addObject("services", servicesdao.list());
@@ -828,6 +963,7 @@ public class PageController<JavaMailSender> {
 
 		String role = user.getRole();
 		mav.addObject("Role",role);
+		mav.addObject("User",user);
 		String mesg = "hi";
 		EmpDetails editdep =userDetails.getById(id);
 		List<TblDepartment> depts1 = deptdao.getDetails();
@@ -847,76 +983,80 @@ public class PageController<JavaMailSender> {
 		return mav;
 
 	}
-	
-	 @RequestMapping(value="/admin/employee/search")
-		public ModelAndView searchBars(HttpServletRequest req) {
 
-			String username = req.getParameter("username");
-			String department = req.getParameter("department");
-			String designation = req.getParameter("designation");
-			List<TblDepartment> deptList = deptdao.getDetails();
-			List<TblDesignation> designList = designationImpl.getDetails();
-			
-			List<EmpDetails> details = userDetails.viewSearch(username, department, designation);
-			
-			ModelAndView mav = new ModelAndView("employees");
-			mav.addObject("services", servicesdao.list());
-			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			EmpDetails user=null;
-			
-			if (principal instanceof EmpDetails) {
+	@RequestMapping(value="/admin/employee/search")
+	public ModelAndView searchBars(HttpServletRequest req) {
+
+		String firstname = req.getParameter("firstname");
+		String lastname = req.getParameter("lastname");
+		String department = req.getParameter("department1");
+		String designation = req.getParameter("designation1");
+		List<TblDepartment> deptList = deptdao.getDetails();
+		List<TblDesignation> designList = designationImpl.getDetails();
+
+		List<EmpDetails> details = userDetails.viewSearch(firstname, lastname, department, designation);
+
+		ModelAndView mav = new ModelAndView("employees");
+		mav.addObject("services", servicesdao.list());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+
+		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
-			}
-			List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
-			List<TblEmpLeavereq> allempleave = empleavereq.view();
-			int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
-			List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
-			List<EmpDetails> emp1 = userDetails.getDetails();
-			mav.addObject("empattendances",empattendances);
-			mav.addObject("allempleave", allempleave);
-			mav.addObject("count",count);
-			mav.addObject("TransferRoleList", transferrole);
-			String role = user.getRole();
-			mav.addObject("Role",role);
-			mav.addObject("User",user);
-			String mesg = "hi";
-			
-			mav.addObject("employees", details);
-			
-			
-			mav.addObject("dupmsg", mesg);
-			mav.addObject("departments", deptList);
-			mav.addObject("designations", designList);
-		
-			List<TblDepartment> dests = deptdao .getDetails();
-			mav.addObject("departments", dests);
-			
-			mav.addObject(user);
-			return mav;		
 		}
-	 
-	 @RequestMapping(value="/admin/employee/timesheetSearch")
-		public ModelAndView attendanceSearch(HttpServletRequest request) {
-			String username = request.getParameter("username");
-			System.out.println(request.getParameter("month"));
-			ModelAndView mav = new ModelAndView("allemptimesheetrequests");
-			mav.addObject("services", servicesdao.list());
-			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-			EmpDetails user=null;
-			if (principal instanceof EmpDetails) {
+		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		List<TblEmpLeavereq> allempleave = empleavereq.view();
+		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
+		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
+		List<EmpDetails> emp1 = userDetails.getDetails();
+		mav.addObject("empattendances",empattendances);
+		mav.addObject("allempleave", allempleave);
+		mav.addObject("count",count);
+		mav.addObject("TransferRoleList", transferrole);
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		mav.addObject("User",user);
+		String mesg = "hi";
+
+		mav.addObject("employees", details);
+
+
+		mav.addObject("dupmsg", mesg);
+		mav.addObject("departments", deptList);
+		mav.addObject("designations", designList);
+
+		List<TblDepartment> dests = deptdao .getDetails();
+		mav.addObject("departments", dests);
+
+		mav.addObject(user);
+		return mav;		
+	}
+	@RequestMapping(value="/admin/employee/timesheetSearch")	 
+	public ModelAndView attendance() {
+		return new ModelAndView("redirect:/admin/employeetimesheets/register");}
+	@RequestMapping(value="/admin/employee/timesheetSearch", method=RequestMethod.POST)
+	public ModelAndView attendanceSearch(HttpServletRequest request) {
+		
+	
+		ModelAndView mav = new ModelAndView("allemptimesheetrequests");
+		mav.addObject("services", servicesdao.list());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
-			}
-			
-			String role = user.getRole();
-			mav.addObject("Role",role);
-			List<TblEmpAttendanceNew> attendances =  empattreq.viewSearch(request.getParameter("username"), request.getParameter("month"), request.getParameter("status"));
-			List<EmpDetails> emp1 = userDetails.getDetails();
-			mav.addObject("User",user);
-			mav.addObject("employees", emp1);
-			mav.addObject("attendancelist",attendances);
-			return mav;		
 		}
-		
+
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		System.out.println(request.getParameter("month"));
+		List<TblEmpAttendanceNew> attendence =  empattreq.viewSearch(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("month"), request.getParameter("status"));
+		List<EmpDetails> emp1 = userDetails.getDetails();
+		mav.addObject("User",user);
+		mav.addObject("employees", emp1);
+		mav.addObject("attendancelist",attendence);
+		return mav;		
+	}
+
 
 	@RequestMapping(value= "/403")
 	public ModelAndView Page403() {
@@ -935,5 +1075,79 @@ public class PageController<JavaMailSender> {
 		return mav;
 	}
 
+	@RequestMapping(value= "admin/leavereq/edit/{id}")
+	public ModelAndView empLeaveEdit(HttpSession session, @PathVariable("id") int id) {
+		ModelAndView mav = new ModelAndView("empleaverequestedit");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
 
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		//List<TblEmpLeavereq> allempleave = ers.view();
+		//List<TblEmpLeavereq> leavereq =  ers.viewbyid(id);
+		TblEmpLeavereq leavereq=ers.getById(id);
+		//int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
+		//List<EmpDetails> emp1 = userDetails.getDetails();
+		//List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
+		//mav.addObject("empattendances",empattendances);
+	//	mav.addObject("allempleave", allempleave);
+	//	mav.addObject("count",count);
+		mav.addObject("User", user);
+		mav.addObject("empleave", leavereq);
+		//mav.addObject("manservices", mandao.list());
+		//mav.addObject("employees", emp1);
+		//mav.addObject("count",count);
+	//	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	//	mav.addObject("TransferRoleList", transferrole);
+		mav.addObject("id",id);
+		mav.addObject("services", servicesdao.list());
+		mav.addObject(user);
+		return mav;
+	}
+	@RequestMapping(value="/admin/leave/upload/{id}", method=RequestMethod.POST)
+	public ModelAndView updateLeaveRequest(HttpServletRequest request,@PathVariable("id") int id) {
+		//ModelAndView mav = new ModelAndView("redirect:/admin/search/register");
+		String fromdate = request.getParameter("fromdate");
+		String[] date = fromdate.split("-");
+		String todate = request.getParameter("todate");
+		SimpleDateFormat formatfromdate = new SimpleDateFormat("yyyy-mm-dd");
+		Date reqfromDate = null;
+		Date reqtoDate = null;
+		try {
+			reqfromDate = formatfromdate.parse(fromdate);
+			reqtoDate = formatfromdate.parse(todate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		LocalDate Day1 = LocalDate.parse(fromdate);
+		LocalDate Day2 = LocalDate.parse(todate);
+
+		long daysNegative = ChronoUnit.DAYS.between(Day1, Day2);
+		ers.updateLeave(id,request.getParameter("leavetype"),request.getParameter("fromdate"),request.getParameter("todate"),request.getParameter("leavereason"),(int)daysNegative,request.getParameter("reason"));
+		ModelAndView mav = new ModelAndView("redirect:/admin/leaverequests/register");
+		return mav;
+
+	}
+
+	
+	@RequestMapping(value="/admin/leavehistory/{id}")
+	public ModelAndView empLeavehistory(@PathVariable("id") int id) {
+		ModelAndView mav = new ModelAndView("allempleaverequests");
+		TblEmpLeavereq leavereq=ers.getById(id);
+		mav.addObject("empleavehistory", leavereq);
+		return mav;
+	}
+	@RequestMapping(value="/leavehistory", method=RequestMethod.POST)
+	@ResponseBody
+	public TblEmpLeavereq leaveHistory(HttpServletRequest request) {
+		TblEmpLeavereq leavereq=ers.getById(Integer.parseInt(request.getParameter("id")));
+		return leavereq;
+		
+	}
+	
 }

@@ -18,6 +18,9 @@ public interface EmpLeaveRequestDao {
 	public String updatetransManager(int id,String transmanid);
 	public String ChangeManager(int id);
 	public int countEmployee(String manid);
-	public List<TblEmpLeavereq> viewSearch(String username, String month, String status);
-	public List<TblEmpLeavereq> empLeaveSearch(String uname,String month, String status); 
+	public List<TblEmpLeavereq> viewSearch(String firstname, String lnamename, String month, String status);
+	public List<TblEmpLeavereq> empLeaveSearch(String uname, String month, String status); 
+	public String updateLeave(int id, String leavetype, String fdate, String tdate, String reasion,int count,
+			String status);
+	public TblEmpLeavereq getById(int id);
 }

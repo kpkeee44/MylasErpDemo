@@ -40,12 +40,14 @@
 <link href="${css}/layout.css" rel="stylesheet">
 <link href="${css}/themes/main_theme.css" rel="stylesheet" />
 <link href="${css}/custom_style.css" rel="stylesheet">
+<link href="${css}/main.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body class="theme-indigo light layout-fixed">
@@ -122,10 +124,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>First Name</label> <input type="text"
-														name="firstname" id="firstname" class="form-control"
-														placeholder="First Name" required="required" size="50"
-														maxlength="50">
+													<!-- <label>First Name</label> --><input type="text"
+														name="firstname1" id="firstname1" class="form-control"
+														required="required" size="50" maxlength="50" placeholder="First Name">
 												</div>
 											</div>
 										</div>
@@ -134,10 +135,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>Last Name </label> <input type="text"
-														name="lastname" id="lastname" class="form-control"
-														placeholder="Last Name " required="required" size="50"
-														maxlength="50">
+													<!-- <label>Last Name </label> --><input type="text"
+														name="lastname1" id="lastname1" class="form-control"
+														required="required" size="50" maxlength="50" placeholder="Last Name">
 												</div>
 											</div>
 										</div>
@@ -146,9 +146,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>Username</label> <input type="text" name="uname"
-														id="uname" class="form-control" placeholder="Username"
-														required="required" size="50" maxlength="50">
+													<!-- <label>Username</label> --><input type="text"
+													 name="uname" id="uname" class="form-control"
+													  required="required" size="50" maxlength="50" placeholder="User Name">
 												</div>
 											</div>
 										</div>
@@ -157,9 +157,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>Email</label> <input type="email" name="email"
-														id="email" class="form-control" placeholder="Email"
-														required="required" size="50" maxlength="50">
+													<!-- <label>Email</label> --><input type="email" name="email"
+														id="email" class="form-control" required="required"
+														size="50" maxlength="50" placeholder="Email">
 												</div>
 											</div>
 										</div>
@@ -168,11 +168,11 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>Password </label> <input type="password" name="pswd"
-														id="pswd" class="form-control" placeholder="Password"
+													<!-- <label>Password </label> --><input type="password" name="pswd"
+														id="pswd" class="form-control"
 														pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
 														title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
-														required="required">
+														required="required" placeholder="Password">
 												</div>
 											</div>
 										</div>
@@ -181,9 +181,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>Confirm Password </label> <input type="password"
+													<!-- <label>Confirm Password </label> --><input type="password"
 														name="cpswd" id="cpswd" class="form-control"
-														placeholder="Confirm Password" required="required">
+														required="required" placeholder="Confirm Password">
 												</div>
 											</div>
 										</div>
@@ -192,9 +192,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>Employee ID </label> <input type="text" name="empid"
-														id="empid" class="form-control" placeholder="Employee ID"
-														required="required" size="15" maxlength="15">
+													<!-- <label>Employee ID </label> --><input type="text" name="empid"
+														id="empid" class="form-control" required="required"
+														size="15" maxlength="15" placeholder="Employee ID">
 												</div>
 											</div>
 										</div>
@@ -203,9 +203,8 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>Joining Date </label> <input type="date"
-														name="joindate" class="form-control"
-														placeholder="Joining Date">
+													<!-- <label>Joining Date </label> --><input type="date"
+														name="joindate" class="form-control" required="required" placeholder="Joining Date">
 												</div>
 												<span class="input-group-addon"><i
 													class="material-icons">date_range </i></span>
@@ -216,9 +215,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<label>Phone </label> <input type="number" name="phone"
-														id="phone" class="form-control" placeholder="Phone"
-														required="required" size="10" maxlength="10">
+													<!-- <label>Phone </label> --><input type="text" name="phone"
+														id="phone" class="form-control" required="required"
+														size="10" maxlength="10" placeholder="Phone" pattern="[0-9]{10}">
 												</div>
 											</div>
 										</div>
@@ -227,19 +226,26 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="form-line">
-													<label>Company</label> <input type="text" name="company"
-														id="company" class="form-control" placeholder="Company"
-														required="required" size="50" maxlength="50">
+													<!-- <label>Company</label> -->
+													<!-- <input type="text" name="company"
+														id="company" class="form-control" 
+														required="required" size="50" maxlength="50"> -->
+													<select class="form-control" size="1" name="company"
+														id="company" required="required">
+														<option value="">Select Company</option>
+														<option value="mylasit">MylasIT</option>
+
+													</select>
 												</div>
 											</div>
 										</div>
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="form-line">
-													<label>Department</label> <select class="form-control"
+													<!-- <label>Department</label> --><select class="form-control"
 														size="1" name="department" id="department"
 														required="required">
-														<option value="">Please select</option>
+														<option value="">Select Department</option>
 														<c:forEach items="${departments}" var="deper">
 															<option value="${deper.getDepartment()}">${deper.getDepartment()}</option>
 														</c:forEach>
@@ -252,10 +258,10 @@
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="form-line">
-													<label>Designation</label> <select class="form-control"
+													<!-- <label>Designation</label>  --><select class="form-control"
 														size="1" name="designation" id="designation"
 														required="required">
-														<option value="0">Please select</option>
+														<option value="">Select Designations</option>
 														<c:forEach items="${designations}" var="desig">
 															<c:if test="${desig.getDesignation()!='Manager'}">
 																<option value="${desig.getDesignation()}">${desig.getDesignation()}</option>
@@ -288,15 +294,21 @@
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 search_leav">
 								<div class="col-md-2 padding_col">
 									<div class="form-group">
-										<input type="text" class="form-control" id="username"
-											placeholder="Employee ID" name="username" />
+										<input type="text" class="form-control" id="firstname"
+											placeholder="First Name" name="firstname" value=""/>
 									</div>
 								</div>
 								<div class="col-md-2 padding_col">
 									<div class="form-group">
-										<select id="department" name="department" class="form-control"
-											size="1">
-											<option value="">please select</option>
+										<input type="text" class="form-control" id="lastname"
+											placeholder="Last Name" name="lastname" value=""/>
+									</div>
+								</div>
+								<div class="col-md-3 padding_col">
+									<div class="form-group">
+										<select id="department1" name="department1"
+											class="form-control" size="1">
+											<option value="">Select Department</option>
 											<c:forEach items="${departments}" var="departments">
 												<option value="${departments.getDepartment()}">
 													${departments.getDepartment()}</option>
@@ -304,11 +316,11 @@
 										</select>
 									</div>
 								</div>
-								<div class="col-md-2 padding_col">
+								<div class="col-md-3 padding_col">
 									<div class="form-group">
-										<select id="designation" name="designation"
+										<select id="designation1" name="designation1"
 											class="form-control" size="1">
-											<option value="">please select</option>
+											<option value="">Select Designation</option>
 											<c:forEach items="${designations}" var="designations">
 												<option value="${designations.getDesignation()}">
 													${designations.getDesignation()}</option>
@@ -319,7 +331,7 @@
 
 
 								<div class="col-md-2 ">
-									<button type="submit"
+									<button type="submit" onclick="return Search()"
 										class="btn btn-primary  pull-right waves-effect ">Search</button>
 								</div>
 							</div>
@@ -370,8 +382,7 @@
 												<div class="chip">
 													<a
 														href="<%=request.getContextPath()%>/${role}/allemp/register/${empl.getId()}/employeedetails">
-														<img src="/erp.demo/resources/images/mail/one.jpg"
-														alt="Contact Person">
+														<img src="${images}/mail/one.jpg" alt="Contact Person">
 														<div class="profiletitlewidth hideOverflow ">${empl.getFname()}
 															${empl.getLname()}</div>
 
@@ -401,10 +412,10 @@
 																	href="${contextRoot}/admin/empdetais/edit/${empl.getId()}"
 																	class=" waves-effect waves-classic"><i
 																		class="material-icons">edit</i>Edit</a></li>
-																<li><a
+																<%-- 	<li><a
 																	href="${contextRoot}/admin/allemp/delete/${empl.getId()}"
 																	class=" waves-effect waves-classic"><i
-																		class="material-icons">delete</i>Delete</a></li>
+																		class="material-icons">delete</i>Delete</a></li> --%>
 
 															</ul></li>
 													</c:if>
@@ -426,8 +437,7 @@
 														<div class="chip">
 															<a
 																href="<%=request.getContextPath()%>/admin/allemp/register/${empl.getId()}/employeedetails">
-																<img src="/erp.demo/resources/images/mail/one.jpg"
-																alt="Contact Person">
+																<img src="${images}/mail/one.jpg" alt="Contact Person">
 																<div class="profiletitlewidth hideOverflow ">${empl.getFname()}
 																	${empl.getLname()}</div>
 
@@ -452,13 +462,14 @@
 																	aria-expanded="false"> <i class="material-icons">more_vert</i>
 																</a>
 																	<ul class="dropdown-menu pull-right">
-																		<li><a href="${contextRoot}/admin/empdetais/edit/${empl.getId()}"
+																		<li><a
+																			href="${contextRoot}/admin/empdetais/edit/${empl.getId()}"
 																			class=" waves-effect waves-classic"><i
 																				class="material-icons">edit</i>Edit</a></li>
-																		<li><a
+																		<%-- <li><a
 																			href="${contextRoot}/admin/allemp/delete/${empl.getId()}"
 																			class=" waves-effect waves-classic"><i
-																				class="material-icons">delete</i>Delete</a></li>
+																				class="material-icons">delete</i>Delete</a></li> --%>
 
 																	</ul></li>
 															</c:if>
@@ -497,6 +508,8 @@
 	<!-- LAYOUT JS -->
 	<script src="${js}/demo.js"></script>
 	<script src="${js}/layout.js"></script>
+	<script src="${js}/jquery.1.10.2.min.js"></script>
+	<script src="${js}/jquery.autocomplete.min.js"></script>
 
 	<script>
 		$(document).ready(function() {
@@ -529,7 +542,7 @@
 			}
 
 			if ((ph.length < 10) || ph.length > 10) {
-				alert(" Your Mobile Number must ");
+				alert("Invalid Mobile Number");
 				phone.focus();
 				return false;
 			}
@@ -558,7 +571,73 @@
 
 		});
 	</script>
+	<script>
+     function Search(){
+	 var fname = document.getElementById("firstname").value;
+	 var lname = document.getElementById("lastname").value;
+	 var mon = document.getElementById("department1").value;
+	 var sta = document.getElementById("designation1").value;
+	 if(fname=="" && lname=="" && mon=="" && sta=="")
+		 {
+		 alert("plese Select any one of these");
+		 return false;
+		 }
 
+}
+     </script>
+
+	<script>
+	$(document).ready(function() {
+
+		$('#firstname').autocomplete({
+			
+			serviceUrl: '${contextRoot}/getTags',
+			paramName: "firstname",
+			delimiter: ",",
+		    transformResult: function(response) {
+		    	
+		        return {
+		        	
+		            suggestions: $.map($.parseJSON(response), function(item) {
+		            	
+		                return { value: item.fname, data: item.id };
+		            })
+		            
+		        };
+		        
+		    }
+		    
+		});
+		
+		
+	});
+	</script>
+	<script>
+	$(document).ready(function() {
+
+		$('#lastname').autocomplete({
+			
+			serviceUrl: '${contextRoot}/lastNames',
+			paramName: "lastname",
+			delimiter: ",",
+		    transformResult: function(response) {
+		    	
+		        return {
+		        	
+		            suggestions: $.map($.parseJSON(response), function(item) {
+		            	
+		                return { value: item.lname, data: item.id };
+		            })
+		            
+		        };
+		        
+		    }
+		    
+		});
+		
+		
+	});
+	</script>
 </body>
 
 </html>

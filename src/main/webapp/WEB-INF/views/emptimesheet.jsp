@@ -172,7 +172,7 @@
 
 															<td><select class="form-control" size="1"
 																name="year" id="year" required>
-																	<option value="">Please select</option>
+																	<option value="">Select Year</option>
 																	<option value="2018">2018</option>
 																	<option value="2019">2019</option>
 																	<option value="2020">2020</option>
@@ -180,7 +180,7 @@
 															<td><select class="form-control" size="1"
 																name="month" id="month" onchange="return validate()"
 																required>
-																	<option value="">Please select</option>
+																	<option value="">Select Month</option>
 																	<option value="January">January</option>
 																	<option value="February">February</option>
 																	<option value="March">March</option>
@@ -241,13 +241,13 @@
 										<div
 											class="col-lg-12 col-md-12 col-sm-12 col-xs-12 search_leav">
 
-											<form action="${contextRoot}/${role}/timesheet/search">
+											<form action="${contextRoot}/${role}/timesheet/search" method="post">
 												<div class="col-md-2 padding_col">
 													<div class="form-group">
 
-														<select class="form-control" id="month" name="month"
+														<select class="form-control" id="months" name="month"
 															size="1">
-															<option value="">Please select</option>
+															<option value="">Select Month</option>
 															<option value="January">January</option>
 															<option value="February">February</option>
 															<option value="March">March</option>
@@ -268,7 +268,7 @@
 
 														<select class="form-control" id="status" name="status"
 															size="1">
-															<option value="">Please select</option>
+															<option value="">Select Status</option>
 															<option value="2">Pending</option>
 															<option value="1">Approved</option>
 															<option value="0">Declined</option>
@@ -276,7 +276,7 @@
 													</div>
 												</div>
 												<div class="col-md-2 ">
-													<button type="submit"
+													<button type="submit" onclick="return Search()"
 														class="btn btn-primary  pull-right waves-effect ">
 														Search</button>
 												</div>
@@ -687,14 +687,14 @@
 																			data-toggle="dropdown" role="button"
 																			aria-haspopup="true" aria-expanded="false"> <i
 																				class="material-icons">more_vert</i>
-																		</a>
+																		</a><c:if test="${attlist.getStatas() == null}">
 																			<ul class="dropdown-menu pull-right">
-																				<c:if test="${attlist.getStatas() == null}">
+																				
 																					<li><a
 																						href="${contextRoot}/${role}/timesheet/delete/${attlist.getId()}"><i
 																							class="material-icons">delete</i>Delete</a></li>
-																				</c:if>
-																			</ul></li>
+																				
+																			</ul></c:if></li>
 																	</ul>
 																</td>
 															</tr>
@@ -895,8 +895,19 @@
 		});
 	</script>
 	</c:if>
+<script>
+     function Search(){
 
+	 var mon = document.getElementById("months").value;
+	 var sta = document.getElementById("status").value;
+	 if(mon=="" && sta=="")
+		 {
+		 alert("plese Select any one of these");
+		 return false;
+		 }
 
+}
+</script>
 
 </body>
 

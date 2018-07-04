@@ -40,6 +40,7 @@
 <link href="${css}/layout.css" rel="stylesheet">
 <link href="${css}/themes/main_theme.css" rel="stylesheet" />
 <link href="${css}/custom_style.css" rel="stylesheet">
+<link href="${css}/main.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -104,14 +105,21 @@
 										<div class="form-group">
 
 											<input type="text" class="form-control"
-												placeholder="Username" name="username" id="uname" />
+												placeholder="First Name" name="firstname" id="firstname" />
+										</div>
+									</div>
+									<div class="col-md-2 padding_col">
+										<div class="form-group">
+
+											<input type="text" class="form-control"
+												placeholder="Last Name" name="lastname" id="lastname" />
 										</div>
 									</div>
 									<div class="col-md-2 padding_col">
 										<div class="form-group">
 
 											<select name="month" id="month" class="form-control" size="1">
-												<option value="">Please select</option>
+												<option value="">Select Month</option>
 												<option value="January">January</option>
 												<option value="February">February</option>
 												<option value="March">March</option>
@@ -132,7 +140,7 @@
 
 											<select name="status" id="status" class="form-control"
 												size="1">
-												<option value="">Please select</option>
+												<option value="">Select Status</option>
 												<option value="2">Pending</option>
 												<option value="1">Approved</option>
 												<option value="0">Declined</option>
@@ -151,7 +159,7 @@
 						</form>
 						<div class="card">
 
-							<div class="body" style="overflow: hidden; overflow-x: scroll;">
+							<div class="body" style="overflow-y: visible; overflow-x: scroll;height: 600px; ">
 								<table class="tablesaw table-striped table-hover table-bordered">
 									<thead class="tableheding">
 										<tr>
@@ -1083,6 +1091,8 @@
 	<!-- LAYOUT JS -->
 	<script src="${js}/demo.js"></script>
 	<script src="${js}/layout.js"></script>
+	<script src="${js}/jquery.1.10.2.min.js"></script>
+	<script src="${js}/jquery.autocomplete.min.js"></script>
 
 
 
@@ -1105,10 +1115,11 @@
  -->
 	<script>
 		function Search() {
-			var name = document.getElementById("uname").value;
+			var fname = document.getElementById("firstname").value;
+			var lname = document.getElementById("lastname").value;
 			var mon = document.getElementById("month").value;
 			var sta = document.getElementById("status").value;
-			if (name == "" && mon == "" && sta == "") {
+			if (fname == "" && lname == "" && mon == "" && sta == "") {
 				alert("plese Select any one of these");
 				return false;
 			}
@@ -1123,7 +1134,59 @@
 			document.getElementById('form_a').action = "${contextRoot}/${role}/attendance/approve/"
 					+ id;
 		}
-</script>
+		</script>
+<script>
+	$(document).ready(function() {
+
+		$('#firstname').autocomplete({
+			
+			serviceUrl: '${contextRoot}/getTags',
+			paramName: "firstname",
+			delimiter: ",",
+		    transformResult: function(response) {
+		    	
+		        return {
+		        	
+		            suggestions: $.map($.parseJSON(response), function(item) {
+		            	
+		                return { value: item.fname, data: item.id };
+		            })
+		            
+		        };
+		        
+		    }
+		    
+		});
+		
+		
+	});
+	</script>
+	<script>
+	$(document).ready(function() {
+
+		$('#lastname').autocomplete({
+			
+			serviceUrl: '${contextRoot}/lastNames',
+			paramName: "lastname",
+			delimiter: ",",
+		    transformResult: function(response) {
+		    	
+		        return {
+		        	
+		            suggestions: $.map($.parseJSON(response), function(item) {
+		            	
+		                return { value: item.lname, data: item.id };
+		            })
+		            
+		        };
+		        
+		    }
+		    
+		});
+		
+		
+	});
+	</script>
 		</body>
 
 		</html>

@@ -10,6 +10,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.TblEmpAttendanceNew;
+import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.appservices.GetSession;
 import mylas.com.erp.demo.dao.EmpAttendenceDao;
 
@@ -130,60 +131,110 @@ public class EmpAttendanceDaoImpl implements EmpAttendenceDao {
 	}
 
 	@Override
-	public List<TblEmpAttendanceNew> viewSearch(String username, String month, String status) {
+	public List<TblEmpAttendanceNew> viewSearch(String firstname, String lastname, String month, String status) {
+		System.out.print(firstname+lastname+month+status);
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		System.out.println("start");
 		Query q = null;
-		if(username!="" && month!="" && status!="") {
+		
+		if(firstname!="" && lastname!="" && month!="" && status!="") {
 
 			if(status.equals("1")||status.equals("0")) {
-				q= session.createQuery("from TblEmpAttendanceNew where empid='"+username+"'AND month='"+month+"' AND statas="+status);
+				q= session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"' AND lname='"+lastname+"') AND month LIKE '"+month+"' AND statas="+status);
 			}else {
-				q=session.createQuery("from TblEmpAttendanceNew where empid='"+username+"'AND month='"+month+"' AND statas is null");
+				q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"' AND lname='"+lastname+"') AND month='"+month+"' AND statas is null");
 			}
 		}
-		else if(username!="" && month!="") {
-			q=session.createQuery("from TblEmpAttendanceNew where empid='"+username+"'AND month='"+month+"'");
-		}
-		else if(username!="" && status!="") {
+		else if(firstname!="" && lastname!="" && month!="") {
+
+				q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"' AND lname='"+lastname+"') AND month='"+month+"'");
+			}
+		
+		else if(firstname!="" && lastname!="" && status!="") {
+
 			if(status.equals("1")||status.equals("0")) {
-				q= session.createQuery("from TblEmpAttendanceNew where empid='"+username+"'AND statas="+status);
+				q= session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"' AND lname='"+lastname+"') AND statas="+status);
 			}else {
-				q=session.createQuery("from TblEmpAttendanceNew where empid='"+username+"'AND statas is null");
+				q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"' AND lname='"+lastname+"') AND statas is null");
+			}
+		}
+		else if(firstname!="" && month!="" && status!="") {
+
+			if(status.equals("1")||status.equals("0")) {
+				q= session.createQuery("from TblEmpAttendanceNew where  empid IN (select eid from EmpDetails where fname='"+firstname+"') AND month='"+month+"' AND statas="+status);
+			}else {
+				q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"') AND month='"+month+"' AND statas is null");
+			}
+		}
+		else if(lastname!="" && month!="" && status!="") {
+
+			if(status.equals("1")||status.equals("0")) {
+				q= session.createQuery("from TblEmpAttendanceNew where  empid IN (select eid from EmpDetails where lname='"+lastname+"') AND month='"+month+"' AND statas="+status);
+			}else {
+				q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where lname='"+lastname+"') AND month='"+month+"' AND statas is null");
+			}
+		}
+		else if(firstname!="" && month!="") {
+			System.out.println(month);
+			q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"') AND month='"+month+"'");
+		}
+		else if(firstname!="" && lastname!="") {
+			q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"' AND lname='"+lastname+"')");
+		}
+		else if(firstname!="" && status!="") {
+			if(status.equals("1")||status.equals("0")) {
+				q= session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"') AND statas="+status);
+			}else {
+				q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"') AND statas is null");
+			}
+		}
+		else if(lastname!="" && month!="") {
+			q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where lname='"+lastname+"') AND month='"+month+"'");
+		}
+		else if(lastname!="" && status!="") {
+			if(status.equals("1")||status.equals("0")) {
+				q= session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where lname='"+lastname+"') AND statas="+status);
+			}else {
+				q=session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where lname='"+lastname+"') AND statas is null");
 			}
 		}
 		else if(month!="" && status!="") {
 			if(status.equals("1")||status.equals("0")) {
 				q= session.createQuery("from TblEmpAttendanceNew where month='"+month+"' AND statas="+status);
 			}else {
-				q=session.createQuery("from TblEmpAttendanceNew where month='"+month+"' AND status is null");
+				q=session.createQuery("from TblEmpAttendanceNew where month='"+month+"' AND statas is null");
 			}
 
 		}
-		else if(username!="")
+		else if(firstname!="")
 		{
 
-			q = session.createQuery("from TblEmpAttendanceNew where empid='"+username+"'");	
+			q = session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where fname='"+firstname+"')");	
+		}
+		else if(lastname!="")
+		{
+
+			q = session.createQuery("from TblEmpAttendanceNew where empid IN (select eid from EmpDetails where lname='"+lastname+"')");	
 		}
 		else if(month!="")
 		{
+			System.out.println(month+"hi");
 
-			q = session.createQuery("from TblEmpAttendanceNew where month='"+month+"'");	
+			q = session.createQuery("from TblEmpAttendanceNew where month ='"+month+"'");
+			System.out.println(q);
 		}
 		else if(status!="")
 		{
 			if(status.equals("1")||status.equals("0")) {
-				q= session.createQuery("from TblEmpAttendanceNew where status="+status);
+				q= session.createQuery("from TblEmpAttendanceNew where statas="+status);
 			}else {
-				q=session.createQuery("from TblEmpAttendanceNew where status is null");
+				q=session.createQuery("from TblEmpAttendanceNew where statas is null");
 			}
 		}
-		List<TblEmpAttendanceNew> empleave = q.list();
-		System.out.println(empleave);
+		List<TblEmpAttendanceNew> attendance = q.list();
+		System.out.println(attendance);
 		session.getTransaction().commit();
-		return (empleave);		
-
+		return (attendance);
 	}
 
 	@Override
@@ -212,9 +263,10 @@ public class EmpAttendanceDaoImpl implements EmpAttendenceDao {
 		    q=session.createQuery("from TblEmpAttendanceNew where empid='"+id+"'AND statas is null");
 		   }
 		  }
-		  List<TblEmpAttendanceNew> empleave = q.list();
+		  List<TblEmpAttendanceNew> attendence = q.list();
+		  System.out.println(attendence+"....hi");
 		  session.getTransaction().commit();
-		  return (empleave); 
+		  return (attendence); 
 	}
 
 

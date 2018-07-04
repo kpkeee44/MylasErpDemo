@@ -28,7 +28,36 @@
 		</c:if>
 	</c:if>
 </c:forEach>
+<c:forEach items="${TransferRoleList}" var="transferRoleList">
+	<c:if test="${transferRoleList.getStatus() == null}">
+		<c:if
+			test="${transferRoleList.getFrommanid() == User.getEid() || transferRoleList.getTomanid() == User.getEid()}">
+			<c:set var="toDate" value="${transferRoleList.getFromdate()}" />
+			<c:set var="toManId" value="${transferRoleList.getTomanid()}" />
+			<c:set var="fromManagerid" value="${transferRoleList.getFrommanid()}" />
+			<c:set var="id" value="${transferRoleList.getId()}" />
+			<%
+				String ToDate = (String) pageContext.getAttribute("toDate");
+							String manid = (String) pageContext.getAttribute("fromManagerid");
+							String toManid = (String) pageContext.getAttribute("toManId");
+							Integer id = (Integer) pageContext.getAttribute("id");
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+							String today = sdf.format(new Date());
+							Date Today = sdf.parse(today);
 
+							Date tDate = sdf.parse(ToDate);
+							out.println(Today + "," + tDate);
+							if (Today.after(tDate) || Today.equals(tDate)) {
+								out.println("in set");
+								out.println(id);
+								RoletransfoeDaoImpl rolemethod = new RoletransfoeDaoImpl();
+								out.println(rolemethod);
+								rolemethod.changeMainManager(manid, toManid, id);
+							}
+			%>
+		</c:if>
+	</c:if>
+</c:forEach>
 
 
 
@@ -126,7 +155,7 @@
 			</div>
 		</div>
 	</nav>
-<%-- <c:forEach items="${TransferRoleList}" var="transferRoleList">
+	<%-- <c:forEach items="${TransferRoleList}" var="transferRoleList">
 	<c:if test="${transferRoleList.getStatus() == null}">
 ${transferRoleList.getFrommanid()}
 	</c:if>

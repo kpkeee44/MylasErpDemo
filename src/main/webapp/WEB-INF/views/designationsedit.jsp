@@ -98,17 +98,23 @@
 						</div>
 					</div>
 				</div>
-
+<td><c:if test="${dsmsg.equals('Designation UpDated Successfully')}">
+         <h4 style="color: green;">${dsmsg}</h4>
+        </c:if></td>
+      <td><c:if test="${dsmsg.equals('Designation already exists.Please try Again')}">
+         <h4 style="color: red;">${dsmsg}</h4>
+        </c:if></td>
 				<div class="col-md-12 card">
 					<div class="custom_title">
 						<h2>Edit Designations</h2>
 					</div>
+					
 					<hr class="custom_line">
 					<div class="body">
 
 
 						<form
-							action="${contextRoot}/admin/empdesignation/edit/${depdetailsforedit.getDesignationId()}"
+							action="${contextRoot}/admin/designation/edit/${depdetailsforedit.getDesignationId()}"
 							method="post">
 
 							<div class="col-md-6">
@@ -117,7 +123,7 @@
 										<div class="form-line">
 											<label>Designations Name</label> <input type="text"
 												name="designationname" id="designationname"
-												class="form-control" placeholder="Designations Name">
+												class="form-control">
 										</div>
 									</div>
 								</div>

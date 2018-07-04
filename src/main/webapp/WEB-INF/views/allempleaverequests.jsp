@@ -1,9 +1,22 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+<%-- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <spring:url var="css" value="/resources/css" />
 <spring:url var="js" value="/resources/js" />
+<spring:url var="images" value="/resources/images" />
+<spring:url var="plugins" value="/resources/plugins" />
+<c:set var="contextRoot" value="${pageContext.request.contextPath}" /> --%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@page import="java.util.List"%>
+<%@page import="mylas.com.erp.demo.*"%>
+<spring:url var="css" value="/resources/css" />
+<spring:url var="js" value="/resources/js" />
+
 <spring:url var="images" value="/resources/images" />
 <spring:url var="plugins" value="/resources/plugins" />
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
@@ -45,6 +58,8 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+<link href="${css}/main.css" rel="stylesheet">
 </head>
 
 <body class="theme-indigo light layout-fixed">
@@ -95,20 +110,29 @@
 						<!-- Table Kitchen Sink -->
 						<div class="card">
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 search_leav">
-								<form action="${contextRoot}/${role}/search/register" method="post">
+								<form action="${contextRoot}/${role}/search/register"
+									method="post">
+									<div class="col-md-2 padding_col">
+
+										<div class="form-group">
+											<input type="text" id="firstname" value=""
+												class="form-control" placeholder="First Name"
+												name="firstname" />
+										</div>
+									</div>
 									<div class="col-md-2 padding_col">
 
 										<div class="form-group">
 
-											<input type="text" class="form-control"
-												placeholder="Username" name="uname" id="uname" />
+											<input type="text" id="lastname" value=""
+												class="form-control" placeholder="Last Name" name="lastname" />
 										</div>
 									</div>
 									<div class="col-md-2 padding_col">
 										<div class="form-group">
 
 											<select class="form-control" size="1" name="month" id="month">
-												<option value="">Please select</option>
+												<option value="">Select Month</option>
 												<option value="01">January</option>
 												<option value="02">February</option>
 												<option value="03">March</option>
@@ -129,11 +153,11 @@
 
 											<select class="form-control" size="1" name="status"
 												id="status">
-												<option value="">Please select</option>
+												<option value="">Select Status</option>
 												<option value="2">Pending</option>
 												<option value="1">Approved</option>
 												<option value="0">Declined</option>
-												</select>
+											</select>
 										</div>
 									</div>
 
@@ -152,7 +176,8 @@
 										<tr>
 											<th data-tablesaw-sortable-col
 												data-tablesaw-sortable-default-col
-												data-tablesaw-priority="persist">Employee</th>
+												data-tablesaw-priority="persist">Employee 
+												</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="3">
 												Leave Type</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="2">From</th>
@@ -170,14 +195,25 @@
 										</tr>
 									</thead>
 									<div class="clearfix"></div>
+									<c:if test="${Role.equals('ADMIN_ROLE')}">
+										<c:set var="role" value="admin" />
+									</c:if>
 
+									<c:if test="${Role.equals('MANAGER_ROLE')}">
+										<c:set var="role" value="manager" />
+									</c:if>
+
+									<c:if test="${Role.equals('EMPLOYEE_ROLE')}">
+										<c:set var="role" value="employee" />
+									</c:if>
 									<c:forEach items="${empleave}" var="empleaveslist">
 										<c:if test="${User.getRole().equals('MANAGER_ROLE')}">
+										<c:if test="${empleaveslist.getReferenceid()!=0}">
 											<c:set var="user" value="${User.getEid()}" />
 											<c:if test="${empleaveslist.getEmployeeid() != user}">
 												<c:if
 													test="${empleaveslist.getManagerid()==user || empleaveslist.getMantrans() == user}">
-
+														
 													<tbody>
 														<tr>
 															<td>
@@ -185,8 +221,24 @@
 																	<img src="${images}/mail/one.jpg" alt="Contact Person">
 																	<span>${empleaveslist.getEmployeeid()}</span>
 																	<div style="text-align: center"></div>
+																	<c:if test="${empleaveslist.getReferenceid()>0}">
+																		<button style="border: none; background: none;"
+																			id="${empleaveslist.getReferenceid()}"
+																			data-target="#leavehistory" data-toggle="modal"
+																			onclick="displayhistory(this.id)">
+																			<i class="material-icons">bubble_chart</i>
+																		</button>
+																	</c:if>
 																</div>
-															</td>
+															 <c:if test="${empleaveslist.getReferenceid()>0}">
+																<button style="border: none; background: none;"
+																	id="${empleaveslist.getReferenceid()}"
+																	data-target="#leavehistory" data-toggle="modal"
+																	onclick="displayhistory(this.id)">
+																	<i class="material-icons">bubble_chart</i>
+																</button>
+															</c:if>
+														</td>
 															<td>${empleaveslist.getLeavetype()}</td>
 															<td>${empleaveslist.getFromdate()}</td>
 															<td>${empleaveslist.getTodate()}</td>
@@ -205,14 +257,25 @@
 																	</c:if>
 																	<c:if test="${empleaveslist.getStatus() == false}">
 																		<button type="button"
-																			class="btn btn-primary  btn-outline btn-rounded waves-effect colorred">Declined
-																		</button>
+																			class="btn btn-primary  btn-outline btn-rounded waves-effect colorred"
+																			data-toggle="dropdown">Declined</button>
+																		<ul class="dropdown-menu pull-right">
+																			<li><a
+																				href="${contextRoot}/${role}/leavereq/edit/${empleaveslist.getId()}">
+																					Edit</a></li>
+
+																		</ul>
 																	</c:if>
 																	<c:if test="${empleaveslist.getStatus() == true}">
 																		<button type="button"
 																			class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect "
-																			aria-haspopup="true" aria-expanded="false">Approved
-																		</button>
+																			aria-haspopup="true" aria-expanded="false"
+																			data-toggle="dropdown">Approved</button>
+																		<ul class="dropdown-menu pull-right">
+																			<li><a
+																				href="${contextRoot}/${role}/leavereq/edit/${empleaveslist.getId()}">
+																					Edit</a></li>
+																		</ul>
 																	</c:if>
 																	<c:set var="eid" value="${User.getEid()}"></c:set>
 																	<c:if
@@ -220,29 +283,20 @@
 																		<c:if test="${empleaveslist.getStatus() == null}">
 
 																			<ul class="dropdown-menu bullet">
-																				<c:if test="${Role.equals('ADMIN_ROLE')}">
-																					<c:set var="role" value="admin" />
-																				</c:if>
 
-																				<c:if test="${Role.equals('MANAGER_ROLE')}">
-																					<c:set var="role" value="manager" />
-																				</c:if>
+																				<li>
+																					<button type="button"
+																						class="btn btn-primary  btn-outline btn-rounded waves-effect colorred"
+																						data-toggle="modal" data-target="#longmodal1"
+																						id="${empleaveslist.getId()}"
+																						onclick="display(this.id)">Declined</button>
 
-																				<c:if test="${Role.equals('EMPLOYEE_ROLE')}">
-																					<c:set var="role" value="employee" />
-																				</c:if>
-
-
-																					<li>
-																			<button type="button"
-																				class="btn btn-primary  btn-outline btn-rounded waves-effect colorred"
-																				data-toggle="modal" data-target="#longmodal1" id="${empleaveslist.getId()}" onclick="display(this.id)">Declined</button>
-																			
-																		</li>
-																		<li><button type="button"
-																				class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect"
-																				data-toggle="modal" data-target="#longmodal" id="${empleaveslist.getId()}" onclick="display(this.id)">Approved</button>
-																			</li>
+																				</li>
+																				<li><button type="button"
+																						class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect"
+																						data-toggle="modal" data-target="#longmodal"
+																						id="${empleaveslist.getId()}"
+																						onclick="display(this.id)">Approved</button></li>
 
 																			</ul>
 																		</c:if>
@@ -255,87 +309,109 @@
 
 													</tbody>
 												</c:if>
+												</c:if>
 											</c:if>
 										</c:if>
 										<c:if test="${User.getRole().equals('ADMIN_ROLE')}">
-											<tbody>
-												<tr>
-													<td>
-														<div class="chip">
-															<img src="${images}/mail/one.jpg" alt="Contact Person">
-															<span>${empleaveslist.getEmployeeid()}</span>
-															<div style="text-align: center"></div>
-														</div>
-													</td>
-													<td>${empleaveslist.getLeavetype()}</td>
-													<td>${empleaveslist.getFromdate()}</td>
-													<td>${empleaveslist.getTodate()}</td>
-													<td>${empleaveslist.getCount()}days</td>
-													<td>${empleaveslist.getLeavereason()}</td>
+											<c:if test="${empleaveslist.getReferenceid()!=0}">
 
-													<td>
 
-														<div class="btn-group">
 
-															<c:if test="${empleaveslist.getStatus() == null}">
-																<button type="button"
-																	class="btn btn-primary btn-outline btn-rounded waves-effect"
-																	data-toggle="dropdown" aria-haspopup="true"
-																	aria-expanded="false">Pending</button>
-															</c:if>
-															<c:if test="${empleaveslist.getStatus() == false}">
-																<button type="button"
-																	class="btn btn-primary  btn-outline btn-rounded waves-effect colorred">Declined
+												<tbody>
+													<tr>
+														<td>
+															<div class="chip">
+
+																<img src="${images}/mail/one.jpg" alt="Contact Person">
+																<span>${empleaveslist.getEmployeeid()}</span>
+																<div style="text-align: center"></div>
+															</div> <c:if test="${empleaveslist.getReferenceid()>0}">
+																<button style="border: none; background: none;"
+																	id="${empleaveslist.getReferenceid()}"
+																	data-target="#leavehistory" data-toggle="modal"
+																	onclick="displayhistory(this.id)">
+																	<i class="material-icons">bubble_chart</i>
 																</button>
 															</c:if>
-															<c:if test="${empleaveslist.getStatus() == true}">
-																<button type="button"
-																	class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect "
-																	aria-haspopup="true" aria-expanded="false">Approved
-																</button>
-															</c:if>
-															<c:set var="eid" value="${User.getEid()}"></c:set>
-															<c:if
-																test="${empleaveslist.getManagerid() == eid || empleaveslist.getMantrans() == eid}">
+														</td>
+														<td>${empleaveslist.getLeavetype()}</td>
+														<td>${empleaveslist.getFromdate()}</td>
+														<td>${empleaveslist.getTodate()}</td>
+														<td>${empleaveslist.getCount()}days</td>
+														<td>${empleaveslist.getLeavereason()}</td>
+
+														<td>
+
+															<div class="btn-group">
+
 																<c:if test="${empleaveslist.getStatus() == null}">
+																	<button type="button"
+																		class="btn btn-primary btn-outline btn-rounded waves-effect"
+																		data-toggle="dropdown" aria-haspopup="true"
+																		aria-expanded="false">Pending</button>
+																</c:if>
+																<c:if test="${empleaveslist.getStatus() == false}">
+																	<button type="button"
+																		class="btn btn-primary  btn-outline btn-rounded waves-effect colorred"
+																		data-toggle="dropdown" aria-haspopup="true"
+																		aria-expanded="false">Declined</button>
+																	<ul class="dropdown-menu pull-right">
+																		<li><a
+																			href="${contextRoot}/admin/leavereq/edit/${empleaveslist.getId()}">
+																				Edit</a></li>
 
-																	<ul class="dropdown-menu bullet">
-																		<c:if test="${Role.equals('ADMIN_ROLE')}">
-																			<c:set var="role" value="admin" />
-																		</c:if>
-
-																		<c:if test="${Role.equals('MANAGER_ROLE')}">
-																			<c:set var="role" value="manager" />
-																		</c:if>
-
-																		<c:if test="${Role.equals('EMPLOYEE_ROLE')}">
-																			<c:set var="role" value="employee" />
-																		</c:if>
-
-
-																		<li>
-																			<button type="button"
-																				class="btn btn-primary  btn-outline btn-rounded waves-effect colorred"
-																				data-toggle="modal" data-target="#longmodal1" id="${empleaveslist.getId()}" onclick="display(this.id)">Declined</button>
-																			
-																		</li>
-																		<li><button type="button"
-																				class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect"
-																				data-toggle="modal" data-target="#longmodal" id="${empleaveslist.getId()}" onclick="display(this.id)">
-</button>
-																			</li>
 
 																	</ul>
 																</c:if>
-															</c:if>
-														</div>
-													</td>
+																<c:if test="${empleaveslist.getStatus() == true}">
+																	<button type="button"
+																		class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect "
+																		data-toggle="dropdown" aria-haspopup="true"
+																		aria-haspopup="true" aria-expanded="false">Approved
+																	</button>
+																	<ul class="dropdown-menu pull-right">
+																		<li><a
+																			href="${contextRoot}/admin/leavereq/edit/${empleaveslist.getId()}">
+																				Edit</a></li>
 
 
-												</tr>
+																	</ul>
+																</c:if>
+																<c:set var="eid" value="${User.getEid()}"></c:set>
+																<c:if
+																	test="${empleaveslist.getManagerid() == eid || empleaveslist.getMantrans() == eid}">
+																	<c:if test="${empleaveslist.getStatus() == null}">
 
-											</tbody>
+																		<ul class="dropdown-menu bullet">
 
+
+																			<li>
+																				<button type="button"
+																					class="btn btn-primary  btn-outline btn-rounded waves-effect colorred"
+																					data-toggle="modal" data-target="#longmodal1"
+																					id="${empleaveslist.getId()}"
+																					onclick="display(this.id)">Declined</button>
+
+																			</li>
+																			<li><button type="button"
+																					class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect"
+																					data-toggle="modal" data-target="#longmodal"
+																					id="${empleaveslist.getId()}"
+																					onclick="display(this.id)">Approved</button>
+																				</button></li>
+
+																		</ul>
+																	</c:if>
+																</c:if>
+															</div>
+														</td>
+
+
+													</tr>
+
+												</tbody>
+
+											</c:if>
 										</c:if>
 									</c:forEach>
 
@@ -359,7 +435,8 @@
 								aria-label="Close">
 								<span aria-hidden="true">x</span>
 							</button>
-							<h4 class="modal-title" id="myModalLabel4">Long Modal</h4>
+							<h4 class="modal-title" id="myModalLabel4">Approve Leave
+								Request</h4>
 						</div>
 						<div class="modal-body">
 							<div class="long-modal">
@@ -377,8 +454,8 @@
 									<div class="clearfix"></div>
 									<div style="text-align: center;">
 										<button type="submit"
-											class="btn btn-primary btn-rounded waves-effect">Approve
-											</button>
+											class="btn btn-primary btn-rounded waves-effect">Edit
+										</button>
 									</div>
 
 
@@ -400,11 +477,12 @@
 								aria-label="Close">
 								<span aria-hidden="true">x</span>
 							</button>
-							<h4 class="modal-title" id="myModalLabel4">Long Modal</h4>
+							<h4 class="modal-title" id="myModalLabel4">Decline Leave
+								Request</h4>
 						</div>
 						<div class="modal-body">
 							<div class="long-modal">
-								<form id="form_d"  method="post">
+								<form id="form_d" method="post">
 									<div class="col-md-6">
 										<div class="form-group">
 											<div class="form-line">
@@ -429,7 +507,123 @@
 					</div>
 				</div>
 			</div>
+			<div class="modal fade" id="leavehistory" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true"
+				style="display: none">
+				<div class="modal-dialog" style="width: 70%;">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">x</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel4">Employee Leave
+								History</h4>
+						</div>
+						<div class="modal-body">
+							<div class="long-modal">
 
+								<div class="body">
+									<table
+										class="tablesaw table-striped table-bordered table-hover"
+										id="result">
+										<thead class="tableheding">
+											<div class="demo timeline-block">
+												<div class="row">
+													<div class="col-md-1 col-md-offset-3"></div>
+												</div>
+												<div class="time-bar"></div>
+												<div class="row">
+													<div class="col-md-2 col-md-offset-1">
+														<div class="timeline-date" id="frommonthandyear"></div>
+													</div>
+													<div class="col-md-1">
+														<div class="timeline2-icon bg-indigo">
+															<i class="material-icons">flag</i>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="timeline-hover">
+															<div class="timeline-heading bg-indigo">
+																<div class="timeline-arrow arrow-indigo"></div>
+																Peding Leave Request
+															</div>
+															<div class="timeline-content">
+
+																<div id="leaverequestcount"></div>
+																<div id="leaverequestfrom"></div>
+
+																<p id="leaverequestto">
+																<p id="leaveststusbyadmin">
+
+
+																	<!--  <p id="leaverequestinitialststus"></p> -->
+															</div>
+
+
+														</div>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-2 col-md-offset-1">
+														<!-- <div class="timeline-date">
+                                                    14-Mar-2017,
+                                                    <br>Sat 16:30
+                                                </div> -->
+													</div>
+													<div class="col-md-1">
+														<div class="timeline2-icon bg-red">
+															<i class="material-icons">chat</i>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="timeline-hover">
+															<div class="timeline-heading bg-red" id="leavemanagerid">
+																<div class="timeline-arrow arrow-red"></div>
+
+															</div>
+															<div class="timeline-comment">
+																<p id="leavemanagerststus"></p>
+																<p id="leavemanreason"></p>
+
+															</div>
+														</div>
+													</div>
+												</div>
+												<c:if test="${empleaveslist.getReferenceid() == 1}"></c:if>
+												<div class="row">
+													<div class="col-md-2 col-md-offset-1"></div>
+													<div class="col-md-1">
+														<div class="timeline2-icon bg-green">
+															<i class="material-icons">chat</i>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="timeline-hover">
+															<div class="timeline-heading bg-green">
+																<div class="timeline-arrow arrow-red">
+																</div>
+
+															</div>
+															<div class="timeline-comment">
+																<p id="leavemanagerststus"></p>
+																<p id="leavemanreason"></p>
+
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</section>
 		<!-- FOOTER-->
 		<footer>
@@ -458,51 +652,198 @@
 	<!-- LAYOUT JS -->
 	<script src="${js}/demo.js"></script>
 	<script src="${js}/layout.js"></script>
+	<script src="${js}/jquery.1.10.2.min.js"></script>
+	<script src="${js}/jquery.autocomplete.min.js"></script>
 
 
+	<!-- <script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 
-	<!-- 	<script type="text/javascript">
-	
-	$(document).ready(function(){
-    $("#de").click(function(){
+	<script>
+		function Search() {
+			var fname = document.getElementById("firstname").value;
+			var lname = document.getElementById("lastname").value;
+			var mon = document.getElementById("month").value;
+			var sta = document.getElementById("status").value;
+			if (fname == "" && lname == "" && mon == "" && sta == "") {
+				alert("plese Select any one of these");
+				return false;
+			}
 
-    	var abc = $("#reason").val();
-    	  
-    	 alert(abc);
-    	 
-    	var word = document.getElementById("reason").value;
-       alert(word);
-        
-    });
-});
-	
+		}
 	</script>
- -->
-
-<script>
-     function Search(){
-	 var name = document.getElementById("uname").value;
-	 var mon = document.getElementById("month").value;
-	 var sta = document.getElementById("status").value;
-	 if(name=="" && mon=="" && sta=="")
-		 {
-		 alert("plese Select any one of these");
-		 return false;
-		 }
-
-}
-  </script>
-  
-  <script type="text/javascript">
-  function display(id){
-	    document.getElementById('form_d').action = "${contextRoot}/${role}/leave/decline/"+id;
-	    document.getElementById('form_a').action = "${contextRoot}/${role}/leave/approve/"+id;
-	    }
 
 
-   
 
-  </script>
+
+	<script>
+		$(document).ready(function() {
+
+			$(".tr").css("display", "none");
+
+			$("#star").click(function() {
+				alert("plese Select any one of these");
+				$(".tr").css("display", "inline-block");
+				alert("plese Select any one of these2");
+				$(".tr").addClass("animated bounce");
+
+			});
+
+		});
+	</script>
+
+
+	<script type="text/javascript">
+		function display(id) {
+			document.getElementById('form_d').action = "${contextRoot}/${role}/leave/decline/"
+					+ id;
+			document.getElementById('form_a').action = "${contextRoot}/${role}/leave/approve/"
+					+ id;
+		}
+	</script>
+
+	<script type="text/javascript">
+		function leveHistory(id) {
+			window.location
+					.replace("${contextRoot}/${role}/leaverequests/register?leavehistory="
+							+ id);
+
+		}
+	</script>
+	<script>
+		$(document).ready(
+				function() {
+
+					$('#firstname').autocomplete(
+							{
+								serviceUrl : '${contextRoot}/getTags',
+								paramName : "firstname",
+								delimiter : ",",
+								transformResult : function(response) {
+
+									return {
+
+										suggestions : $.map($
+												.parseJSON(response), function(
+												item) {
+
+											return {
+												value : item.fname,
+												data : item.id
+											};
+										})
+
+									};
+
+								}
+
+							});
+
+				});
+	</script>
+	<script>
+		$(document).ready(
+				function() {
+
+					$('#lastname').autocomplete(
+							{
+
+								serviceUrl : '${contextRoot}/lastNames',
+								paramName : "lastname",
+								delimiter : ",",
+								transformResult : function(response) {
+
+									return {
+
+										suggestions : $.map($
+												.parseJSON(response), function(
+												item) {
+
+											return {
+												value : item.lname,
+												data : item.id
+											};
+										})
+
+									};
+
+								}
+
+							});
+
+				});
+	</script>
+	<script type="text/javascript">
+		function displayhistory(id) {
+
+			$
+					.ajax({
+						type : "POST",
+						url : "${contextRoot}/leavehistory",
+						data : "id=" + id,
+						cache : false,
+						success : function(response) {
+							//document.getElementById("result").value = response;
+
+							$('#result').html("");
+							/*  $('#leaveststusbyadmin').html("Was Sent to :"); */
+							$('#frommonthandyear').html("");
+							/*  $('#leaverequestinitialststus').html(""); */
+							/*  $('#leaverequestfrom').html("From :"); */
+							/* $('#leaverequestto').html("To :"); */
+							$('#leaverequestcount')
+									.html("A Leave Request of :");
+							$('#leavemanagerid').html("");
+							$('#leavemanagerststus').html(
+									"Leave Request Was : ");
+							$('#leavemanreason').html("With The Reason : ");
+
+							/* $('#result')
+									.html(
+											"<tr><th>Employee</th><th data-tablesaw-sortable-col data-tablesaw-priority='3'>Leave Type</th><th data-tablesaw-sortable-col data-tablesaw-priority='2'>From</th><th data-tablesaw-sortable-col data-tablesaw-priority='4'>To</th><th data-tablesaw-sortable-col data-tablesaw-priority='4'>No of Days</th><th data-tablesaw-sortable-col data-tablesaw-priority='2'>Leave Reason</th><th data-tablesaw-sortable-col data-tablesaw-priority='2'>Manager Remark</th><th data-tablesaw-sortable-col data-tablesaw-priority='4'>Status</th></tr>"); */
+							//var obj = JSON.parse(response);
+							var stat = response.status;
+
+							if (stat == true) {
+								var ststus = '<button type="button" class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect " data-toggle="dropdown" aria-haspopup="true" aria-haspopup="true" aria-expanded="false">Approved</button>';
+							} else if (stat == false) {
+								var ststus = '<button type="button" class="btn btn-primary colorred btn-outline btn-rounded waves-effect " data-toggle="dropdown" aria-haspopup="true" aria-haspopup="true" aria-expanded="false">Declined</button>';
+							}
+
+							$('#frommonthandyear').append(response.fromdate);
+							/* $('#leaveststusbyadmin').append(response.managerid); */
+							/* $('#leaverequestinitialststus').append(ststus); */
+							/* $('#leaverequestfrom').append(response.fromdate);
+							$('#leaverequestto').append(response.fromdate); */
+							$('#leaverequestcount').append(
+									+response.count + " Days From : "
+											+ response.fromdate + "<br> To :"
+											+ response.todate
+											+ " Was Sent to : "
+											+ response.managerid);
+							$('#leavemanagerid').append(response.managerid);
+							$('#leavemanagerststus').append(
+									ststus + " by " + response.managerid);
+							$('#leavemanreason').append(response.reason);
+
+							/* $('#result').append(
+									'<td style="border: 1px solid #eee"><div class="chip"><img src="${images}/mail/one.jpg" style="width: 32px;height: 32px;" alt="Contact Person"><span>' + response.employeeid + '</span><div style="text-align: center"></div></div><td style="border: 1px solid #eee">'
+											+ response.leavetype + '<td style="border: 1px solid #eee">'
+											+ response.fromdate + '<td style="border: 1px solid #eee">'
+											+ response.todate + '<td style="border: 1px solid #eee">'
+											+ response.count + ' Days<td style="border: 1px solid #eee">'
+											+ response.leavereason + '<td style="border: 1px solid #eee">'
+											+ response.reason + '<td style="border: 1px solid #eee">'
+											+ ststus); */
+
+						},
+
+					});
+
+		};
+	</script>
+
+
 </body>
 
 </html>

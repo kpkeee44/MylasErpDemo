@@ -11,10 +11,10 @@ import mylas.com.erp.demo.TblDepartment;
 public interface DepartmentDao {
 
 	
-	public void saveDepartment(TblDepartment tbl);
+	public String saveDepartment(TblDepartment tbl);
 	public List<TblDepartment> getDetails();
 	public void updateDetails(TblDepartment tbl);
 	public void deleteDetails(int id);
-	public void updateDetails(int id,String newDep, String todate);
+	public String updateDetails(int id,String newDep, String todate);
 	public TblDepartment getById(int id);
 }

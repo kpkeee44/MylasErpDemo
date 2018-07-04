@@ -23,5 +23,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Mylas/Desktop/New folder (2)/sqljdbc_6.4/enu/mssql-jdbc-6.4.0.jre9.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -28,6 +28,7 @@
 
     <!--REQUIRED THEME CSS -->
     <link href="${css}/style.css" rel="stylesheet">
+
     <link href="${css}/layout.css" rel="stylesheet">
     <link href="${css}/themes/main_theme.css" rel="stylesheet" />
 
@@ -37,7 +38,7 @@
     <!--Chat Css-->
     <link href="${plugins}/wchat/assets/css/style-light.css" rel="stylesheet">
     <link href="${plugins}/wchat/assets/css/mobile.css" rel="stylesheet" id="style">
-
+    <link href="${plugins}/wchat/assets/css/mobile.css" rel="stylesheet" id="style">
     <!-- EMOJI ONE JS -->
     <link rel="stylesheet" href="${plugins}/wchat/smiley/assets/sprites/emojione.sprites.css"/>
     <script src="${plugins}/wchat/smiley/js/emojione.min.js"></script>
@@ -67,6 +68,216 @@
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+        <link href="${css}/custom_style.css" rel="stylesheet">
+        
+        <style>
+        
+        .timeline { -
+	-uiTimelineMainColor: var(- -timelineMainColor, #222); -
+	-uiTimelineSecondaryColor: var(- -timelineSecondaryColor, #fff);
+	position: relative;
+	padding-top: 3rem;
+	padding-bottom: 3rem;
+}
+
+.timeline:before {
+	content: "";
+	width: 4px;
+	height: 100%;
+	background-color: var(- -uiTimelineMainColor);
+	position: absolute;
+	top: 0;
+}
+
+.timeline__group {
+	position: relative;
+}
+
+.timeline__group:not (:first-of-type ){
+	margin-top: 4rem;
+}
+
+.timeline__year {
+	padding: .5rem 1.5rem;
+	color: var(- -uiTimelineSecondaryColor);
+	background-color: var(- -uiTimelineMainColor);
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+.timeline__box {
+	position: relative;
+}
+
+.timeline__box:not (:last-of-type ){
+	margin-bottom: 30px;
+}
+
+.timeline__box:before {
+	content: "";
+	width: 100%;
+	height: 2px;
+	background-color: var(- -uiTimelineMainColor);
+	position: absolute;
+	left: 0;
+	z-index: -1;
+}
+
+.timeline__date {
+	min-width: 65px;
+	position: absolute;
+	left: 0;
+	box-sizing: border-box;
+	padding: .5rem 1.5rem;
+	text-align: center;
+	background-color: var(- -uiTimelineMainColor);
+	color: var(- -uiTimelineSecondaryColor);
+}
+
+.timeline__day {
+	font-size: 2rem;
+	font-weight: 700;
+	display: block;
+}
+
+.timeline__month {
+	display: block;
+	font-size: .8em;
+	text-transform: uppercase;
+}
+
+.timeline__post {
+	padding: 1.5rem 2rem;
+	border-radius: 2px;
+	border-left: 3px solid var(- -uiTimelineMainColor);
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 1px 2px 0
+		rgba(0, 0, 0, .24);
+	background-color: var(- -uiTimelineSecondaryColor);
+}
+
+@media screen and (min-width: 641px) {
+	.timeline:before {
+		left: 30px;
+	}
+	.timeline__group {
+		padding-top: 55px;
+	}
+	.timeline__box {
+		padding-left: 80px;
+	}
+	.timeline__box:before {
+		top: 50%;
+		-webkit-transform: translateY(-50%);
+		transform: translateY(-50%);
+	}
+	.timeline__date {
+		top: 50%;
+		margin-top: -27px;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	.timeline:before {
+		left: 0;
+	}
+	.timeline__group {
+		padding-top: 40px;
+	}
+	.timeline__box {
+		padding-left: 20px;
+		padding-top: 70px;
+	}
+	.timeline__box:before {
+		top: 90px;
+	}
+	.timeline__date {
+		top: 0;
+	}
+}
+
+.timeline { -
+	-timelineMainColor: #4557bb;
+	font-size: 16px;
+}
+
+@media screen and (min-width: 768px) {
+	html {
+		font-size: 62.5%;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	html {
+		font-size: 55%;
+	}
+}
+
+/*
+* demo page
+*/
+@media screen and (min-width: 768px) {
+	html {
+		font-size: 62.5%;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	html {
+		font-size: 50%;
+	}
+}
+
+
+
+p {
+	margin-top: 0;
+	margin-bottom: 1.5rem;
+	line-height: 1.5;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
+.page {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+}
+
+.page__demo {
+	flex-grow: 1;
+}
+
+.main-container {
+	max-width: 960px;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.page__container {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	max-width: 800px;
+}
+
+@media screen and (min-width: 361px) {
+	.footer__container {
+		display: flex;
+		justify-content: space-between;
+	}
+}
+
+@media screen and (max-width: 360px) {
+	.melnik909 {
+		display: none;
+	}
+}
+        </style>
 </head>
 
 <body class="theme-indigo light layout-fixed">
@@ -1581,6 +1792,68 @@
                             </div>
                         </div>
                     </div>
+                    
+                     <div class="page">
+  <div class="page__demo">
+    <div class="main-container page__container">
+      <div class="timeline">
+        <div class="timeline__group">
+          <span class="timeline__year">2008</span>
+          <div class="timeline__box">
+            <div class="timeline__date">
+              <span class="timeline__day">2</span>
+              <span class="timeline__month">Feb</span>
+            </div>
+            <div class="timeline__post">
+              <div class="timeline__content">
+                <p>Attends the Philadelphia Museum School of Industrial Art. Studies design with Alexey Brodovitch, art director at Harper's Bazaar, and works as his assistant.</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline__box">
+            <div class="timeline__date">
+              <span class="timeline__day">1</span>
+              <span class="timeline__month">Sept</span>
+            </div>
+            <div class="timeline__post">
+              <div class="timeline__content">
+                <p>Started from University of Pennsylvania. This is an important stage of my career. Here I worked in the local magazine. The experience greatly affected me</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline__group">
+          <span class="timeline__year">2014</span>
+          <div class="timeline__box">
+            <div class="timeline__date">
+              <span class="timeline__day">14</span>
+              <span class="timeline__month">Jul</span>
+            </div>
+            <div class="timeline__post">
+              <div class="timeline__content">
+                <p>Travels to France, Italy, Spain, and Peru. After completing fashion editorial in Lima, prolongs stay to make portraits of local people in a daylight studio</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="timeline__group">
+          <span class="timeline__year">2016</span>
+          <div class="timeline__box">
+            <div class="timeline__date">
+              <span class="timeline__day">28</span>
+              <span class="timeline__month">Aug</span>
+            </div>
+            <div class="timeline__post">
+              <div class="timeline__content">
+                <p>Upon moving to Brooklyn that summer, I began photographing weddings in Chicago</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
              
                   <div class="row clearfix">
                             <div class="col-md-3">

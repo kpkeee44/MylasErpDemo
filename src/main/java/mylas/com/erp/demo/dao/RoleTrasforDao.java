@@ -13,5 +13,5 @@ public interface RoleTrasforDao {
 	public void deleteDetails(int id);
 	public List<TblManRoleTransfer> viewAll();
 	public String returnToMainManager(String manid , int id);
-	public String changeMainManager(String frommanid, String tomanid);
+	public String changeMainManager(String frommanid, String tomanid, int id);
 	}

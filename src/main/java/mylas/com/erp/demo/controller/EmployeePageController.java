@@ -121,6 +121,7 @@ public class EmployeePageController {
 
 		String role = user.getRole();
 		List<TblEmpAttendanceNew> attendances =  empattreq.Search(request.getParameter("month"), request.getParameter("status"), user.getEid());
+		
 		mav.addObject("attendancelist",attendances);
 		mav.addObject("empservices", empservicesdao.list());
 		mav.addObject("Role",role);
@@ -179,14 +180,8 @@ public class EmployeePageController {
 		attedance.setManagerid(user.getManagerid());
 		attedance.setMonth(request.getParameter("month"));
 		attedance.setYear(Integer.parseInt(request.getParameter("year")));
-		emailSubject = "New Time Sheet For:"+attedance.getMonth()+" "+attedance.getYear()+"";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+attedance.getManagerid()+"On: "+new Date();
-		emailToRecipient = "krishnavarma.java@gmail.com";
-		System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		
 		
-		System.out.println("\nMessage Send Successfully.... Hurrey!\n");
 		if(attedance.getMonth().equals("January")||attedance.getMonth().equals("March")||attedance.getMonth().equals("May")||attedance.getMonth().equals("July")||attedance.getMonth().equals("August")||attedance.getMonth().equals("October")||attedance.getMonth().equals("December")) {
 			attedance.setDay29(Integer.parseInt(request.getParameter("day29")));
 			attedance.setDay30(Integer.parseInt(request.getParameter("day30")));
@@ -227,6 +222,7 @@ public class EmployeePageController {
 
 
 		mav.addObject("Role",role);
+		mav.addObject("User",user);
 		/*
 		 * Message Handling
 		 */
@@ -260,19 +256,14 @@ public class EmployeePageController {
 
 
 
-		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null);
+		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null);
 		empleave.setManagerid(user.getManagerid());
 		empleave.setEmployeeid(user.getEid());
 		empleave.setStatus(null);
 		empleavereq.save(empleave);		
 		System.out.println("Req Sent to Save");
 
-		emailSubject = "New Leave Request has sent by"+empleave.getEmployeeid()+ "From: "+empleave.getFromdate()+"To: "+empleave.getTodate()+"";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+empleave.getManagerid()+"On: "+new Date();
-		emailToRecipient = "kaparapu.praveen@gmail.com";
-		System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", "krishnavarma.java@gmail.com", emailMessage, emailSubject);
-
+	
 		List<EmpDetails> emp1 = cl.getDetails();
 		List<TblEmpLeavereq> leavereq =  empleavereq.viewbyid(user.getEid());
 		mav.addObject("employees", emp1);
@@ -282,10 +273,16 @@ public class EmployeePageController {
 		mav.addObject("empleave", leavereq);
 		mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
 		mav.addObject("Role",role);
+		emailSubject = "New Time Sheet For:";
+		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
+		emailToRecipient = "kpraveen@mylastech.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
 		return mav;
 	}
 	
-	@RequestMapping(value= "/employee/leave/search")
+	@RequestMapping(value= "/employee/leave/search",method=RequestMethod.POST)
 	 public ModelAndView empLeavePageSearch(HttpSession session,HttpServletRequest request) {
 	  Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 	  EmpDetails user=null;
@@ -303,6 +300,11 @@ public class EmployeePageController {
 	  mav.addObject("empservices", empservicesdao.list());
 	  return mav;
 	 }
+	@RequestMapping(value= "/employee/leave/search")
+	public ModelAndView empLeavePageSearch() {
+		return new ModelAndView("redirect:/employee/leave/register");
+		
+	}
 
 
 	/*

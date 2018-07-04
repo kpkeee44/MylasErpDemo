@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 14 Jun, 2018 5:15:27 PM by Hibernate Tools 5.2.8.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 27 Jun, 2018 12:27:49 PM by Hibernate Tools 5.2.8.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
     <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.Holidays" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="holidays">
-        <id name="id" type="java.lang.Integer">
-            <column name="id"/>
-            <generator class="identity"/>
-        </id>
-        <property generated="never" lazy="false" name="name" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="name"/>
-        </property>
-        <property generated="never" lazy="false" name="date" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="date"/>
-        </property>
-        <property generated="never" lazy="false" name="month" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="month"/>
-        </property>
-        <property generated="never" lazy="false" name="year" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="Year"/>
-        </property>
+        <composite-id class="mylas.com.erp.demo.HolidaysId" mapped="false" name="id" unsaved-value="undefined">
+            <key-property name="id" type="int">
+                <column name="id"/>
+            </key-property>
+            <key-property name="name" type="string">
+                <column length="50" name="name"/>
+            </key-property>
+            <key-property name="hdate" type="string">
+                <column length="30" name="hdate"/>
+            </key-property>
+        </composite-id>
     </class>
 </hibernate-mapping>

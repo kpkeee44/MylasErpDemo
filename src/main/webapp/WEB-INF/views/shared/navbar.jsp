@@ -51,9 +51,6 @@ padding : 12px;
 		<!-- START Right Navbar-->
 		<ul class="nav navbar-nav navbar-right">
 		<li><h4 class="fontname">Welcome: ${User.getFname()} ${User.getLname()}</h4></li>
-			<li><a href="#" data-search-open=""> <em
-					class="material-icons">search</em>
-			</a></li>
 			<li class="visible-lg"><a href="#" data-toggle-fullscreen="">
 					<em class="material-icons">fullscreen</em>
 			</a></li>
@@ -62,15 +59,18 @@ padding : 12px;
 			<!-- Notifications -->
 			<li class="dropdown"><a href="javascript:void(0);"
 				class="dropdown-toggle" data-toggle="dropdown" role="button"> <i
-					class="material-icons">notifications</i> <span
-					class="badge badge-success">${count}</span>
+					class="material-icons">notifications</i> 
+				<c:if test="${User.getRole().equals('MANAGER_ROLE') || User.getRole().equals('ADMIN_ROLE') }">	
+				<c:set var="user" value="${User.getEid()}" /><c:if test="${empleaveslist.getEmployeeid() != user}">
+					<span
+					class="badge badge-success">${count}</span></c:if></c:if>
 			</a>
 				<ul class="dropdown-menu">
 					<li class="header">NOTIFICATIONS</li>
 					<li class="body">
 						<ul class="menu">
 							<c:forEach items="${allempleave}" var="empleaveslist">
-								<c:if test="${User.getRole().equals('MANAGER_ROLE')}">
+								<c:if test="${User.getRole().equals('MANAGER_ROLE') || User.getRole().equals('ADMIN_ROLE') }">
 									<c:set var="user" value="${User.getEid()}" />
 									<c:if test="${empleaveslist.getEmployeeid() != user}">
 										<c:if
@@ -91,15 +91,32 @@ padding : 12px;
 
 												</a></li>
 											</c:if>
+											<%-- <c:if test="${empleaveslist.getStatus() == 1}">
+												<li class="media"><a
+													href="${contextRoot}/${role}/leaverequests/register">
+														<div class="media-left">
+															<div class="icon-circle bg-green">
+																<i class="material-icons">alarm</i>
+															</div>
+														</div>
+														<div class="media-body menu-note">
+															<p class="pull-right">20 mins</p>
+															<h4>Approved Leave Request for
+																${empleaveslist.getEmployeeid()}</h4>
+														</div>
+
+												</a></li>
+											</c:if> --%>
 										</c:if>
 									</c:if>
 								</c:if>
 							</c:forEach>
 							<c:forEach var="attlist" items="${empattendances}">
-								<c:if test="${User.getRole().equals('MANAGER_ROLE')}">
+								<c:if test="${User.getRole().equals('MANAGER_ROLE') || User.getRole().equals('ADMIN_ROLE')}">
 									<c:set var="user" value="${User.getEid()}" />
 									<c:if
 										test="${attlist.getManagerid() == user || attlist.getMantrans() == user}">
+										
 										<c:if test="${attlist.getEmpid() != user}">
 											<c:if test="${attlist.getStatas() == null}">
 												<li class="media"><a
@@ -120,32 +137,10 @@ padding : 12px;
 									</c:if>
 								</c:if>
 							</c:forEach>
-							<li class="media"><a href="#">
-									<div class="media-left">
-										<div class="icon-circle bg-green">
-											<i class="material-icons">cached</i>
-										</div>
-									</div>
-									<div class="media-body menu-note">
-										<p class="pull-right">3 days</p>
-										<h4>Server 10 is not working Properly</h4>
-									</div>
-							</a></li>
-							<li class="media"><a href="#">
-									<div class="media-left">
-										<div class="icon-circle bg-grey">
-											<i class="material-icons">settings</i>
-										</div>
-									</div>
-									<div class="media-body menu-note">
-										<p class="pull-right">5 days</p>
-										<h4>Restart your system</h4>
-									</div>
-							</a></li>
+							
 						</ul>
 					</li>
-					<li class="footer"><a href="javascript:void(0);">View All
-							Notifications</a></li>
+					
 				</ul></li>
 			<!-- #END# Notifications -->
 			<!-- Task -->
@@ -274,8 +269,8 @@ padding : 12px;
 
 					<!--  li class="header">NOTIFICATIONS</li>-->
 					<li class="header"><a href="${contextRoot}/logout">Log Out</a></li>
-					<li class="header"><a href="${contextRoot}/signout">Sign
-							Out</a></li>
+					<%-- <li class="header"><a href="${contextRoot}/signout">Sign
+							Out</a></li> --%>
 
 				</ul></li>
 			<!-- #END# Notifications -->

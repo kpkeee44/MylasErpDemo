@@ -207,7 +207,7 @@
 										<div class="form-group">
 
 											<select class="form-control" size="1" name="month" id="month">
-												<option value="">Please select</option>
+												<option value="">Select Month</option>
 												<option value="01">January</option>
 												<option value="02">February</option>
 												<option value="03">March</option>
@@ -228,7 +228,7 @@
 
 											<select class="form-control" size="1" id="status"
 												name="status">
-												<option value="">Please select</option>
+												<option value="">Select Status</option>
 												<option value="2">Pending</option>
 												<option value="1">Approved</option>
 												<option value="0">Declined</option>
@@ -236,7 +236,7 @@
 										</div>
 									</div>
 									<div class="col-md-2 ">
-										<button type="submit" 
+										<button type="submit" onclick="return Search()"
 											class="btn btn-primary  pull-right waves-effect ">
 											Search</button>
 									</div>
@@ -314,14 +314,14 @@
 															class="dropdown-toggle" data-toggle="dropdown"
 															role="button" aria-haspopup="true" aria-expanded="false">
 																<i class="material-icons">more_vert</i>
-														</a>
+														</a><c:if test="${empleaveslist.getStatus() == null}">
 															<ul class="dropdown-menu pull-right">
-																<c:if test="${empleaveslist.getStatus() == null}">
+																
 																	<li><a
 																		href="${contextRoot}/${role}/leave/delete/${empleaveslist.getId()}"><i
 																			class="material-icons">delete</i>Delete</a></li>
-																</c:if>
-															</ul></li>
+																
+															</ul></c:if></li>
 													</ul>
 												</td>
 
@@ -404,6 +404,18 @@ function Validate() {
 
 		});
 	</script>
+	<script>
+     function Search(){
+	 var mon = document.getElementById("month").value;
+	 var sta = document.getElementById("status").value;
+	 if(name=="" && mon=="" && sta=="")
+		 {
+		 alert("plese Select any one of these");
+		 return false;
+		 }
+
+}
+  </script>
 </body>
 
 </html>
