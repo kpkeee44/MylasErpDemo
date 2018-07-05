@@ -42,8 +42,7 @@ public class DesignationService implements DesignationDao {
 	@Override
 	public List<TblDesignation> getDetails() {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-
+		session.beginTransaction();		
 		Query q = session.createQuery("from TblDesignation");
 		List<TblDesignation> emp1 = q.list();
 		session.getTransaction().commit();

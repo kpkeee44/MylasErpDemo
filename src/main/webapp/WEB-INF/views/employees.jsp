@@ -96,6 +96,9 @@
 						<c:if test="${Role.equals('MANAGER_ROLE')}">
 							<c:set var="role" value="manager" />
 						</c:if>
+						<c:if test="${dupmsg.equals('This is a Duplicate Entry')}">
+									<h4 style="color: red;">${dupmsg}</h4>
+								</c:if>
 						<div class="col-md-12 card" id="addnewemp">
 							<button type="button" class="close" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
@@ -105,9 +108,7 @@
 								<c:if test="${dupmsg.equals('Employee Saved')}">
 									<h4 style="color: green;">${dupmsg}</h4>
 								</c:if>
-								<c:if test="${dupmsg.equals('This is a Duplicate Entry')}">
-									<h4 style="color: red;">${dupmsg}</h4>
-								</c:if>
+								
 								<c:if test="${empty dupmsg}">
 									<h4 style="color: red;">Employee Save Failed</h4>
 								</c:if>
@@ -366,8 +367,8 @@
 								</tr>
 							</thead>
 							<tbody>
-								<c:set var="manager" value="${User.getEid()}" />
-								<c:set var="compname" value="${User.getCompName()}" />
+							 <c:set var="manager" value="${User.getEid()}" />
+							<%-- 	<c:set var="compname" value="${User.getCompName()}" /> --%>
 
 								<c:forEach items="${employees}" var="empl">
 									<%-- <c:if test="${empl.getCompName() == compname}"> --%>
@@ -383,13 +384,9 @@
 													<a
 														href="<%=request.getContextPath()%>/${role}/allemp/register/${empl.getId()}/employeedetails">
 														<img src="${images}/mail/one.jpg" alt="Contact Person">
-														<div class="profiletitlewidth hideOverflow ">${empl.getFname()}
-															${empl.getLname()}</div>
-
+														<div class="profiletitlewidth hideOverflow ">${empl.getFname()}${empl.getLname()}</div>
 														<div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div>
-
 													</a>
-
 												</div>
 											</td>
 											<td>${empl.getEid()}</td>
@@ -638,6 +635,15 @@
 		
 	});
 	</script>
+	
+	<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $("h4").hide();
+    });
+});
+</script>
+	
 </body>
 
 </html>

@@ -176,6 +176,7 @@ public class PageController<JavaMailSender> {
 		ModelAndView mav = new ModelAndView("holidays");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		EmpDetails user=null;
+		mav.addObject("User",user);
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
@@ -187,13 +188,14 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
+		mav.addObject("User", user);
 		mav.addObject("TransferRoleList", transferrole);
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		List<Holidays> holidays = himpl.viewAll();
 		mav.addObject("HolidaysList",holidays);
 		mav.addObject("services", servicesdao.list());
-		mav.addObject("User",user);
+		
 		return mav;		
 	}
 
@@ -386,6 +388,14 @@ public class PageController<JavaMailSender> {
 		mav.addObject("services", servicesdao.list());
 		mav.addObject("User", user);
 		mav.addObject("msg",msg);
+		
+		emailSubject = "New Department For:";
+		emailMessage = "A new Department is added :"+"On: "+new Date()+"   i.e"+request.getParameter("departmentname");
+		emailToRecipient = "kpraveen@mylastech.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
+		
 		return mav;		
 	}
 
@@ -398,7 +408,7 @@ public class PageController<JavaMailSender> {
 		DesignationService depdetails = new DesignationService();
 		
 		List<TblDesignation> depts = depdetails.getDetails();
-		mav.addObject("designations", depts);
+		
 		mav.addObject("services", servicesdao.list());
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		EmpDetails user=null;
@@ -420,6 +430,16 @@ public class PageController<JavaMailSender> {
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		mav.addObject("dgmsg",dgmsg);
+		mav.addObject("User", user);
+		mav.addObject("designations", depts);
+		
+		emailSubject = "New Designation For:";
+		emailMessage = "A new Designation  has Been added :"+"On: "+new Date()+"    i.e"+request.getParameter("designationname")+"  in  "+request.getParameter("department")+" department";
+		emailToRecipient = "kpraveen@mylastech.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
+		
 		return mav;		
 	}
 
@@ -593,11 +613,11 @@ public class PageController<JavaMailSender> {
 		boolean status = true;
 		empattreq.update(status, id);
 		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "kaparapu.praveen@gmail.com";
+		emailMessage = "A new Time Sheet has Been approved :"+"On: "+new Date();
+		emailToRecipient = "kpraveen@mylastech.com";
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
-		
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
 		return mav;
 	}
 	@RequestMapping(value= "/admin/attendance/decline/{id}")
@@ -606,12 +626,12 @@ public class PageController<JavaMailSender> {
 		String reason = "Decline";
 		boolean status = false;
 		empattreq.update(status, id);
-		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "kaparapu.praveen@gmail.com";
+		emailSubject = "Time Sheet For:";
+		emailMessage = "A Time Sheet has Been declined :"+"On: "+new Date();
+		emailToRecipient = "kpraveen@mylastech.com";
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
-		
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
 		return mav;
 	}
 	@RequestMapping(value= "/admin/leave/approve/{id}")
@@ -624,12 +644,12 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empleave", leavereq);
 		mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());	
-		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new LeaveRequest For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "kaparapu.praveen@gmail.com";
+		emailSubject = "New Leave Request For:";
+		emailMessage = "A new Leave Request  has Been approved :"+"On: "+new Date();
+		emailToRecipient = "kpraveen@mylastech.com";
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
-		
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
 		return mav;
 	}
 	@RequestMapping(value= "/admin/leave/decline/{id}")
@@ -642,11 +662,12 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empleave", leavereq);
 		mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());	
-		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new LeaveRequest For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "kaparapu.praveen@gmail.com";
+		emailSubject = "Leave Request For:";
+		emailMessage = "A Leave Request has Been declined :"+"On: "+new Date();
+		emailToRecipient = "kpraveen@mylastech.com";
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
 		
 		return mav;
 	}
@@ -679,6 +700,9 @@ public class PageController<JavaMailSender> {
 		mav.addObject("TransferRoleList", transferrole);
 		String role = user.getRole();
 		mav.addObject("Role",role);
+		
+		
+		
 		String dt=request.getParameter("hdate");
 		/*String[]sdt=dt.split("-");	*/	
 		String name=request.getParameter("holiday");
@@ -688,6 +712,12 @@ public class PageController<JavaMailSender> {
 		mav.addObject("HolidaysList",holidays);
 		mav.addObject("services", servicesdao.list());
 		mav.addObject("msg",msg);
+		emailSubject = "New Holiday added for:";
+		emailMessage = "A new Holiday added :"+"On: "+new Date()+"    i.e"+name;
+		emailToRecipient = "kpraveen@mylastech.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
 		return mav;
 	}
 

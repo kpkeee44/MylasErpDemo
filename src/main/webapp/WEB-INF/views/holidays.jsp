@@ -83,7 +83,7 @@
 									<h4 style="color: red;">${msgup}</h4>
 									</c:if>
 
-
+                                 
 
 
 								<div class="col-md-6">
@@ -105,7 +105,9 @@
 						</div>
 					</div>
 				</div>
-                         <td><c:if test="${msg.equals('Holiday added successfully!....')}">
+                      
+                      
+                        <td ><c:if test="${msg.equals('Holiday added successfully!....')}">
 									<h4 style="color: green;">${msg}</h4>
 								</c:if></td>
 						<td><c:if test="${msg.equals('Holiday already exists')}">
@@ -346,12 +348,21 @@ case 5:
 case 6:
     day = "Saturday";
 }
- document.getElementById('day'+${Holiday.getId()}).innerHTML = day; 
+ document.getElementById('day'+'${Holiday.getId()}').innerHTML = day; 
 
-
+ }
 </script>
 
 	</c:forEach> 
+
+ <script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $("h4").hide();
+    });
+});
+</script>
+
 
 
 </body>

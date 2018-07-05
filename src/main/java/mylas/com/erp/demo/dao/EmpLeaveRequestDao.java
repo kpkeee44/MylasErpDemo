@@ -23,4 +23,5 @@ public interface EmpLeaveRequestDao {
 	public String updateLeave(int id, String leavetype, String fdate, String tdate, String reasion,int count,
 			String status);
 	public TblEmpLeavereq getById(int id);
+	public void EmailSend(int id,int count);
 }

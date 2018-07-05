@@ -199,7 +199,18 @@ public class EmployeePageController {
 		mav.addObject("empservices", empservicesdao.list());	
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
+		emailSubject = "New Time Sheet For:";
+		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
+		emailToRecipient = "kpraveen@mylastech.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
 		return mav;
+		
+		
+		
+		
+		
 	}
 
 	/*
@@ -234,10 +245,10 @@ public class EmployeePageController {
 
 
 		String fromdate = request.getParameter("fromdate");
-		String[] date = fromdate.split("-");
+	//	String[] date = fromdate.split("-");
 		String todate = request.getParameter("todate");
 		SimpleDateFormat formatfromdate = new SimpleDateFormat("yyyy-mm-dd");
-		Date reqfromDate = null;
+		/*Date reqfromDate = null;
 		Date reqtoDate = null;
 		try {
 			reqfromDate = formatfromdate.parse(fromdate);
@@ -245,18 +256,18 @@ public class EmployeePageController {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 		LocalDate Day1 = LocalDate.parse(fromdate);
 		LocalDate Day2 = LocalDate.parse(todate);
 
 		long daysNegative = ChronoUnit.DAYS.between(Day1, Day2);
-
-
-
-
-
-		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null);
+		int dayCount;
+		if(daysNegative>3)
+			dayCount=3;
+		else
+			dayCount=(int) (daysNegative-1);
+		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
 		empleave.setManagerid(user.getManagerid());
 		empleave.setEmployeeid(user.getEid());
 		empleave.setStatus(null);
@@ -273,8 +284,8 @@ public class EmployeePageController {
 		mav.addObject("empleave", leavereq);
 		mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
 		mav.addObject("Role",role);
-		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
+		emailSubject = "New Leave Request For:";
+		emailMessage = "A new Leave Request For Approval has Been Sent  :"+"On: "+new Date()+"\n Employee Name:  "+user.getFname()+" "+user.getLname()+"\n Employee id:"+user.getEid()+"\n  Manager:"+user.getManagerid()+"\n  Type of Absence Requested for:"+request.getParameter("leavetype")+"\n Dates of Absence: "+"\n From:"+request.getParameter("fromdate")+"                     To:"+ request.getParameter("todate");
 		emailToRecipient = "kpraveen@mylastech.com";
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);

@@ -326,6 +326,13 @@
 		});
 	</script>
 
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $("h4").hide();
+    });
+});
+</script>
 
 
 </body>

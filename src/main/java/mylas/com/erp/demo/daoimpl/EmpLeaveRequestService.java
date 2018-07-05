@@ -1,5 +1,6 @@
 package mylas.com.erp.demo.daoimpl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.TblEmpLeavereq;
+import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.appservices.GetSession;
 import mylas.com.erp.demo.dao.EmpLeaveRequestDao;
 
@@ -24,6 +26,9 @@ import mylas.com.erp.demo.dao.EmpLeaveRequestDao;
 @Repository("ers")
 public class EmpLeaveRequestService implements EmpLeaveRequestDao {
 
+	EmailSender emailsender = new EmailSender();
+
+	static String emailToRecipient, emailSubject, emailMessage;
 
 
 
@@ -353,6 +358,29 @@ return "error occured while updating";}
 			session.getTransaction().rollback();
 return "error occured while updating";}
 		
+		
+	}
+
+	@Override
+	public void EmailSend(int id, int count) {
+			// TODO Auto-generated method stub
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		TblEmpLeavereq employe = session.load(TblEmpLeavereq.class, id);
+		count=count-1;
+		employe.setDaycount(count);
+		try {
+			session.update(employe);session.getTransaction().commit();
+		}catch(Exception e){session.getTransaction().rollback();}
+			emailSubject = "New Time Sheet For:";
+			emailMessage = "A Remaindere Request For Approval has Been Sent to :"+employe.getFromdate()+"to"+employe.getTodate()+"On: "+new Date();
+			emailToRecipient ="kpraveen@mylastech.com";
+			//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+			emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+			System.out.println("send mail");
+			
+			
+	
 		
 	}
 }

@@ -47,6 +47,40 @@ padding : 12px;
 				class="visible-xs sidebar-toggle"> <em class="material-icons">menu</em>
 			</a></li>
 		</ul>
+		<%@page import="java.text.DateFormat"%>
+<%@page import="java.util.*"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Calendar" %>  
+<%@page import="mylas.com.erp.demo.daoimpl.*"%> 
+<%@page import="mylas.com.erp.demo.*"%> 
+<%@page import="java.time.LocalDate"%>
+<%@page import="java.time.temporal.ChronoUnit" %>
+<%@page import="java.time.*" %>
+<% 
+EmpLeaveRequestService tbllev=new EmpLeaveRequestService();
+List<TblEmpLeavereq> allempleave = tbllev.view();
+for(TblEmpLeavereq tbl:allempleave){
+	String date2 =tbl.getFromdate(); 
+String date1 =date2.replace('-','/');
+   SimpleDateFormat dateformat = new SimpleDateFormat ("E    yyyy.MM.dd"); //SDF to display output with day of week
+Date displaydate1=new Date(date1); //Turning the inputed date from string
+Date displaydate2=new Date();
+  int differenceInDays =(int) ((displaydate2.getTime() - displaydate1.getTime())/(1000*60*60*24));//common method to calculate number of days
+  
+   if(differenceInDays<=3&&differenceInDays>0){
+	   if(differenceInDays==tbl.getDaycount()){
+	  tbllev.EmailSend(tbl.getId(),differenceInDays);
+	   }
+  } 
+//out.println("Between " +dateformat.format(displaydate1)+ " and " +dateformat.format(displaydate2)+ " there are " +differenceInDays+ " days");
+ // tbllev.EmailSend();
+  
+}
+%>
+		
+		
+		
+		
 		<!-- END Left navbar-->
 		<!-- START Right Navbar-->
 		<ul class="nav navbar-nav navbar-right">
@@ -54,7 +88,7 @@ padding : 12px;
 			<li class="visible-lg"><a href="#" data-toggle-fullscreen="">
 					<em class="material-icons">fullscreen</em>
 			</a></li>
-
+			
 
 			<!-- Notifications -->
 			<li class="dropdown"><a href="javascript:void(0);"

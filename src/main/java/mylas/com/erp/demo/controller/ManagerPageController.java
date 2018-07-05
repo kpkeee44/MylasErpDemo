@@ -222,10 +222,10 @@ public class ManagerPageController {
 		 */
 
 		String fromdate = request.getParameter("fromdate");
-		String[] date = fromdate.split("-");
+		//String[] date = fromdate.split("-");
 		String todate = request.getParameter("todate");
 		SimpleDateFormat formatfromdate = new SimpleDateFormat("yyyy-mm-dd");
-		Date reqfromDate = null;
+		/*Date reqfromDate = null;
 		Date reqtoDate = null;
 		try {
 			reqfromDate = formatfromdate.parse(fromdate);
@@ -233,7 +233,7 @@ public class ManagerPageController {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 
 		LocalDate Day1 = LocalDate.parse(fromdate);
 		LocalDate Day2 = LocalDate.parse(todate);
@@ -244,8 +244,12 @@ public class ManagerPageController {
 		mav.addObject("User", user);
 		mav.addObject("manservices", mandao.list());	
 		mav.addObject("employees", emp1);
-
-		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null);
+		int dayCount;
+		if(daysNegative>3)
+			dayCount=3;
+		else
+			dayCount=(int) (daysNegative-1);
+		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
 
 
 		empleave.setManagerid(user.getManagerid());
@@ -257,11 +261,15 @@ public class ManagerPageController {
 			mav.addObject("empleave", leavereq);
 			System.out.println("Req Sent to Save");
 			mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
-			emailSubject = "New Leave Request has sent by"+empleave.getEmployeeid()+ "From: "+empleave.getFromdate()+"To: "+empleave.getTodate()+"";
-			emailMessage = "A new Time Sheet For Approval has Been Sent to :"+empleave.getManagerid()+"On: "+new Date();
-			emailToRecipient = "kaparapu.praveen@gmail.com";
-			System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-			//emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", "krishnavarma.java@gmail.com", emailMessage, emailSubject);
+			
+			emailSubject = "New Leave Request For:";
+			emailMessage = "A new Leave Request For Approval has Been Sent to :"+"On: "+new Date();
+			emailToRecipient = "kpraveen@mylastech.com";
+			//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+			emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+			System.out.println("send mail");
+			
+					
 			List<TblEmpLeavereq> allempleave = ers.view();
 			int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
 			List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
@@ -399,6 +407,9 @@ public class ManagerPageController {
 		List<TblEmpLeavereq> allempleave = ers.view();
 		int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
+		
+		
+			
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
@@ -407,6 +418,15 @@ public class ManagerPageController {
 		mav.addObject("User", user);
 		List<EmpDetails> emp1 = userDetails.getDetails();
 		mav.addObject("employees", emp1);
+		
+		emailSubject = "New Time Sheet For:";
+		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
+		emailToRecipient = "kpraveen@mylastech.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");
+		
+		
 		return mav;
 	}
 

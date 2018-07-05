@@ -207,7 +207,7 @@
 	<!-- LAYOUT JS -->
 	<script src="${js}/demo.js"></script>
 	<script src="${js}/layout.js"></script>
-
+<<<<<<< HEAD
 	<!-- <script>
 		alert("hai");
 		document.getElementById("leavetype").value = "${empleave.getLeavetype()}";
@@ -215,9 +215,21 @@
 		document.getElementById("todate").value = "${empleave.getTodate()}";
 		document.getElementById("leavereason").value = "${empleave.getLeavereason()}";
 	</script> -->
+	<script>
 	
+	alert("hai");
+	document.getElementById("leavetype").value = "${empleave.getLeavetype()}";
+	document.getElementById("fromdate").value = "${empleave.getFromdate()}";
+	document.getElementById("todate").value = "${empleave.getTodate()}";
+	/* document.getElementById("leavereason").value = "${empleave.getLeavereason()}";  */
+	
+	</script>
 	<script type="text/javascript">
+=======
 
+	<script>
+	
+>>>>>>> branch 'master' of https://github.com/KrishnaVarmaJava/master.git
 		function Validate() {
 			var startDate = document.getElementById("fromdate").value;
 			var endDate = document.getElementById("todate").value;
@@ -251,6 +263,9 @@
 
 		});
 	</script> -->
+<<<<<<< HEAD
+	
+=======
 	<script>
 		
 		document.getElementById("leavetype").value = "${empleave.getLeavetype()}";
@@ -258,6 +273,7 @@
 		document.getElementById("todate").value = "${empleave.getTodate()}";
 		document.getElementById("leavereason").value = "${empleave.getLeavereason()}";
 	</script>
+>>>>>>> branch 'master' of https://github.com/KrishnaVarmaJava/master.git
 </body>
 
 </html>

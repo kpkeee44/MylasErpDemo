@@ -245,7 +245,7 @@ return "error occured while updating";}
 			q = session.createQuery("from EmpDetails where department='"+department+"'AND designation='"+designation+"'");
 		}
 		else if(firstname!="") {
-			System.out.println("inside");
+		
 			q = session.createQuery("from EmpDetails where fname='"+firstname+"'");
 		}
 		else if(lastname!="") {
@@ -260,7 +260,7 @@ return "error occured while updating";}
 			
 		}
 		List<EmpDetails> empleave = q.list();
-System.out.println(empleave);
+
 		session.getTransaction().commit();
 		return (empleave);		
 	}

@@ -99,7 +99,7 @@
 						</div>
 					</div>
 				</div>
-
+<p style="color: green;" class="sub">${Submitmsg}</p>
 				<div class="col-md-12 card" id="addnewemp">
 					<button type="button" class="close" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -107,7 +107,7 @@
 					<div class="custom_title">
 						<h2>Add Leave Request</h2>
 					</div>
-					<p style="color: green;">${Submitmsg}</p>
+					
 					<p style="color: red;">${errmsg}</p>
 					<c:if test="${Role.equals('ADMIN_ROLE')}">
 						<c:set var="role" value="admin" />
@@ -416,6 +416,13 @@ function Validate() {
 
 }
   </script>
+   <script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $("p.sub").hide();
+    });
+});
+</script>
 </body>
 
 </html>
