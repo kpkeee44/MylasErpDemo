@@ -3,10 +3,15 @@ package mylas.com.erp.demo.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +34,7 @@ import mylas.com.erp.demo.TblDesignation;
 import mylas.com.erp.demo.TblEmpAttendanceNew;
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblManRoleTransfer;
+import mylas.com.erp.demo.Tblleaves;
 import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.appservices.UserServiceImpl;
 import mylas.com.erp.demo.dao.DepartmentDao;
@@ -36,6 +42,7 @@ import mylas.com.erp.demo.dao.DesignationDao;
 import mylas.com.erp.demo.dao.EmpAttendenceDao;
 import mylas.com.erp.demo.dao.EmpLeaveRequestDao;
 import mylas.com.erp.demo.dao.EmployeeDao;
+import mylas.com.erp.demo.dao.LeaveManiplication;
 import mylas.com.erp.demo.dao.ManagerServicesDao;
 import mylas.com.erp.demo.dao.RoleTrasforDao;
 import mylas.com.erp.demo.service.Client;
@@ -63,14 +70,18 @@ public class ManagerPageController {
 
 	@Autowired
 	EmpLeaveRequestDao ers;
+	
+	@Autowired
+	LeaveManiplication leave;
 
 
 
 	EmailSender emailsender = new EmailSender();
 
 	static String emailToRecipient, emailSubject, emailMessage;
-
-
+   
+	Client c = new Client();
+    
 	@RequestMapping(value= "/manager/leave/register")
 	public ModelAndView empLeavePage(HttpSession session) {
 		ModelAndView mav = new ModelAndView("empleaverequests");
@@ -237,18 +248,21 @@ public class ManagerPageController {
 
 		LocalDate Day1 = LocalDate.parse(fromdate);
 		LocalDate Day2 = LocalDate.parse(todate);
+		LocalDate Day3=new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 		long daysNegative = ChronoUnit.DAYS.between(Day1, Day2);
+		long daysNegative1 = ChronoUnit.DAYS.between(Day3, Day1);
+		System.out.println(daysNegative1);
 		List<EmpDetails> emp1 = userDetails.getDetails();
 
 		mav.addObject("User", user);
 		mav.addObject("manservices", mandao.list());	
 		mav.addObject("employees", emp1);
 		int dayCount;
-		if(daysNegative>3)
+		if(daysNegative1>3)
 			dayCount=3;
 		else
-			dayCount=(int) (daysNegative-1);
+			dayCount=(int) (daysNegative1-1);
 		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
 
 
@@ -263,11 +277,12 @@ public class ManagerPageController {
 			mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
 			
 			emailSubject = "New Leave Request For:";
-			emailMessage = "A new Leave Request For Approval has Been Sent to :"+"On: "+new Date();
-			emailToRecipient = "kpraveen@mylastech.com";
+			emailMessage = "A new Leave Request For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getFname()+" "+user.getLname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
+			emailToRecipient = c.getMail(user.getManagerid());
 			//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 			emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
 			System.out.println("send mail");
+		
 			
 					
 			List<TblEmpLeavereq> allempleave = ers.view();
@@ -296,10 +311,47 @@ public class ManagerPageController {
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
+		int a[]=ers.countSum(user.getEid());
 		mav.addObject("manservices", mandao.list());	
 		List<TblEmpLeavereq> allempleave = ers.view();
 		int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
+		List<Tblleaves> numofleaves=leave.getDetailsofleavetye();
+		
+		Map<String,Integer> using=ers.count(user.getEid());
+		Map<String,Integer> pending=new HashMap<>();
+		Set<String> keys = using.keySet();
+		Iterator itr = keys.iterator();
+		int pleave=0;
+		for(Tblleaves li:numofleaves) {
+			System.out.println(li.getLeavetype());
+			System.out.println(using);
+			while(itr.hasNext())
+	        {System.out.println("comes");
+	        System.out.println(li.getLeavetype());
+	       
+	        String key=(String) itr.next();
+	        System.out.println(key);
+		if(li.getLeavetype().equals(key) ) {
+			System.out.println(li.getNumleavedays());
+			pleave=li.getNumleavedays()-using.get(key);
+			pending.put(li.getLeavetype(), pleave);
+			
+			System.out.println(pending);}
+	        }
+			itr = keys.iterator();
+			System.out.println("hai");
+			}
+		System.out.println(pending);
+		mav.addObject("pleave",pending);
+		mav.addObject("using",using);
+		mav.addObject("nleave",numofleaves);
+		mav.addObject("medical",a[0]);
+		mav.addObject("casual",a[1]);
+		mav.addObject("sick",a[2]);
+		mav.addObject("pmedical",10-a[0]);
+		mav.addObject("pcasual",10-a[1]);
+		mav.addObject("psick",10-a[2]);
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
@@ -420,8 +472,8 @@ public class ManagerPageController {
 		mav.addObject("employees", emp1);
 		
 		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "kpraveen@mylastech.com";
+		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getFname()+" "+user.getLname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
+		emailToRecipient = c.getMail(user.getManagerid());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
 		System.out.println("send mail");
@@ -510,7 +562,11 @@ public class ManagerPageController {
 	@RequestMapping(value= "/manager/leave/approve/{id}")
 	public ModelAndView empLeaveApprovePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/manager/leaverequests/register");
-
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
 		List<TblEmpLeavereq> leavereq =  ers.view();
 		String reason = "Approved";
 		boolean status = true;
@@ -519,17 +575,21 @@ public class ManagerPageController {
 		mav.addObject("empleave", leavereq);
 		mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());
-		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "krishnavarma.java@gmail.com";
+		emailSubject = "Leave Request Status For:";
+		emailMessage = "A new Leave Request was approved :"+"On: "+new Date()+" By:  "+user.getFname()+" "+user.getLname();
+		emailToRecipient = c.getMail(user.getManagerid());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
-
+		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		return mav;
 	}
 	@RequestMapping(value= "/manager/leave/decline/{id}")
 	public ModelAndView empLeavedeclinePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/manager/leaverequests/register");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
 		List<TblEmpLeavereq> leavereq =  ers.view();
 		String reason = "Decline";
 		boolean status = false;
@@ -537,11 +597,12 @@ public class ManagerPageController {
 		mav.addObject("empleave", leavereq);
 		mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());
-		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "krishnavarma.java@gmail.com";
-		System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+		
+		emailSubject = "Leave Request Status For:";
+		emailMessage = "A new Leave Request was declined :"+"On: "+new Date()+" By:  "+user.getFname()+" "+user.getLname();
+		emailToRecipient = c.getMail(user.getManagerid());
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 
 		return mav;
 	}
@@ -553,27 +614,42 @@ public class ManagerPageController {
 	@RequestMapping(value= "/manager/attendance/approve/{id}")
 	public ModelAndView empTimesheetApprovePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/manager/employeetimesheets/register");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
 		String reason = "Approved";
 		boolean status = true;
 		attimpl.update(status, id);	
-		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "krishnavarma.java@gmail.com";
-		System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+		
+		
+		emailSubject = "Time Sheet Request Status For:";
+		emailMessage = "A new Time Sheet Request was approved :"+"On: "+new Date()+" By:  "+user.getFname()+" "+user.getLname();
+		emailToRecipient = c.getMail(user.getManagerid());
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		return mav;
 	}
 	@RequestMapping(value= "/manager/attendance/decline/{id}")
 	public ModelAndView empTimesheetdeclinePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/manager/employeetimesheets/register");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
 		String reason = "Decline";
 		boolean status = false;
 		attimpl.update(status, id);
-		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
-		emailToRecipient = "krishnavarma.java@gmail.com";
-		System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-		emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+		
+		emailSubject = "Time Sheet Request Status For:";
+		emailMessage = "A new Time Sheet Request was declined :"+"On: "+new Date()+" By:  "+user.getFname()+" "+user.getLname();
+		emailToRecipient = c.getMail(user.getManagerid());
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
+     
+		
 		return mav;
 	}
 

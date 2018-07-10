@@ -100,7 +100,7 @@
 									<h4 style="color: red;">${dupmsg}</h4>
 								</c:if>
 						<div class="col-md-12 card" id="addnewemp">
-							<button type="button" class="close" aria-label="Close">
+								<button type="button" class="close" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
 							<div class="custom_title">
@@ -382,7 +382,7 @@
 											<td>
 												<div class="chip">
 													<a
-														href="<%=request.getContextPath()%>/${role}/allemp/register/${empl.getId()}/employeedetails">
+														href="<%-- <%=request.getContextPath()%>/${role}/allemp/register/${empl.getId()}/employeedetails --%>">
 														<img src="${images}/mail/one.jpg" alt="Contact Person">
 														<div class="profiletitlewidth hideOverflow ">${empl.getFname()}${empl.getLname()}</div>
 														<div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div>

@@ -454,6 +454,7 @@ input[type=checkbox]:not(:disabled).tabbed:focus ~ .lever::after {
     background-color: #e4e4e4;
     margin-bottom: 5px;
     margin-right: 5px;
+    width:150px;
 }
 
 .chip img {

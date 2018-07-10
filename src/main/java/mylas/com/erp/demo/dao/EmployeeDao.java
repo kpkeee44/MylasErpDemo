@@ -23,4 +23,6 @@ public interface EmployeeDao {
 	 public List<EmpDetails> viewSearch(String firstname, String lastname, String department, String designation);
 	 public List<EmpDetails> simulateSearchResult(String tagName);
 	 public List<EmpDetails> simulateSearchResultLastName(String tagName);
+	 public String getMail(String mngid);
+
 }

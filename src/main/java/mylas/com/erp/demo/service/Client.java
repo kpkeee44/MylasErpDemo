@@ -303,6 +303,26 @@ return "error occured while updating";}
 		return result;
 		
 	}
+	
+	
+	@Override
+	public String getMail(String mngid) {
+		System.out.println(mngid);
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		String tomail = null;
+		Query q = session.createQuery("from EmpDetails where eid ='"+mngid+"'");
+		System.out.println(q);
+		List<EmpDetails> emp1 = q.list();
+		System.out.println(emp1);
+		for(EmpDetails user : emp1) {
+			tomail=user.getEmail();
+			session.getTransaction().commit();
+				
+			}
+		System.out.println(tomail);
+		return tomail;		
+	}
 }
 
 

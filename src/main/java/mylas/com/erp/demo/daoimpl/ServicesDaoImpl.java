@@ -58,6 +58,20 @@ public class ServicesDaoImpl implements ServicesDao{
 		service.setServiceRole("admin");
 		services.add(service);
 		
+		service = new Services();
+		service.setServiceID("leavetype");
+		service.setServiceName("Leave Types");
+		service.setServiceDescription("List Of Leave Types");
+		service.setServiceRole("admin");
+		services.add(service);
+		
+		service = new Services();
+		service.setServiceID("leavecount");
+		service.setServiceName("Leave Addition");
+		service.setServiceDescription("List Of Leave Types Addition");
+		service.setServiceRole("admin");
+		services.add(service);
+		
 	}
 	@Override
 	public List<Services> list() {

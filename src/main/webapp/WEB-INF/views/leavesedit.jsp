@@ -19,7 +19,7 @@
 	name="viewport">
 <title>Amp Demo</title>
 <!-- Favicon-->
-<link rel="icon" href="${images}/favicon.png" type="image/x-icon">
+<link rel="icon" href="${images}favicon.png" type="image/x-icon">
 
 <!--REQUIRED PLUGIN CSS-->
 <link href="${plugins}/font-awesome/css/font-awesome.min.css"
@@ -62,56 +62,39 @@
 		<section>
 			<!-- Page content-->
 			<div class="content-wrapper">
-				<div class="container-fluid">
-
-					<div class="row clearfix">
-
-						<div class=""></div>
-					</div>
-				</div>
-
+				<p style="color: red;" align="center">${msg}</p>
 				<div class="col-md-12 card" id="addnewemp">
-					<!--  <button type="button" class="close" aria-label="Close"> 
-						<span aria-hidden="true">&times;</span>
-					</button> -->
-					<div class="custom_title">
 
-						<h2>Edit Leave Request  </h2>
-						<h2>${empleave.getLeavereason()}</h2>
-					</div> 
-
-						
-					</div>
-
-					<p style="color: green;">${Submitmsg}</p>
-					<p style="color: red;">${errmsg}</p>
-					<c:if test="${Role.equals('ADMIN_ROLE')}">
-						<c:set var="role" value="admin" />
-					</c:if>
-
-					<c:if test="${Role.equals('MANAGER_ROLE')}">
-						<c:set var="role" value="manager" />
-					</c:if>
-
-					<c:if test="${Role.equals('EMPLOYEE_ROLE')}">
-						<c:set var="role" value="employee" />
-					</c:if>
-
-					<form action="${contextRoot}/${role}/leave/upload/${id}"
-						method="post" onsubmit="return Validate()" name="form">
-						<hr class="custom_line">
-						<div class="body">
-
+					<div class="body">
+						<form action="${contextRoot}/days/edit/${tblday.getId()}"
+							method="post">
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="form-line">
-										<label>Leave Type</label> <select class="form-control"
-											size="1" name="leavetype" id="leavetype" required="required">
-											<option value="">Please select</option>
-											<option value="Loss of Pay">Loss of Pay</option>
-											<option value="Casual Leave">Casual Leave 12 Days</option>
-											<option value="Medical Leave">Medical Leave</option>
-										</select>
+									<label>LeaveType</label> <input type="text" name="type"
+											id="type" class="form-control"  required="required" />
+
+
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-md-6">
+								<div class="form-group">
+									<div class="form-line">
+									<label>NumberOfDays</label> <input type="number" name="count"
+											id="count" class="form-control"  required="required" />
+
+
+									</div>
+								</div>
+							</div>
+							<!-- <div class="col-md-6">
+								<div class="form-group">
+									<div class="form-line">
+										<label>LeaveType </label> <input type="text" name="ltype"
+											id="ltype" required="required" class="form-control" />
+
 									</div>
 								</div>
 							</div>
@@ -119,8 +102,8 @@
 								<div class="form-group">
 									<div class="input-group addon-line">
 										<div class="form-line">
-											<label>From </label> <input type="date" name="fromdate"
-												id="fromdate" class="form-control" placeholder="From Date"
+											<label>NumberofDays</label> <input type="date" name="hdate"
+												id="hdate" class="form-control" placeholder="Holiday Date"
 												required="required">
 										</div>
 										<span class="input-group-addon"><i
@@ -128,65 +111,27 @@
 									</div>
 								</div>
 
-							</div>
+							</div> -->
 
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="input-group addon-line">
-										<div class="form-line">
-											<label>To </label> <input type="date" name="todate"
-												id="todate" class="form-control" placeholder="To Date"
-												required="required">
-										</div>
-										<span class="input-group-addon"><i
-											class="material-icons">date_range </i></span>
-									</div>
-								</div>
-
-							</div>
-
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="form-line">
-										<label>Leave Reason </label>
-										<input type="text" name="leavereason" id="leavereason"
-											class="form-control" rows="3" required="required">
-									</div>
-								</div>
-
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="form-line">
-										<label>Reason* </label>
-										<textarea name="reason" id="reason" class="form-control"
-											rows="3" required="required"></textarea>
-									</div>
-								</div>
-
-							</div>
-							<div class="clearfix"></div>
 							<div style="text-align: center;">
 								<button type="submit"
-									class="btn btn-primary btn-rounded waves-effect">
-									updated</button>
+									class="btn btn-primary btn-rounded waves-effect">Update
+									</button>
 							</div>
-						</div>
-					</form>
-
-					<!-- #END# Kitchen Sink -->
-
+						</form>
+					</div>
 
 				</div>
 			</div>
+			<div class="md-overlay custom-overlay"></div>
+		</section>
+		<!-- FOOTER-->
+		<footer>
+			<span>&copy; 2018 - <b class="col-blue">Amp</b></span>
+		</footer>
 	</div>
-	<div class="md-overlay custom-overlay"></div>
-	</section>
-	<!-- FOOTER-->
-	<footer>
-		<span>&copy; 2018 - <b class="col-blue">Amp</b></span>
-	</footer>
-	</div>
+
+
 	<!-- CORE PLUGIN JS -->
 	<script src="${plugins}/jquery/jquery.min.js"></script>
 	<script src="${plugins}/bootstrap/js/bootstrap.js"></script>
@@ -208,37 +153,8 @@
 	<script src="${js}/demo.js"></script>
 	<script src="${js}/layout.js"></script>
 
-	<!-- <script>
-		alert("hai");
-		document.getElementById("leavetype").value = "${empleave.getLeavetype()}";
-		document.getElementById("fromdate").value = "${empleave.getFromdate()}";
-		document.getElementById("todate").value = "${empleave.getTodate()}";
-		document.getElementById("leavereason").value = "${empleave.getLeavereason()}";
-	</script> -->
-	<!-- <script>
-	
-	alert("hai");
-	document.getElementById("leavetype").value = "${empleave.getLeavetype()}";
-	document.getElementById("fromdate").value = "${empleave.getFromdate()}";
-	document.getElementById("todate").value = "${empleave.getTodate()}";
-	/* document.getElementById("leavereason").value = "${empleave.getLeavereason()}";  */
-	
-	</script -->>
-	<script type="text/javascript">
 
-		function Validate() {
-			var startDate = document.getElementById("fromdate").value;
-			var endDate = document.getElementById("todate").value;
-
-			if (Date.parse(endDate) <= Date.parse(startDate)) {
-				alert("To date should be greater than From date");
-				fromdate.focus();
-				return false;
-			}
-		}
-	</script>
-
-	<!-- <script>
+	<!-- 	<script>
 		$(document).ready(function() {
 
 			$("#addnewemp").css("display", "none");
@@ -252,21 +168,24 @@
 			});
 
 			$(".close").click(function() {
+				alert("close!");
 				$("#addnewemp").css("display", "none");
 				$("#addnewemp").addClass("animated");
 
 			});
 
 		});
-	</script> -->
-
-	<script>
-		
-		document.getElementById("leavetype").value = "${empleave.getLeavetype()}";
-		document.getElementById("fromdate").value = "${empleave.getFromdate()}";
-		document.getElementById("todate").value = "${empleave.getTodate()}";
-		document.getElementById("leavereason").value = "${empleave.getLeavereason()}";
 	</script>
+
+ -->
+	<script type="text/javascript">
+		/* alert("${Holiday.getName()}"); */
+
+		document.getElementById("type").value = "${tblday.getLeavetype()}";
+		document.getElementById("count").value = "${tblday.getNumleavedays()}";
+	</script>
+
+
 
 </body>
 

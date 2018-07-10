@@ -116,7 +116,7 @@
 							<div class="card">
 							<table class="table empdt">
 		 <tr>
-		 <td>Username</td>
+		 <td>UserName</td>
 		 <td>:</td>
 		 <td>${User.getUname()}</td>
 		 </tr>
@@ -146,18 +146,111 @@
 		 <td>${User.getCompName()}</td>
 		 </tr>
 		  </table>
-		  </div>
+		  
+		  </div>				
+		  
 							</div>
                             </div>
                         </div>
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topbar">
+
+								<div class="col-md-6">
+									<div class="row pagetitle">
+										<span>Employee Leave Details</span>
+									</div>
+								</div>
+
+							</div>
+                        <div class="col-md-12">
+                        
+                         <table class="table tablesaw table-striped table-bordered table-hover">
+                        <tr> <th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">LeaveType
+												</th>
+												<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">TotalLeaves
+												</th>
+												<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">UsedLeaves
+												</th>
+												<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">PendingLeaves												</th></tr>
+									<c:forEach items="${nleave}" var="empleaveslist">
+									<thead class="tableheding">
+									<tbody>
+										<tr>
+											<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">${empleaveslist.getLeavetype()}
+												</th>
+										
+									</thead>
+									<div class="clearfix"></div>
+												
+													
+													
+													<!-- 	<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">Total Leaves
+												</th> -->
+															<td>${empleaveslist.getNumleavedays()}</td>
+															<c:set var="leave" value="${using}"></c:set>
+															 <td>${leave.get(empleaveslist.getLeavetype())}</td>
+															<c:set var="pleave" value="${pleave}"></c:set>
+															<td>${pleave.get(empleaveslist.getLeavetype())}</td> 
+
+														</tr>
+
+													</tbody>
+													</c:forEach>
+													<%-- <tbody>
+														<tr>
+														<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">Pending Leaves
+												</th>
+															<td>${psick}</td>
+															<td>${pcasual}</td>
+															<td>${pmedical}</td>
+														</tr>
+
+													</tbody>
+													<tbody>
+														<tr>
+														<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">Used Leaves
+												</th>
+															<td>${sick}</td>
+															<td>${casual}</td>
+															<td>${medical}</td>
+
+														</tr>
+
+													</tbody> --%>
+
+
+								</table>
+                   
+                   </div>
+                   
                     </div>
              
 							</diV>
+												
+							
+							</div>
+							
 								<!--ROW END-->
 							
-
-        </div>
+	
 		 </div>
+		
+		
     </section>
     <!-- FOOTER-->
     <footer>

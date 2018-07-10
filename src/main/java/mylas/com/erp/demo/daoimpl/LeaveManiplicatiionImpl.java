@@ -1,6 +1,8 @@
 package mylas.com.erp.demo.daoimpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.PersistenceException;
 
@@ -10,96 +12,105 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.Holidays;
+import mylas.com.erp.demo.TblEmpLeavereq;
+import mylas.com.erp.demo.Tblleaves;
+import mylas.com.erp.demo.Tblleavestype;
 import mylas.com.erp.demo.appservices.GetSession;
-import mylas.com.erp.demo.dao.HolidayDao;
+import mylas.com.erp.demo.dao.LeaveManiplication;
 
-@Repository("himpl")
-public class HolidayDaoImpl implements HolidayDao {
+@Repository("leave")
+public class LeaveManiplicatiionImpl implements LeaveManiplication {
 
 	@Override
-	public String saveHoliday(Holidays hday) {
+	public List<Tblleavestype> getDetails() {
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Query q = session.createQuery("from Tblleavestype");
+		List<Tblleavestype> leavededails = q.list();
+		session.getTransaction().commit();
+		return leavededails;
+	}
+
+	@Override
+	public String save(Tblleaves empleave) {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		try {
 			session.beginTransaction();
-			int num = (Integer) session.save(hday);
+			int num = (Integer) session.save(empleave);
 
 			if(num!=0) {
 				System.out.println("Holiday added successfully!....");
 				session.getTransaction().commit();
-				return "Holiday added successfully!....";
+				return "LeaveType added successfully!....";
 			}else {
 			
 				/*			session.getTransaction().commit();
-				 */			return "Holiday already exists";
+				 */			return "LeaveType already exists";
 			}
 
 		}catch(ConstraintViolationException e) {
 			System.out.println("Duplicate Entry");
 			session.getTransaction().rollback();
-			return "Holiday already exists";
+			return "LeaveType already exists";
 		}
-	}
+			
+		}
 
 	@Override
-	public void deleteHoliday(int id) {
+	public List<Tblleaves> getDetailsofleavetye() {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-
-		Holidays deptdel = session.load(Holidays.class, id);
-		session.delete(deptdel);
-		System.out.println("Object Deleted successfully.....!!");
-		session.getTransaction().commit(); 	
-	}
-
-	@Override
-	public List<Holidays> viewAll() {
-		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		Query q = session.createQuery("from Holidays");
-		List<Holidays> empatt = q.list();
+		Query q = session.createQuery("from Tblleaves");
+		List<Tblleaves> leavenum = q.list();
 		session.getTransaction().commit();
-		
-		return empatt;
-
+		return leavenum;
 	}
 
 	@Override
-	public String updateHOliday(int id,Holidays holiday) throws org.hibernate.exception.ConstraintViolationException {
+	public Tblleaves getDetaisById(int id) {
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Tblleaves tbldays = session.get(Tblleaves.class, id);
+		session.getTransaction().commit();
+		return tbldays;
+		
+	}
+	@Override
+	public String updateLeave(int id,Tblleaves leave) throws org.hibernate.exception.ConstraintViolationException {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		try {
 		session.beginTransaction();
-		Holidays deptdel = session.load(Holidays.class, id);
-		deptdel.setName(holiday.getName());
-		deptdel.setHdate(holiday.getHdate());
+		Tblleaves deptdel = session.load(Tblleaves.class, id);
+		deptdel.setLeavetype(leave.getLeavetype());
+		deptdel.setNumleavedays(leave.getNumleavedays());
 		session.saveOrUpdate(deptdel);
 		System.out.println("saveor updated");
 		session.getTransaction().commit();
 		System.out.println("commited");
-		return "HoliDay UpDated Successfully";
+		return "UpDated Successfully";
 		}catch(ConstraintViolationException e) {
 			System.out.println("exception");
 			session.getTransaction().rollback();
-			return "HoliDay is Already Exists.Please try Again";
+			return "LeaveType is Already Exists.Please try Again";
 		}catch(PersistenceException e){                                                       
 			System.out.println("this is PersistenceException exception throw");   
 			session.getTransaction().rollback();
-			return "HoliDay is Already Exists.Please try Again";
+			return "Leave is Already Exists.Please try Again";
          }
 	
 		
 	}
 
 	@Override
-	public Holidays getHolidayById(int id) {
+	public void deleteByid(int id) {
+		// TODO Auto-generated method stub
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Holidays deptdel = session.get(Holidays.class, id);
-		session.getTransaction().commit();
-		return deptdel;
+
+		Tblleaves ltdel = session.load(Tblleaves.class, id);
+		session.delete(ltdel);
+		System.out.println("Object Deleted successfully.....!!");
+		session.getTransaction().commit(); 	
+		
 	}
-
-
-
-
-
 }

@@ -4,6 +4,7 @@ package mylas.com.erp.demo.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
@@ -82,9 +83,16 @@ public class EmployeePageController {
 			user = ((EmpDetails)principal);
 		}
 		String role = user.getRole();
+		int a[]=empleavereq.countSum(user.getEid());
 		ModelAndView mav = new ModelAndView("useremployee");
 		mav.addObject("Role", role);
 		mav.addObject("User", user);
+		mav.addObject("medical",a[0]);
+		mav.addObject("casual",a[1]);
+		mav.addObject("sick",a[2]);
+		mav.addObject("pmedical",10-a[0]);
+		mav.addObject("pcasual",10-a[1]);
+		mav.addObject("psick",10-a[2]);
 		mav.addObject("empservices", empservicesdao.list());	
 		return mav;
 	}
@@ -260,13 +268,16 @@ public class EmployeePageController {
 
 		LocalDate Day1 = LocalDate.parse(fromdate);
 		LocalDate Day2 = LocalDate.parse(todate);
+		LocalDate Day3=new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 		long daysNegative = ChronoUnit.DAYS.between(Day1, Day2);
+		long daysNegative1 = ChronoUnit.DAYS.between(Day3, Day1);
+		System.out.println(daysNegative1);
 		int dayCount;
-		if(daysNegative>3)
+		if(daysNegative1>3)
 			dayCount=3;
 		else
-			dayCount=(int) (daysNegative-1);
+			dayCount=(int) (daysNegative1-1);
 		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
 		empleave.setManagerid(user.getManagerid());
 		empleave.setEmployeeid(user.getEid());

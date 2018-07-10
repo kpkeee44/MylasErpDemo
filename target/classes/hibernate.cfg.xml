@@ -28,5 +28,7 @@
   <mapping resource="mylas/com/erp/demo/Email.hbm.xml"/>
   <mapping resource="mylas/com/erp/demo/TblDesignation.hbm.xml"/>
   <mapping resource="mylas/com/erp/demo/TblEmpLeavereq.hbm.xml"/>
+    <mapping resource="mylas/com/erp/demo/Tblleavestype.hbm.xml"/> 
+     <mapping resource="mylas/com/erp/demo/Tblleaves.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

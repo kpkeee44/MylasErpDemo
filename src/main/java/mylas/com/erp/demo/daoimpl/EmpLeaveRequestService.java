@@ -1,6 +1,8 @@
 package mylas.com.erp.demo.daoimpl;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -8,16 +10,11 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.service.ServiceRegistry;
 import org.springframework.stereotype.Repository;
 
-import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.TblEmpLeavereq;
+import mylas.com.erp.demo.Tblleaves;
 import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.appservices.GetSession;
 import mylas.com.erp.demo.dao.EmpLeaveRequestDao;
@@ -377,10 +374,73 @@ return "error occured while updating";}
 			emailToRecipient ="kpraveen@mylastech.com";
 			//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 			emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
-			System.out.println("send mail");
-			
-			
-	
-		
+			System.out.println("send mail");	
 	}
+	@Override
+	public int[] countSum(String eid) {
+		
+		int countcasual=0,countmedical=0,countsick=0;
+		List<TblEmpLeavereq> empleave=this.view();
+		/*Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Query q =session.createQuery("from TblEmpLeavereq");
+		List<TblEmpLeavereq> empleave = q.list();*/
+		
+		for(TblEmpLeavereq  tbl:empleave)
+		{
+					if(tbl.getLeavetype().equals("Medical Leave") &&tbl.getEmployeeid().equals(eid) ) {		
+						countmedical=countmedical+tbl.getCount();}
+					else if(tbl.getLeavetype().equals("Casual Leave") &&tbl.getEmployeeid().equals(eid))	
+				countcasual=countcasual+tbl.getCount();
+					else if(tbl.getLeavetype().equals("Loss of Pay") &&tbl.getEmployeeid().equals(eid))	
+						countsick=countsick+tbl.getCount();
+		}
+		 int[] sum = new int[]{countmedical,countcasual,countsick}; 
+		//countleave[0]=countmedical;countleave[1]=countcasual;
+		System.out.println(countmedical);System.out.println(countcasual);
+		/*session.getTransaction().commit();*/
+	return sum;	
+	}
+	
+	
+	public Map count() {
+		Map leavecount = new HashMap();
+		List<TblEmpLeavereq> empleave=this.view();
+		LeaveManiplicatiionImpl leave = new LeaveManiplicatiionImpl();
+		List<Tblleaves> leavesCount = leave.getDetailsofleavetye();
+		for(Tblleaves leavename:  leavesCount) {
+			int count= 0;
+		for(TblEmpLeavereq leaves: empleave) {
+			
+			if(leaves.getLeavetype().equals(leavename.getLeavetype())) {
+				count= count + leaves.getCount();
+			}
+			leavecount.put(leavename.getLeavetype(), count);	
+			}
+		}
+		return leavecount;
+	}
+
+	@Override
+	public Map count(String eid) {
+		Map leavecount = new HashMap();
+		List<TblEmpLeavereq> empleave=this.view();
+		LeaveManiplicatiionImpl leave = new LeaveManiplicatiionImpl();
+		List<Tblleaves> leavesCount = leave.getDetailsofleavetye();
+		for(Tblleaves leavename:  leavesCount) {
+			int count= 0;
+		for(TblEmpLeavereq leaves: empleave) {
+			if(leaves.getLeavetype().equals(leavename.getLeavetype())) {
+				if(leaves.getEmployeeid().equals(eid))
+				count= count + leaves.getCount();
+			}
+			leavecount.put(leavename.getLeavetype(), count);	
+			}
+		}
+		
+		System.out.println(leavecount);
+		System.out.println("hi");
+		return leavecount;
+	}
+	
 }

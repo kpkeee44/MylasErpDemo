@@ -59,11 +59,30 @@
 		<%@include file="shared/offslidebar.jsp"%>
 		<!-- Main section-->
 		<section>
+					
 			<!-- Page content-->
 			<div class="content-wrapper">
-				<div class="page-header">
-					<h2>Employee</h2>
+				<div class="container-fluid">
+
+					<div class="row clearfix">
+
+						<div class="">
+
+
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topbar">
+
+								<div class="col-md-6">
+									<div class="row pagetitle">
+										<span>Employee Details</span>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
 				</div>
+				
 			
 
 				<div class="col-md-12">
@@ -86,7 +105,7 @@
 						<div class="card">
 							<table class="table empdt">
 								<tr>
-									<td>Username</td>
+									<td>UserName</td>
 									<td>:</td>
 									<td>${employee.getUname()}</td>
 								</tr>
@@ -116,11 +135,104 @@
 									<td>${employee.getCompName()}</td>
 								</tr>
 							</table>
+							
+							
+						</div>
+						
+					</div>
+					 
+            
+            
+            
+            
+					
+				
+				
+			</div>
+			<div class="content-wrapper">
+				<div class="container-fluid">
+
+					<div class="row clearfix">
+
+						<div class="">
+
+
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 topbar">
+
+								<div class="col-md-6">
+									<div class="row pagetitle">
+										<span>Employee Leave Details</span>
+									</div>
+								</div>
+
+							</div>
+
 						</div>
 					</div>
 				</div>
-			</div>
+										  				<table class="tablesaw table-striped table-bordered table-hover">
+									<thead class="tableheding">
+										<tr>
+										<th></th>
+											<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">Loss of Pay
+												</th>
+											<th data-tablesaw-sortable-col data-tablesaw-priority="3">
+												Casual Leaves</th>
+											<th data-tablesaw-sortable-col data-tablesaw-priority="2">Medical Leaves</th>
+
+										</tr>
+									</thead>
+									<div class="clearfix"></div>
+												
+													<tbody>
+														<tr>
+														<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">Total Leaves
+												</th>
+															<td>10</td>
+															<td>10</td>
+															<td>10</td>
+
+														</tr>
+
+													</tbody>
+													<tbody>
+													<c:set var="count" value="${sick}"></c:set>
+													
+														<tr>
+														<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">Pending Leaves
+												</th>
+															<td>${psick}</td>
+															<td>${pcasual}</td>
+															<td>${pmedical}</td>
+
+														</tr>
+
+													</tbody>
+													<tbody>
+														<tr>
+														<th data-tablesaw-sortable-col
+												data-tablesaw-sortable-default-col
+												data-tablesaw-priority="persist">Used Leaves
+												</th>
+															<td>${sick}</td>
+															<td>${casual}</td>
+															<td>${medical}</td>
+
+														</tr>
+
+													</tbody>
+
+
+								</table>
+			
 		</div>
+		
 	</section>
 	<!-- FOOTER-->
 	<footer>

@@ -25,6 +25,7 @@ margin-bottom: 30px;
    
 }
 
+
 .pagetitle 
 {	
 	padding: 10px;
@@ -114,7 +115,8 @@ background:none;
 {
 	font-size:10px;
 	text-align:center;
-	
+	position: relative;
+    top: 25px;
 	
 }
 .card .body .col-xs-6, .card .body .col-sm-6, .card .body .col-md-6, .card .body .col-lg-6 {
@@ -131,6 +133,7 @@ background:none;
 {
 	    width: 120px;
     display: inline;
+    position: absolute;
 	
 	}
 .colorred

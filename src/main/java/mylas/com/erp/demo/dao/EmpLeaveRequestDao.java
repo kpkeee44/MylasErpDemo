@@ -1,6 +1,7 @@
 package mylas.com.erp.demo.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import mylas.com.erp.demo.TblEmpLeavereq;
 
@@ -24,4 +25,6 @@ public interface EmpLeaveRequestDao {
 			String status);
 	public TblEmpLeavereq getById(int id);
 	public void EmailSend(int id,int count);
+	public int[] countSum(String eid);
+	public Map count(String eid);
 }

@@ -66,11 +66,11 @@ String date1 =date2.replace('-','/');
 Date displaydate1=new Date(date1); //Turning the inputed date from string
 Date displaydate2=new Date();
   int differenceInDays =(int) ((displaydate2.getTime() - displaydate1.getTime())/(1000*60*60*24));//common method to calculate number of days
-  
-   if(differenceInDays<=3&&differenceInDays>0){
-	   if(differenceInDays==tbl.getDaycount()){
+   if((differenceInDays<=3) && (differenceInDays>0)){
+	   if(tbl.getDaycount()!=null)
+	    if(differenceInDays==tbl.getDaycount()){ 
 	  tbllev.EmailSend(tbl.getId(),differenceInDays);
-	   }
+	   } 
   } 
 //out.println("Between " +dateformat.format(displaydate1)+ " and " +dateformat.format(displaydate2)+ " there are " +differenceInDays+ " days");
  // tbllev.EmailSend();

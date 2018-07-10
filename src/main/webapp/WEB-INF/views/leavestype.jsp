@@ -73,90 +73,75 @@
 
 								<div class="col-md-6">
 									<div class="row pagetitle">
-										<span> Holidays </span>
+										<span>Leave Type</span>
 									</div>
 								</div>
-									<c:if test="${msgup.equals('HoliDay UpDated Successfully')}">
-									<h4 style="color: green;">${msgup}</h4>
-								</c:if>
-								<c:if test="${msgup.equals('HoliDay is notUpdated.Please try Again')}">
-									<h4 style="color: red;">${msgup}</h4>
-									</c:if>
-
-                                 
-
-
 								<div class="col-md-6">
 									<div class="row pagetitle">
 										<span class="pull-right">
-											<button type="button" id="addnew"
-												class="btn btn-primary btn-rounded waves-effect">Add
-												New Holiday</button>
+											<button type="button" id="addnew1" class="btn btn-primary btn-rounded waves-effect">Add
+												Leave Type</button>
 										</span>
 									</div>
 								</div>
-
-
-								<div></div>
-
 
 							</div>
 
 						</div>
 					</div>
 				</div>
-                      
-                      
-                        <td ><c:if test="${msg.equals('Holiday added successfully!....')}">
+				
+				   <td ><c:if test="${msg.equals('leavetype added successfully!....')}">
 									<h4 style="color: green;">${msg}</h4>
 								</c:if></td>
-						<td><c:if test="${msg.equals('Holiday already exists')}">
+						<td><c:if test="${msg.equals('Entered Leavetype already exists')}">
 									<h4 style="color: red;">${msg}</h4>
 								</c:if></td>
-								
-				<div class="col-md-12 card" id="addnewemp">
-
+				
+				
+				<div class="col-md-12 card animated bounce" id="addnewemp">
 					<button type="button" class="close" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
+						<span aria-hidden="true">×</span>
 					</button>
-					<div class="body">
-						<form action="${contextRoot}/admin/empholidays/register"
-							method="post">
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="form-line">
-										<label>Holiday Name </label> <input type="text" name="holiday"
-											id="holiday" class="form-control" required="required" />
+					
+					
+					<p style="color: red;">${errmsg}</p>
+					<c:if test="${Role.equals('ADMIN_ROLE')}">
+						<c:set var="role" value="admin" />
+					</c:if>
 
+				<%-- 	<c:if test="${Role.equals('MANAGER_ROLE')}">
+						<c:set var="role" value="manager" />
+					</c:if>
 
+					<c:if test="${Role.equals('EMPLOYEE_ROLE')}">
+						<c:set var="role" value="employee" />
+					</c:if> --%>
+
+					<form action="${contextRoot}/${role}/leavetype/register" method="post"
+						 name="form">
+						
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 search_leav">
+								<div class="col-md-6 padding_col">
+									<div class="form-group">
+										<input type="text" class="form-control" id="leavetype"
+											placeholder="Enter leavetype" name="leavetype" value=""/>
 									</div>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<div class="input-group addon-line">
-										<div class="form-line">
-											<label>Holiday Date</label> <input type="date" name="hdate"
-												id="hdate" class="form-control" placeholder="Holiday Date"
-												required="required">
-										</div>
-										<span class="input-group-addon"><i
-											class="material-icons">date_range </i></span>
-									</div>
-								</div>
-
-							</div>
-
-							<div style="text-align: center;">
 								<button type="submit"
-									class="btn btn-primary btn-rounded waves-effect">Create
-									Holiday</button>
+									class="btn btn-primary btn-rounded waves-effect">Submit</button>
+												
 							</div>
-						</form>
+							
+							<div  class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+								
+							</div>
+							</form>
+						</div>
 					</div>
-
-				</div>
-				<div class="row clearfix">
+					
+					
+					<div class="row clearfix">
 
 
 					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -170,12 +155,10 @@
 								<table class="tablesaw table-striped table-bordered table-hover">
 									<thead class="tableheding">
 										<tr>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="3">Title
+											<th data-tablesaw-sortable-col data-tablesaw-priority="3">Leave Type
 											</th>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="2">Holiday
-												Date</th>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="4">Day
-											</th>
+											
+											
 											<th data-tablesaw-sortable-col data-tablesaw-priority="1"
 												class="actiontabel">Action</th>
 
@@ -183,11 +166,10 @@
 									</thead>
 									<div class="clearfix"></div>
 									<tbody>
-										<c:forEach items="${HolidaysList}" var="Holiday">
+										<c:forEach items="${leavetypeslist}" var="leavetypes">
 											<tr>
-												<td>${Holiday.getName()}</td>
-												<td>${Holiday.getHdate()}</td>
-												<td id="day${Holiday.getId()}"></td>
+												<td>${leavetypes.getLeavetype()}</td>
+											
 												<td>
 													<ul class="tabelaction">
 														<li class="dropdown"><a href="javascript:void(0);"
@@ -197,10 +179,10 @@
 														</a>
 															<ul class="dropdown-menu pull-right">
 																<li><a
-																	href="${contextRoot}/holidays/edit/${Holiday.getId()}"><i
+																	href="${contextRoot}/admin/leavetype/edit/${leavetypes.getId()}"><i
 																		class="material-icons">edit</i>Edit</a></li>
 																<li><a
-																	href="${contextRoot}/holidays/delete/${Holiday.getId()}"><i
+																	href="${contextRoot}/admin/leavetype/delete/${leavetypes.getId()}"><i
 																		class="material-icons">delete</i>Delete</a></li>
 
 															</ul></li>
@@ -218,12 +200,20 @@
 
 					</div>
 				</div>
-			</div>
+			
+			
+
+				
+				
+				
+				
+				
+			
 			<div class="md-overlay custom-overlay"></div>
 		</section>
 		<!-- FOOTER-->
 		<footer>
-			<span>&copy; 2018 - <b class="col-blue">Amp</b></span>
+			<span>© 2018 - <b class="col-blue">Amp</b></span>
 		</footer>
 	</div>
 
@@ -250,118 +240,23 @@
 	<script src="${js}/layout.js"></script>
 
 
-	<script>
-		$(document).ready(function() {
+	<!-- <script type="text/javascript">
+		/ alert("${Holiday.getName()}"); /
 
-			$("#addnewemp").css("display", "none");
+		document.getElementById("holiday").value = "${Holiday.getName()}";
+		document.getElementById("hdate").value = "${Holiday.getHdate()}";
+	</script> -->
 
-			$("#addnew").click(function() {
-
-				$("#addnewemp").css("display", "block");
-				$("#addnewemp").addClass("animated bounce");
-				$("this").css("display", "none")
-
-			});
-
-			$(".close").click(function() {
-
-				$("#addnewemp").css("display", "none");
-				$("#addnewemp").addClass("animated");
-
-			});
-
-		});
-	</script>
-
-	<c:forEach items="${HolidaysList}" var="Holiday">
-		<script type="text/javascript">
-		var input = '${Holiday.getHdate()}';
-var fields = input.split('-');
-		
-var date = fields[2];
-var month1 = fields[1];
-var year = fields[0];
-
-switch (month1) {
-case "01":
-	month = "0";
-    break;
-case "02":
-	month = "1";
-    break;
-case "03":
-	month = 2;
-    break;
-case "04":
-	month = "3";
-    break;
-case "05":
-	month = "4";
-    break;
-case "06":
-	month = 5;
-	break;
-case "07":
-	month = "6";
-	break;
-case "08":
-	month = "7";
-	break;
-case "09":
-	month = "8";
-	break;
-case "10":
-	month = "9";
-	break;
-case "11":
-	month = "10";
-	break;
-case "12":
-	month = "11";
-}
-
-var date = new Date(year, month, date);
-
-var day1 = date.getDay();
-
-switch (day1) {
-case 0:
-    day = "Sunday";
-    break;
-case 1:
-    day = "Monday";
-    break;
-case 2:
-    day = "Tuesday";
-    break;
-case 3:
-    day = "Wednesday";
-    break;
-case 4:
-    day = "Thursday";
-    break;
-case 5:
-    day = "Friday";
-    break;
-case 6:
-    day = "Saturday";
-}
-
- document.getElementById('day'+'${Holiday.getId()}').innerHTML = day; 
-
-</script>
-
-	</c:forEach> 
-
- <script>
-$(document).ready(function(){
-    $("button").click(function(){
-        $("h4").hide();
-    });
+<script>
+$(".close").click(function(){
+	$("#addnewemp").css("display","none");
+	
+	
+});
+$("#addnew1").click(function(){
+	$("#addnewemp").css("display","block");
 });
 </script>
-
-
 
 </body>
 
