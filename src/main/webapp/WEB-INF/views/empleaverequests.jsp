@@ -131,10 +131,12 @@
 									<div class="form-line">
 										<label>Leave Type</label> <select class="form-control"
 											size="1" name="leavetype" id="leavetype" required="required">
-											<option value="">Please select</option>
-											<option value="Loss of Pay">Loss of Pay</option>
-											<option value="Casual Leave">Casual Leave 12 Days</option>
-											<option value="Medical Leave">Medical Leave</option>
+											<option value="">PleaseSelect</option>
+											<c:forEach items="${nleave}" var="nleave">
+											<option value="${nleave.getLeavetype()}">${nleave.getLeavetype()}</option>
+											</c:forEach>
+											<!-- <option value="Casual Leave">Casual Leave 12 Days</option>
+											<option value="Medical Leave">Medical Leave</option> -->
 										</select>
 									</div>
 								</div>

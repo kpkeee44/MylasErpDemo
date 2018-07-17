@@ -403,7 +403,7 @@ return "error occured while updating";}
 	}
 	
 	
-	public Map count() {
+	/*public Map count() {
 		Map leavecount = new HashMap();
 		List<TblEmpLeavereq> empleave=this.view();
 		LeaveManiplicatiionImpl leave = new LeaveManiplicatiionImpl();
@@ -420,18 +420,21 @@ return "error occured while updating";}
 		}
 		return leavecount;
 	}
-
+*/
 	@Override
 	public Map count(String eid) {
 		Map leavecount = new HashMap();
-		List<TblEmpLeavereq> empleave=this.view();
+		/*List<TblEmpLeavereq> empleave=this.view();
 		LeaveManiplicatiionImpl leave = new LeaveManiplicatiionImpl();
 		List<Tblleaves> leavesCount = leave.getDetailsofleavetye();
 		for(Tblleaves leavename:  leavesCount) {
 			int count= 0;
 		for(TblEmpLeavereq leaves: empleave) {
+			if(leaves.getStatus()!=null)
+				if(leaves.getStatus())
 			if(leaves.getLeavetype().equals(leavename.getLeavetype())) {
 				if(leaves.getEmployeeid().equals(eid))
+					if(leaves.getStatus())
 				count= count + leaves.getCount();
 			}
 			leavecount.put(leavename.getLeavetype(), count);	
@@ -439,7 +442,7 @@ return "error occured while updating";}
 		}
 		
 		System.out.println(leavecount);
-		System.out.println("hi");
+		System.out.println("hi");*/
 		return leavecount;
 	}
 	

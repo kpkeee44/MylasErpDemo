@@ -148,13 +148,13 @@
 											required="required">
 											<option value="">Please select</option>
 											<c:forEach items="${departments}" var="deper">
-												<option value="${deper.getDepartment()}">${deper.getDepartment()}</option>
+												<option value="${deper.getDepartmentname()}">${deper.getDepartmentname()}</option>
 											</c:forEach>
 										</select>
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
+							<!-- <div class="col-md-6">
 
 								<div class="form-group">
 									<div class="input-group addon-line">
@@ -168,7 +168,7 @@
 									</div>
 								</div>
 
-							</div>
+							</div> -->
 							<div class="clearfix"></div>
 							<div style="text-align: center;">
 								<button type="submit"
@@ -190,6 +190,7 @@
 
 
 
+
 						<!-- Table Kitchen Sink -->
 						<div class="card">
 
@@ -200,8 +201,8 @@
 
 											<th data-tablesaw-sortable-col data-tablesaw-priority="3">Designation</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="4">Department</th>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="4">From</th>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="4">To</th>
+											<!-- <th data-tablesaw-sortable-col data-tablesaw-priority="4">From</th>
+											<th data-tablesaw-sortable-col data-tablesaw-priority="4">To</th> -->
 											<th data-tablesaw-sortable-col data-tablesaw-priority="4">Active
 												State</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="1"
@@ -220,20 +221,20 @@
 
 											<tr>
 												<td>${desig.getDesignation()}</td>
-												<td>${desig.getDepartment()}</td>
-												<td>${desig.getFromdate()}</td>
-												<c:if test="${desig.getTodate() == null}">
+												<td>${desig.getDepartmentname()}</td>
+												<%-- <td>${desig.getCreateddate()}</td> --%>
+												<%-- <c:if test="${desig.getTodate() == null}">
 													<td>--/--/--</td>
 												</c:if>
 												<c:if test="${desig.getTodate() != null}">
 													<td>${desig.getTodate()}</td>
-												</c:if>
-												<c:if test="${desig.getActivestate() == true}">
+												</c:if>--%>
+												<c:if test="${desig.getIsactive() == true}">
 													<td><i class="${green}"></i></td>
 												</c:if>
-												<c:if test="${desig.getActivestate() == false}">
+												<c:if test="${desig.getIsactive() == false}">
 													<td><i class="${red}"></i></td>
-												</c:if>
+												</c:if> 
 
 												<td>
 													<ul class="tabelaction">
@@ -241,23 +242,23 @@
 															class="dropdown-toggle" data-toggle="dropdown"
 															role="button" aria-haspopup="true" aria-expanded="false">
 																<i class="material-icons">more_vert</i>
-														</a><c:if test="${desig.getActivestate() == true}">
+														</a><%-- <c:if test="${desig.getIsactive() == true}"> --%>
 															<ul class="dropdown-menu pull-right">
 																<li><a
-																	href="${contextRoot}/${role}/designation/edit/${desig.getDesignationId()}"><i
+																	href="${contextRoot}/${role}/designation/edit/${desig.getDesignationid()}"><i
 																		class="material-icons">edit</i>Edit</a></li>
-																<li><a
-																	href="${contextRoot}/${role}/designations/delete/${desig.getDesignationId()}"><i
-																		class="material-icons">delete</i>Delete</a></li>
+																<%-- <li><a onclick="return ConfirmDelete()"
+																	href="${contextRoot}/${role}/designations/delete/${desig.getDesignationid()}"><i
+																		class="material-icons">delete</i>Delete</a></li> --%>
 
-															</ul></c:if>
-															<c:if test="${desig.getActivestate() != true}">
+															</ul><%-- </c:if> --%>
+															<%-- <c:if test="${desig.getIsactive() != true}">
 															<ul class="dropdown-menu pull-right">
-																<li><a
-																	href="${contextRoot}/${role}/designations/delete/${desig.getDesignationId()}"><i
+																<li><a onclick="return ConfirmDelete()"
+																	href="${contextRoot}/${role}/designations/delete/${desig.getDesignationid()}"><i
 																		class="material-icons">delete</i>Delete</a></li>
 
-															</ul></c:if> </li>
+															</ul></c:if> --%> </li>
 													</ul>
 												</td>
 
@@ -333,7 +334,16 @@ $(document).ready(function(){
     });
 });
 </script>
-
+<script>
+function ConfirmDelete()
+{
+  var x = confirm("Are you sure you want to delete?");
+  if (x)
+      return true;
+  else
+    return false;
+}
+</script>
 
 </body>
 

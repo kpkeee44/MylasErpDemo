@@ -50,6 +50,20 @@
     <![endif]-->
 
 <style>
+.load{
+width: 10%;
+    /* height: 500px; */
+    /* margin: 0 auto; */
+    position: absolute;
+    /* z-index: 9; */
+    /* text-align: -webkit-match-parent; */
+    display: block;
+    margin-left: 50%;
+    /* margin-right: 10%; */
+    z-index: 9;
+    margin: 10% 50%;
+    display:none;
+    }
 .icn {
 	font-size: 20px;
 	color: #428bca;
@@ -61,6 +75,7 @@
 
 <body class="theme-indigo light layout-fixed">
 	<div class="wrapper">
+	<img src="http://gifimage.net/wp-content/uploads/2018/04/loading-gif-blue-4.gif" class="load">
 		<!-- top navbar-->
 		<!-- top navbar-->
 		<header class="topnavbar-wrapper">
@@ -111,7 +126,32 @@
 									</div>
 								</div>
 							</div>
-							
+							<div class="col-md-8 col-xs-8">
+                                            <ul class="list-inline">
+                                                <li class="eagle-checkbox">
+                                                    <label class="eagle-check custom-radio">
+                                                        <input id="active1" name="active" value="true" type="radio" class="eagle-check-input" >
+                                                        <span class="eagle-check-indicator"></span>
+                                                        <span class="eagle-check-description">Active</span>
+                                                    </label>
+                                                </li>
+                                                <li class="eagle-checkbox">
+                                                    <label class="eagle-check custom-radio">
+                                                        <input id="active" name="active" value="false" type="radio" class="eagle-check-input">
+                                                        <span class="eagle-check-indicator"></span>
+                                                        <span class="eagle-check-description">InActive</span>
+                                                    </label>
+                                                </li>
+                                               
+                                            </ul>
+                                        </div>
+						
+											
+           
+								
+       <input type="radio" name="main-categories" id="_2345" value="2345" /> 
+<input type="radio" name="main-categories" id="_3456" value="3456" /> 
+            
 							<div class="clearfix"></div>
 							<div style="text-align: center;">
 								<button type="submit"
@@ -121,15 +161,11 @@
 						</div>
 					</form>
 				</div>
-
-
-
-
-
-
 			</div>
 	</div>
 	</div>
+	
+								
 	<div class="md-overlay custom-overlay"></div>
 	</section>
 	<!-- FOOTER-->
@@ -169,8 +205,11 @@
  
  %> --%>
 	<script type="text/javascript">
-		
+		var active=${leavestypeedit.getIsactive()};
 		document.getElementById("leavetype").value = "${leavestypeedit.getLeavetype()}";
+		
+		if(active==true)
+		document.getElementById("active1").value = "${leavestypeedit.getIsactive()}";
 		
 	</script>
 

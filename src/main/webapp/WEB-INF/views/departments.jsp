@@ -238,14 +238,14 @@
 															<ul class="dropdown-menu pull-right">
 																<li><a href="${contextRoot}/${role}/departments/edit/${dep.getDepartmentId()}"><i
 																		class="material-icons">edit</i>Edit</a></li>
-																<li><a
+																<li><a Onclick="return ConfirmDelete()"
 																	href="${contextRoot}/${role}/departments/delete/${dep.getDepartmentId()}"><i
 																		class="material-icons">delete</i>Delete</a></li>
 
 															</ul></c:if>
 															<c:if test="${dep.getActivestate() != true}">
 															<ul class="dropdown-menu pull-right">
-																<li><a
+																<li><a Onclick="return ConfirmDelete()"
 																	href="${contextRoot}/${role}/departments/delete/${dep.getDepartmentId()}"><i
 																		class="material-icons">delete</i>Delete</a></li>
 
@@ -294,7 +294,16 @@
 	<!-- LAYOUT JS -->
 	<script src="${js}/demo.js"></script>
 	<script src="${js}/layout.js"></script>
-
+<script>
+function ConfirmDelete()
+{
+  var x = confirm("Are you sure you want to delete?");
+  if (x)
+      return true;
+  else
+    return false;
+}
+</script>
 
 
 <script>
@@ -326,6 +335,7 @@ $(document).ready(function(){
     });
 });
 </script>
+
 
 </body>
 

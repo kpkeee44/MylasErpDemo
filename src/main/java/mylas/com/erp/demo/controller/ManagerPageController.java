@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import mylas.com.erp.demo.EmpDetails;
+import mylas.com.erp.demo.LeaveAddition;
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.TblDesignation;
 import mylas.com.erp.demo.TblEmpAttendanceNew;
@@ -106,6 +107,8 @@ public class ManagerPageController {
 		mav.addObject("manservices", mandao.list());
 		mav.addObject("employees", emp1);
 		mav.addObject("count",count);
+		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+		mav.addObject("nleave",numofleaves);
 		return mav;
 	}
 
@@ -291,6 +294,8 @@ public class ManagerPageController {
 			mav.addObject("empattendances",empattendances);
 			mav.addObject("allempleave", allempleave);
 			mav.addObject("count",count);
+			List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+			mav.addObject("nleave",numofleaves);
 			return mav;
 		}catch(DateTimeParseException e){
 			mav.addObject("errmsg", "Please enter the required fields");
@@ -316,14 +321,13 @@ public class ManagerPageController {
 		List<TblEmpLeavereq> allempleave = ers.view();
 		int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
-		List<Tblleaves> numofleaves=leave.getDetailsofleavetye();
-		
+		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
 		Map<String,Integer> using=ers.count(user.getEid());
 		Map<String,Integer> pending=new HashMap<>();
 		Set<String> keys = using.keySet();
 		Iterator itr = keys.iterator();
 		int pleave=0;
-		for(Tblleaves li:numofleaves) {
+	/*	for(Tblleaves li:numofleaves) {
 			System.out.println(li.getLeavetype());
 			System.out.println(using);
 			while(itr.hasNext())
@@ -345,7 +349,7 @@ public class ManagerPageController {
 		System.out.println(pending);
 		mav.addObject("pleave",pending);
 		mav.addObject("using",using);
-		mav.addObject("nleave",numofleaves);
+		mav.addObject("nleave",numofleaves);*/
 		mav.addObject("medical",a[0]);
 		mav.addObject("casual",a[1]);
 		mav.addObject("sick",a[2]);
@@ -902,6 +906,8 @@ public class ManagerPageController {
 		mav.addObject("id",id);
 		mav.addObject("manservices", mandao.list());
 		mav.addObject("User",user);
+		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+		mav.addObject("nleave",numofleaves);
 		return mav;
 			
 	}

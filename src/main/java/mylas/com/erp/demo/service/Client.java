@@ -1,7 +1,11 @@
 package mylas.com.erp.demo.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
 
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -14,7 +18,9 @@ import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.TblEmpLeavereq;
+import mylas.com.erp.demo.TblEmployees;
 import mylas.com.erp.demo.appservices.GetSession;
+import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.EmployeeDao;
 
 @Repository("userDetails")
@@ -294,7 +300,7 @@ return "error occured while updating";}
 	
 		// iterate a list and filter by tagName
 		for (EmpDetails tag : emp1) {
-			if (tag.getLname().contains(tagName)) {
+			if (tag.getFname().contains(tagName)) {
 				result.add(tag);
 			}
 		}
@@ -322,6 +328,45 @@ return "error occured while updating";}
 			}
 		System.out.println(tomail);
 		return tomail;		
+	}
+
+	@Override
+	public String saveEmpDetails(int id,String empid, String fname, String lname, String email,String uname, String pswd, String addres,String ph,String adr,
+			String crby, String upby, String role, String dept, String des) {
+		// TODO Auto-generated method stub
+		try(Session  s=HibernateUtil.getSessionFactory().openSession())
+		{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_employee");
+query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(3,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(4,String.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(5,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(6,String.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(7,Boolean.class, ParameterMode.IN);query.registerStoredProcedureParameter(8,String.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(9,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(10,String.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(11,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(12,Date.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(13,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(14,Date.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(15,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(16,String.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(17,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(18,String.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(19,Integer.class, ParameterMode.OUT);
+System.out.println(id);
+
+query.setParameter(1,id);query.setParameter(2,empid);query.setParameter(3,fname);query.setParameter(4,lname);query.setParameter(5,email);query.setParameter(6,pswd);
+query.setParameter(7,true);query.setParameter(8,addres);query.setParameter(9,ph);query.setParameter(10,adr);query.setParameter(11,crby);query.setParameter(12,new Date());
+query.setParameter(13,upby);query.setParameter(14,new Date());query.setParameter(15,role);query.setParameter(16,dept);query.setParameter(17,des);query.setParameter(18,uname);
+query.execute();
+int a=(int) query.getOutputParameterValue(9);
+	System.out.println(a);
+		}
+		catch(Exception e)
+		{
+			return "Employee already Exits";
+		}
+	return "Employee added successfully";
+		
+	}
+
+	@Override
+	public List<TblEmployees> getDetails1() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

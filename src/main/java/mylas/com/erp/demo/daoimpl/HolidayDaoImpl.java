@@ -1,46 +1,66 @@
 package mylas.com.erp.demo.daoimpl;
 
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.PersistenceException;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
-import mylas.com.erp.demo.Holidays;
+import mylas.com.erp.demo.TblHolidays;
 import mylas.com.erp.demo.appservices.GetSession;
+import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.HolidayDao;
 
 @Repository("himpl")
 public class HolidayDaoImpl implements HolidayDao {
 
 	@Override
-	public String saveHoliday(Holidays hday) {
-		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-		try {
-			session.beginTransaction();
-			int num = (Integer) session.save(hday);
-
-			if(num!=0) {
-				System.out.println("Holiday added successfully!....");
-				session.getTransaction().commit();
-				return "Holiday added successfully!....";
-			}else {
-			
-				/*			session.getTransaction().commit();
-				 */			return "Holiday already exists";
+	public String saveHoliday(int id,String name,String dt,boolean active,String eid,Date cdt,String upby,Date update) {
+		System.out.println(id+" 1"+name+" 2"+dt+"3 "+active+"4 "+eid+"5 "+cdt+"5 "+upby+"6 "+update);
+			try(Session  s=HibernateUtil.getSessionFactory().openSession())
+			{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_holidays");
+			query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(3,String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(4,Boolean.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(5,String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(6,Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(7,String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(8,Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(9,Integer.class, ParameterMode.OUT);
+			System.out.println(id);
+		query.setParameter(1,id);
+		query.setParameter(2,name);
+		query.setParameter(3,dt);
+		query.setParameter(4,active);
+		query.setParameter(5,eid);
+		query.setParameter(6,new Date());
+		query.setParameter(7,eid);
+		query.setParameter(8,new Date());
+		query.execute();
+		
+		int a=(int) query.getOutputParameterValue(9);
+		System.out.println(a);
 			}
+			catch(Exception e)
+			{
+				return "Holiday already exists";
+			}
+		return "updated successfully";
+		}
+			
 
-		}catch(ConstraintViolationException e) {
+		/*}catch(ConstraintViolationException e) {
 			System.out.println("Duplicate Entry");
 			session.getTransaction().rollback();
 			return "Holiday already exists";
-		}
-	}
-
-	@Override
+		}*/
+	
+/*	@Override
 	public void deleteHoliday(int id) {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -51,18 +71,7 @@ public class HolidayDaoImpl implements HolidayDao {
 		session.getTransaction().commit(); 	
 	}
 
-	@Override
-	public List<Holidays> viewAll() {
-		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		Query q = session.createQuery("from Holidays");
-		List<Holidays> empatt = q.list();
-		session.getTransaction().commit();
-		
-		return empatt;
-
-	}
-
+	
 	@Override
 	public String updateHOliday(int id,Holidays holiday) throws org.hibernate.exception.ConstraintViolationException {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
@@ -87,19 +96,30 @@ public class HolidayDaoImpl implements HolidayDao {
          }
 	
 		
-	}
+	}*/
 
 	@Override
-	public Holidays getHolidayById(int id) {
+	public TblHolidays getHolidayById(int id) {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Holidays deptdel = session.get(Holidays.class, id);
+		TblHolidays deptdel = session.get(TblHolidays.class, id);
 		session.getTransaction().commit();
 		return deptdel;
 	}
 
 
 
+	@Override
+	public List<TblHolidays> viewAll() {
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Query q = session.createQuery("from TblHolidays");
+		List<TblHolidays> empatt = q.list();
+		session.getTransaction().commit();
+		
+		return empatt;
+
+	}
 
 
 }

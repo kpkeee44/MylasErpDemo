@@ -185,9 +185,9 @@
 									<tbody>
 										<c:forEach items="${HolidaysList}" var="Holiday">
 											<tr>
-												<td>${Holiday.getName()}</td>
-												<td>${Holiday.getHdate()}</td>
-												<td id="day${Holiday.getId()}"></td>
+												<td>${Holiday.getHolidayname()}</td>
+												<td>${Holiday.getHolidaydate()}</td>
+												<td id="day${Holiday.getHolidayid()}"></td>
 												<td>
 													<ul class="tabelaction">
 														<li class="dropdown"><a href="javascript:void(0);"
@@ -197,11 +197,11 @@
 														</a>
 															<ul class="dropdown-menu pull-right">
 																<li><a
-																	href="${contextRoot}/holidays/edit/${Holiday.getId()}"><i
+																	href="${contextRoot}/holidays/edit/${Holiday.getHolidayid()}"><i
 																		class="material-icons">edit</i>Edit</a></li>
-																<li><a
-																	href="${contextRoot}/holidays/delete/${Holiday.getId()}"><i
-																		class="material-icons">delete</i>Delete</a></li>
+																<%-- <li><a Onclick="return ConfirmDelete()"
+																href="${contextRoot}/holidays/delete/${Holiday.getHolidayid()}"><i
+																		class="material-icons">delete</i>Delete</a></li> --%>
 
 															</ul></li>
 													</ul>
@@ -275,7 +275,7 @@
 
 	<c:forEach items="${HolidaysList}" var="Holiday">
 		<script type="text/javascript">
-		var input = '${Holiday.getHdate()}';
+		var input = '${Holiday.getHolidaydate()}';
 var fields = input.split('-');
 		
 var date = fields[2];
@@ -347,7 +347,7 @@ case 6:
     day = "Saturday";
 }
 
- document.getElementById('day'+'${Holiday.getId()}').innerHTML = day; 
+ document.getElementById('day'+'${Holiday.getHolidayid()}').innerHTML = day; 
 
 </script>
 
@@ -360,9 +360,18 @@ $(document).ready(function(){
     });
 });
 </script>
+<script type="text/javascript">
+function ConfirmDelete()
+{
+  var x = confirm("Are you sure you want to delete?");
+  if (x)
+      return true;
+  else
+    return false;
+}
+</script>
 
-
-
+ 
 </body>
 
 </html>

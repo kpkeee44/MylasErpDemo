@@ -7,7 +7,11 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -26,11 +30,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import mylas.com.erp.demo.EmpDetails;
+import mylas.com.erp.demo.LeaveAddition;
 import mylas.com.erp.demo.TblEmpAttendanceNew;
 import mylas.com.erp.demo.TblEmpLeavereq;
+import mylas.com.erp.demo.Tblleaves;
 import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.dao.EmpLeaveRequestDao;
 import mylas.com.erp.demo.dao.EmpServicesDao;
+import mylas.com.erp.demo.dao.LeaveManiplication;
 import mylas.com.erp.demo.daoimpl.EmpAttendanceDaoImpl;
 import mylas.com.erp.demo.service.Client;
 
@@ -49,6 +56,10 @@ public class EmployeePageController {
 
 	@Autowired
 	EmpAttendanceDaoImpl empattreq;
+	
+	@Autowired
+	LeaveManiplication leave;
+
 
 	EmailSender emailsender = new EmailSender();
 
@@ -72,6 +83,8 @@ public class EmployeePageController {
 		mav.addObject("User", user);
 		mav.addObject("empleave", leavereq);
 		mav.addObject("empservices", empservicesdao.list());
+		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+		mav.addObject("nleave",numofleaves);
 		return mav;
 	}
 
@@ -85,6 +98,35 @@ public class EmployeePageController {
 		String role = user.getRole();
 		int a[]=empleavereq.countSum(user.getEid());
 		ModelAndView mav = new ModelAndView("useremployee");
+		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+		Map<String,Integer> using=empleavereq.count(user.getEid());
+		Map<String,Integer> pending=new HashMap<>();
+		Set<String> keys = using.keySet();
+		Iterator itr = keys.iterator();
+		int pleave=0;
+		/*for(Tblleaves li:numofleaves) {
+			System.out.println(li.getLeavetype());
+			System.out.println(using);
+			while(itr.hasNext())
+	        {System.out.println("comes");
+	        System.out.println(li.getLeavetype());
+	       
+	        String key=(String) itr.next();
+	        System.out.println(key);
+		if(li.getLeavetype().equals(key) ) {
+			System.out.println(li.getNumleavedays());
+			pleave=li.getNumleavedays()-using.get(key);
+			pending.put(li.getLeavetype(), pleave);
+			
+			System.out.println(pending);}
+	        }
+			itr = keys.iterator();
+			System.out.println("hai");
+			}
+		System.out.println(pending);
+		mav.addObject("pleave",pending);
+		mav.addObject("using",using);
+		mav.addObject("nleave",numofleaves);*/
 		mav.addObject("Role", role);
 		mav.addObject("User", user);
 		mav.addObject("medical",a[0]);
@@ -301,6 +343,9 @@ public class EmployeePageController {
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
 		System.out.println("send mail");
+		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+		mav.addObject("nleave",numofleaves);
+		
 		return mav;
 	}
 	

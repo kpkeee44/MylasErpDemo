@@ -48,7 +48,7 @@ public class DepartmentService implements DepartmentDao {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 
-		Query q = session.createQuery("from TblDepartment");
+		Query q = session.createQuery("from TblDepartment where isactive=1");
 		System.out.println("dept");
 		List<TblDepartment> emp1 = q.list();
 		session.getTransaction().commit();
@@ -86,13 +86,13 @@ public class DepartmentService implements DepartmentDao {
 	
 	@Override
 	  public String updateDetails(int id,String newDep,String toDate) {
-	   Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+	   /*Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 	   try {
 	   session.beginTransaction();
 	   TblDepartment deptdel = session.load(TblDepartment.class, id);
-	     deptdel.setDepartment(newDep);
+	     deptdel.setDepartmentname(newDep);
 	     if(toDate!="") {
-	      deptdel.setTodate(toDate);
+	      deptdel.setCreateddate(toDate);
 	      deptdel.setActivestate(false);}
 	   session.saveOrUpdate(deptdel);
 	   System.out.println("saveor updated");
@@ -107,6 +107,7 @@ public class DepartmentService implements DepartmentDao {
 	    System.out.println("this is PersistenceException exception throw");   
 	    session.getTransaction().rollback();
 	    return "Department is Already Exists.Please try Again";
-	          }
+	          }*/
+		return null;
 	}
 }

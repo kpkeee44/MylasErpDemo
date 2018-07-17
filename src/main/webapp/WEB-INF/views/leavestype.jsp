@@ -39,6 +39,7 @@
 <link href="${css}/layout.css" rel="stylesheet">
 <link href="${css}/themes/main_theme.css" rel="stylesheet" />
 <link href="${css}/custom_style.css" rel="stylesheet">
+<link href="${css}/loading.css" rel="stylesheet">
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
@@ -48,6 +49,9 @@
 </head>
 
 <body class="theme-indigo light layout-fixed">
+<div id="loading">
+  <img id="loading-image" src="${images}/loading_spinner.gif" alt="Loading..." />
+</div>
 	<div class="wrapper">
 
 		<!-- top navbar-->
@@ -157,19 +161,29 @@
 										<tr>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="3">Leave Type
 											</th>
-											
-											
-											<th data-tablesaw-sortable-col data-tablesaw-priority="1"
+												<th data-tablesaw-sortable-col data-tablesaw-priority="4">Active State</th>
+													<th data-tablesaw-sortable-col data-tablesaw-priority="1"
 												class="actiontabel">Action</th>
-
 										</tr>
 									</thead>
 									<div class="clearfix"></div>
-									<tbody>
+									  <c:set var="green"
+																value="icon-display  fa fa-check attenedance_check_green" />
+															<c:set var="red"
+																value="icon-display  fa fa-close  attenedance_check_red" />
+									
 										<c:forEach items="${leavetypeslist}" var="leavetypes">
+										<tbody>
 											<tr>
 												<td>${leavetypes.getLeavetype()}</td>
-											
+											  
+											   <c:if test="${leavetypes.getIsactive() == true}">
+													<td><i class="${green}"></i></td>
+												</c:if>
+												<c:if test="${leavetypes.getIsactive() == false}">
+													<td><i class="${red}"></i></td>
+												</c:if>
+                                               
 												<td>
 													<ul class="tabelaction">
 														<li class="dropdown"><a href="javascript:void(0);"
@@ -181,17 +195,20 @@
 																<li><a
 																	href="${contextRoot}/admin/leavetype/edit/${leavetypes.getId()}"><i
 																		class="material-icons">edit</i>Edit</a></li>
-																<li><a
-																	href="${contextRoot}/admin/leavetype/delete/${leavetypes.getId()}"><i
+																<c:if test="${leavetypes.getIsactive() == false}">
+																 <%-- <li><a
+																	 href="${contextRoot}/admin/leavetype/delete/${leavetypes.getId()}"><i
 																		class="material-icons">delete</i>Delete</a></li>
-
+   --%>
+                                                               </c:if>
 															</ul></li>
 													</ul>
 												</td>
 
 											</tr>
+												</tbody>
 										</c:forEach>
-									</tbody>
+								
 								</table>
 							</div>
 						</div>
@@ -257,7 +274,11 @@ $("#addnew1").click(function(){
 	$("#addnewemp").css("display","block");
 });
 </script>
-
+<script language="javascript" type="text/javascript">
+     $(window).load(function() {
+     $('#loading').hide();
+  });
+</script>
 </body>
 
 </html>

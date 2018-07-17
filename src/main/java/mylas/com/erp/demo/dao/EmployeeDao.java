@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 
 import mylas.com.erp.demo.EmpDetails;
+import mylas.com.erp.demo.TblEmployees;
 
 public interface EmployeeDao {
 	
@@ -24,5 +25,7 @@ public interface EmployeeDao {
 	 public List<EmpDetails> simulateSearchResult(String tagName);
 	 public List<EmpDetails> simulateSearchResultLastName(String tagName);
 	 public String getMail(String mngid);
-
+	 /*new methods*/
+	 public String saveEmpDetails(int id,String empid,String fname,String lname,String email,String uname,String pswd,String addres,String ph,String adr,String crby,String upby,String role,String dept,String des);
+	 public List<TblEmployees> getDetails1();
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated Jul 17, 2018 4:44:28 PM by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.TblEmployees" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_employees">
+        <id name="eid" type="java.lang.Integer">
+            <column name="eid"/>
+            <generator class="identity"/>
+        </id>
+        <property generated="never" lazy="false" name="empid" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="empid"/>
+        </property>
+        <property generated="never" lazy="false" name="emplfirstname" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="emplfirstname"/>
+        </property>
+        <property generated="never" lazy="false" name="empllastname" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="empllastname"/>
+        </property>
+        <property generated="never" lazy="false" name="email" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="email"/>
+        </property>
+        <property generated="never" lazy="false" name="password" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="password"/>
+        </property>
+        <property generated="never" lazy="false" name="isactive" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="isactive"/>
+        </property>
+        <property generated="never" lazy="false" name="address" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="Address"/>
+        </property>
+        <property generated="never" lazy="false" name="mobileno" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="mobileno"/>
+        </property>
+        <property generated="never" lazy="false" name="aadharno" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="aadharno"/>
+        </property>
+        <property generated="never" lazy="false" name="createdby" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="createdby"/>
+        </property>
+        <property generated="never" lazy="false" name="createdDate" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="23" name="createdDate"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedBy" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="updatedBy"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedDate" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="23" name="updatedDate"/>
+        </property>
+        <property generated="never" lazy="false" name="role" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="role"/>
+        </property>
+        <property generated="never" lazy="false" name="magrtranferid" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="magrtranferid"/>
+        </property>
+        <property generated="never" lazy="false" name="department" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="department"/>
+        </property>
+        <property generated="never" lazy="false" name="designation" optimistic-lock="true" type="string" unique="false">
+            <column length="20" name="designation"/>
+        </property>
+        <property generated="never" lazy="false" name="username" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="username" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

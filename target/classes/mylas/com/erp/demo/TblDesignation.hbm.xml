@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Jul 3, 2018 3:19:21 PM by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 17, 2018 11:13:53 AM by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.TblDesignation" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_Designation">
-        <id name="designationId" type="java.lang.Integer">
-            <column name="DesignationId"/>
+    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.TblDesignation" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_designation">
+        <id name="designationid" type="java.lang.Integer">
+            <column name="designationid"/>
             <generator class="identity"/>
         </id>
         <property generated="never" lazy="false" name="designation" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="Designation" unique="true"/>
+            <column length="50" name="designation" not-null="true"/>
         </property>
-        <property generated="never" lazy="false" name="department" optimistic-lock="true" type="string" unique="false">
-            <column length="55" name="department"/>
+        <property generated="never" lazy="false" name="departmentname" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="departmentname" not-null="true"/>
         </property>
-        <property generated="never" lazy="false" name="fromdate" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="fromdate"/>
+        <property generated="never" lazy="false" name="isactive" optimistic-lock="true" type="java.lang.Boolean" unique="false">
+            <column name="isactive"/>
         </property>
-        <property generated="never" lazy="false" name="todate" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="todate"/>
+        <property generated="never" lazy="false" name="createdBy" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="createdBy"/>
         </property>
-        <property generated="never" lazy="false" name="activestate" optimistic-lock="true" type="java.lang.Boolean" unique="false">
-            <column name="activestate"/>
+        <property generated="never" lazy="false" name="createddate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="createddate"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedby" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="updatedby"/>
+        </property>
+        <property generated="never" lazy="false" name="updateddate" optimistic-lock="true" type="date" unique="false">
+            <column length="10" name="updateddate"/>
         </property>
     </class>
 </hibernate-mapping>

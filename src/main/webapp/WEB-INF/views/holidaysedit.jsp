@@ -66,7 +66,7 @@
 				<div class="col-md-12 card" id="addnewemp">
 
 					<div class="body">
-						<form action="${contextRoot}/holidays/edit/${Holiday.getId()}"
+						<form action="${contextRoot}/holidays/edit/${Holiday.getHolidayid()}"
 							method="post">
 							<div class="col-md-6">
 								<div class="form-group">
@@ -158,10 +158,10 @@
 
  -->
 	<script type="text/javascript">
-		/* alert("${Holiday.getName()}"); */
+		
 
-		document.getElementById("holiday").value = "${Holiday.getName()}";
-		document.getElementById("hdate").value = "${Holiday.getHdate()}";
+		document.getElementById("holiday").value = "${Holiday.getHolidayname()}";
+		document.getElementById("hdate").value = "${Holiday.getHolidaydate()}";
 	</script>
 
 

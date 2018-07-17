@@ -77,7 +77,7 @@
 					<div class="custom_title">
 
 						<h2>Edit Leave Request  </h2>
-						<h2>${empleave.getLeavereason()}</h2>
+					
 					</div> 
 
 						
@@ -108,9 +108,12 @@
 										<label>Leave Type</label> <select class="form-control"
 											size="1" name="leavetype" id="leavetype" required="required">
 											<option value="">Please select</option>
-											<option value="Loss of Pay">Loss of Pay</option>
+											<c:forEach items="${nleave}" var="nleave">
+											<option value="${nleave.getLeavetype()}">${nleave.getLeavetype()}</option>
+											</c:forEach>
+											<!-- <option value="Loss of Pay">Loss of Pay</option>
 											<option value="Casual Leave">Casual Leave 12 Days</option>
-											<option value="Medical Leave">Medical Leave</option>
+											<option value="Medical Leave">Medical Leave</option> -->
 										</select>
 									</div>
 								</div>

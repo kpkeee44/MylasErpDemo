@@ -96,8 +96,8 @@
 						<c:if test="${Role.equals('MANAGER_ROLE')}">
 							<c:set var="role" value="manager" />
 						</c:if>
-						<c:if test="${dupmsg.equals('This is a Duplicate Entry')}">
-									<h4 style="color: red;">${dupmsg}</h4>
+						<c:if test="${mesg.equals('Employee already Exits')}">
+									<h4 style="color: red;">${mesg}</h4>
 								</c:if>
 						<div class="col-md-12 card" id="addnewemp">
 								<button type="button" class="close" aria-label="Close">
@@ -105,11 +105,11 @@
 							</button>
 							<div class="custom_title">
 								<h2>Add Employee</h2>
-								<c:if test="${dupmsg.equals('Employee Saved')}">
-									<h4 style="color: green;">${dupmsg}</h4>
+								<c:if test="${mesg.equals('Employee added successfully')}">
+									<h4 style="color: green;">${mesg}</h4>
 								</c:if>
 								
-								<c:if test="${empty dupmsg}">
+								<c:if test="${empty mesg}">
 									<h4 style="color: red;">Employee Save Failed</h4>
 								</c:if>
 							</div>
@@ -147,13 +147,14 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Username</label> --><input type="text"
-													 name="uname" id="uname" class="form-control"
-													  required="required" size="50" maxlength="50" placeholder="User Name">
+													<!-- <label>Employee ID </label> --><input type="text" name="empid"
+														id="empid" class="form-control" required="required"
+														size="15" maxlength="15" placeholder="Employee ID">
 												</div>
 											</div>
 										</div>
 									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group">
 											<div class="input-group addon-line">
@@ -165,6 +166,18 @@
 											</div>
 										</div>
 									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<div class="input-group addon-line">
+												<div class="form-line">
+													<!-- <label>Employee ID </label> --><input type="text" name="uname"
+														id="uname" class="form-control" required="required"
+														size="15" maxlength="15" placeholder="UserName">
+												</div>
+											</div>
+										</div>
+									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group">
 											<div class="input-group addon-line">
@@ -193,25 +206,14 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Employee ID </label> --><input type="text" name="empid"
-														id="empid" class="form-control" required="required"
-														size="15" maxlength="15" placeholder="Employee ID">
+													<!-- <label>Username</label> --><input type="text"
+													 name="aadhar" id="aadhar" class="form-control"
+													  required="required" size="50" maxlength="50" placeholder="Aadhar Number">
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<div class="input-group addon-line">
-												<div class="form-line">
-													<!-- <label>Joining Date </label> --><input type="date"
-														name="joindate" class="form-control" required="required" placeholder="Joining Date">
-												</div>
-												<span class="input-group-addon"><i
-													class="material-icons">date_range </i></span>
-											</div>
-										</div>
-									</div>
+									
 									<div class="col-md-6">
 										<div class="form-group">
 											<div class="input-group addon-line">
@@ -223,14 +225,26 @@
 											</div>
 										</div>
 									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<div class="input-group addon-line">
+												<div class="form-line">
+													<!-- <label>Phone </label> --><input type="text" name="address"
+														id="address" class="form-control" required="required"
+														size="50" maxlength="50" placeholder="Address" ">
+												</div>
+											</div>
+										</div>
+									</div>
+									
 									<c:if test="${Role.equals('ADMIN_ROLE')}">
-										<div class="col-md-6">
+									<!-- 	<div class="col-md-6">
 											<div class="form-group">
 												<div class="form-line">
-													<!-- <label>Company</label> -->
-													<!-- <input type="text" name="company"
+													<label>Company</label>
+													<input type="text" name="company"
 														id="company" class="form-control" 
-														required="required" size="50" maxlength="50"> -->
+														required="required" size="50" maxlength="50">
 													<select class="form-control" size="1" name="company"
 														id="company" required="required">
 														<option value="">Select Company</option>
@@ -239,7 +253,7 @@
 													</select>
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="form-line">
@@ -248,31 +262,31 @@
 														required="required">
 														<option value="">Select Department</option>
 														<c:forEach items="${departments}" var="deper">
-															<option value="${deper.getDepartment()}">${deper.getDepartment()}</option>
+															<option value="${deper.getDepartmentname()}">${deper.getDepartmentname()}</option>
 														</c:forEach>
 													</select>
 												</div>
 											</div>
 										</div>
 									</c:if>
-									<c:if test="${Role.equals('MANAGER_ROLE')}">
+									<%-- <c:if test="${Role.equals('MANAGER_ROLE')}"> --%>
 										<div class="col-md-6">
 											<div class="form-group">
 												<div class="form-line">
 													<!-- <label>Designation</label>  --><select class="form-control"
 														size="1" name="designation" id="designation"
-														required="required">
+														>
 														<option value="">Select Designations</option>
 														<c:forEach items="${designations}" var="desig">
-															<c:if test="${desig.getDesignation()!='Manager'}">
+															<%-- <c:if test="${desig.getDesignation()!='Manager'}"> --%>
 																<option value="${desig.getDesignation()}">${desig.getDesignation()}</option>
-															</c:if>
+														<%-- 	</c:if> --%>
 														</c:forEach>
 													</select>
 												</div>
 											</div>
 										</div>
-									</c:if>
+								<%-- 	</c:if> --%>
 									<div class="clearfix"></div>
 									<div class="form-actions">
 										<div style="text-align: center;">
@@ -311,8 +325,8 @@
 											class="form-control" size="1">
 											<option value="">Select Department</option>
 											<c:forEach items="${departments}" var="departments">
-												<option value="${departments.getDepartment()}">
-													${departments.getDepartment()}</option>
+												<option value="${departments.getDepartmentname()}">
+													${departments.getDepartmentname()}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -337,7 +351,7 @@
 								</div>
 							</div>
 					</form>
-					<div class="body">
+				 	<div class="body">
 						<div class="clearfix"></div>
 						<table
 							class="tablesaw table-striped table-bordered table-hover one"
@@ -353,12 +367,12 @@
 									<th data-tablesaw-sortable-col="" data-tablesaw-priority="4">Email
 									</th>
 
-									<th data-tablesaw-sortable-col="" data-tablesaw-priority="4">Joining
-										Date</th>
+									<!-- <th data-tablesaw-sortable-col="" data-tablesaw-priority="4">Joining
+										Date</th> -->
 									<th data-tablesaw-sortable-col="" data-tablesaw-priority="2">
 										Phone</th>
-									<th data-tablesaw-sortable-col="" data-tablesaw-priority="4">Company
-									</th>
+									<!-- <th data-tablesaw-sortable-col="" data-tablesaw-priority="4">Company
+									</th> -->
 									<c:if test="${Role.equals('ADMIN_ROLE')}">
 										<th data-tablesaw-sortable-col="" data-tablesaw-priority="1"
 											class="actiontabel">Action</th>
@@ -368,10 +382,10 @@
 							</thead>
 							<tbody>
 							 <c:set var="manager" value="${User.getEid()}" />
-							<%-- 	<c:set var="compname" value="${User.getCompName()}" /> --%>
+								<c:set var="compname" value="${User.getCompName()}" />
 
 								<c:forEach items="${employees}" var="empl">
-									<%-- <c:if test="${empl.getCompName() == compname}"> --%>
+									<c:if test="${empl.getCompName() == compname}">
 									<c:if test="${empl.getManagerid() ==  manager}">
 
 
@@ -382,7 +396,7 @@
 											<td>
 												<div class="chip">
 													<a
-														href="<%-- <%=request.getContextPath()%>/${role}/allemp/register/${empl.getId()}/employeedetails --%>">
+														href="<%=request.getContextPath()%>/${role}/allemp/register/${empl.getId()}/employeedetails">
 														<img src="${images}/mail/one.jpg" alt="Contact Person">
 														<div class="profiletitlewidth hideOverflow ">${empl.getFname()}${empl.getLname()}</div>
 														<div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div>
@@ -392,9 +406,9 @@
 											<td>${empl.getEid()}</td>
 											<td>${empl.getUname()}</td>
 											<td>${empl.getEmail()}</td>
-											<td>${empl.getJdate()}</td>
+											<%-- <td>${empl.getJdate()}</td> --%>
 											<td>${empl.getPhone()}</td>
-											<td>${empl.getCompName()}</td>
+											<%-- <td>${empl.getCompName()}</td> --%>
 											<td>
 
 												<ul class="tabelaction">
@@ -409,10 +423,10 @@
 																	href="${contextRoot}/admin/empdetais/edit/${empl.getId()}"
 																	class=" waves-effect waves-classic"><i
 																		class="material-icons">edit</i>Edit</a></li>
-																<%-- 	<li><a
+																	<li><a
 																	href="${contextRoot}/admin/allemp/delete/${empl.getId()}"
 																	class=" waves-effect waves-classic"><i
-																		class="material-icons">delete</i>Delete</a></li> --%>
+																		class="material-icons">delete</i>Delete</a></li>
 
 															</ul></li>
 													</c:if>
@@ -423,7 +437,7 @@
 
 
 									</c:if>
-									<%-- </c:if> --%>
+									</c:if>
 								</c:forEach>
 								<c:if test="${Role.equals('ADMIN_ROLE')}">
 									<c:forEach items="${employees}" var="empl">
@@ -447,9 +461,9 @@
 													<td>${empl.getEid()}</td>
 													<td>${empl.getUname()}</td>
 													<td>${empl.getEmail()}</td>
-													<td>${empl.getJdate()}</td>
+													<%-- <td>${empl.getJdate()}</td> --%>
 													<td>${empl.getPhone()}</td>
-													<td>${empl.getCompName()}</td>
+												<%-- 	<td>${empl.getCompName()}</td> --%>
 													<td>
 														<ul class="tabelaction">
 															<c:if test="${Role.equals('ADMIN_ROLE')}">
@@ -463,10 +477,10 @@
 																			href="${contextRoot}/admin/empdetais/edit/${empl.getId()}"
 																			class=" waves-effect waves-classic"><i
 																				class="material-icons">edit</i>Edit</a></li>
-																		<%-- <li><a
+																		<li><a
 																			href="${contextRoot}/admin/allemp/delete/${empl.getId()}"
 																			class=" waves-effect waves-classic"><i
-																				class="material-icons">delete</i>Delete</a></li> --%>
+																				class="material-icons">delete</i>Delete</a></li>
 
 																	</ul></li>
 															</c:if>
@@ -478,7 +492,7 @@
 									</c:forEach>
 								</c:if>
 							</tbody>
-						</table>
+						</table> --%>
 		</section>
 		<!-- FOOTER-->
 		<footer>
@@ -568,7 +582,7 @@
 
 		});
 	</script>
-	<script>
+	<!-- <script>
      function Search(){
 	 var fname = document.getElementById("firstname").value;
 	 var lname = document.getElementById("lastname").value;
@@ -581,7 +595,7 @@
 		 }
 
 }
-     </script>
+     </script> -->
 
 	<script>
 	$(document).ready(function() {

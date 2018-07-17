@@ -1,5 +1,6 @@
 package mylas.com.erp.demo.daoimpl;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.PersistenceException;
 import org.hibernate.Session;
@@ -73,13 +74,20 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 
 
 		@Override
-		public String updateLeaveType(int id, Tblleavestype leavetype) throws org.hibernate.exception.ConstraintViolationException{
-		
+		public String updateLeaveType(int id,String leavetype,String eid,String active) throws org.hibernate.exception.ConstraintViolationException{
+		System.out.println();
 			Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 			try {
 			session.beginTransaction();
 			Tblleavestype tlt = session.load(Tblleavestype.class, id);
-			tlt.setLeavetype(leavetype.getLeavetype());
+			tlt.setLeavetype(leavetype);
+			tlt.setUpdatedby(eid);
+			System.out.println(active);
+			if(active.equals("true")) {
+				tlt.setIsactive(true);
+			}else {tlt.setIsactive(false);}
+			
+			tlt.setUpdateddate(new Date());
 			
 			session.saveOrUpdate(tlt);
 			System.out.println("saveor updated");

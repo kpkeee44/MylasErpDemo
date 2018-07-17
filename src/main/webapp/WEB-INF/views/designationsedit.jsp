@@ -114,7 +114,7 @@
 
 
 						<form
-							action="${contextRoot}/admin/designation/edit/${depdetailsforedit.getDesignationId()}"
+							action="${contextRoot}/admin/designation/edit/${depdetailsforedit.getDesignationid()}"
 							method="post">
 
 							<div class="col-md-6">
@@ -137,14 +137,14 @@
 											required="required">
 											<option value="">Please select</option>
 											<c:forEach items="${departments}" var="deper">
-												<option value="${deper.getDepartment()}">${deper.getDepartment()}</option>
+												<option value="${deper.getDepartmentname()}">${deper.getDepartmentname()}</option>
 											</c:forEach>
 										</select>
 									</div>
 								</div>
 							</div>
 
-							<div class="col-md-6">
+							<!-- <div class="col-md-6">
 								<div class="form-group">
 									<div class="input-group addon-line">
 										<div class="form-line">
@@ -156,7 +156,7 @@
 									</div>
 								</div>
 
-							</div>
+							</div> -->
 							<div class="clearfix"></div>
 							<div style="text-align: center;">
 								<button type="submit"
@@ -216,7 +216,7 @@
 
 	<script>
 		document.getElementById("designationname").value = "${depdetailsforedit.getDesignation()}";
-		document.getElementById("department").value = "${depdetailsforedit.getDepartment()}";
+		document.getElementById("department").value = "${depdetailsforedit.getDepartmentname()}";
 		designationname.focus();
 	</script>
 
