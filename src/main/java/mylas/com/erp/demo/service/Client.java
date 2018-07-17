@@ -366,7 +366,13 @@ int a=(int) query.getOutputParameterValue(9);
 	@Override
 	public List<TblEmployees> getDetails1() {
 		// TODO Auto-generated method stub
-		return null;
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Query q = session.createQuery("from TblEmployees");
+		List<TblEmployees> emp1 = q.list();
+		session.getTransaction().commit();
+		return (emp1);
+	
 	}
 }
 

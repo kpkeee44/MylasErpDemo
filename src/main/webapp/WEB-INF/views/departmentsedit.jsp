@@ -112,15 +112,18 @@
 					</div>
 				</div>
 
+      <td><c:if test="${msg.equals('Department already exists')}">
+         <h4 style="color: red;">${msg}</h4>
+        </c:if></td>
 
 				<div class="col-md-12 card">
 					<div class="custom_title">
 						<h2>Edit Department</h2>
-						<p style="color: red;" align="center">${msg}</p>
+						
 
 					</div>
 					<form
-						action="${contextRoot}/admin/departments/edit/${depdetailsforedit.getDepartmentId()}" method="post">
+						action="${contextRoot}/admin/departments/edit/${depdetailsforedit.getDepartmentid()}" method="post">
 						<hr class="custom_line">
 						<div class="body">
 							<div class="col-md-5">
@@ -134,7 +137,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
+			<!-- 				<div class="col-md-6">
 								<div class="form-group">
 									<div class="input-group addon-line">
 										<div class="form-line">
@@ -146,7 +149,7 @@
 									</div>
 								</div>
 
-							</div>
+							</div> -->
 							<div class="clearfix"></div>
 							<div style="text-align: center;">
 								<button type="submit"
@@ -205,7 +208,7 @@
  %> --%>
 	<script>
  
-  document.getElementById("departmentname").value = "${depdetailsforedit.getDepartment()}";
+  document.getElementById("departmentname").value = "${depdetailsforedit.getDepartmentname()}";
  </script>
 
 

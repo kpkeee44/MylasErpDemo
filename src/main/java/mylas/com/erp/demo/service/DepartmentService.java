@@ -1,16 +1,18 @@
 package mylas.com.erp.demo.service;
 
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.PersistenceException;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.appservices.GetSession;
+import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.DepartmentDao;
 
 @Repository("deptdao")
@@ -19,60 +21,43 @@ public class DepartmentService implements DepartmentDao {
 
 	
 	
-	@Override
-	 public String saveDepartment(TblDepartment tbl) {
-	  Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-	  try {
-	   session.beginTransaction();
-	   int num = (Integer) session.save(tbl);
-
-	   if(num!=0) {
-	    System.out.println("Department added successfully!....");
-	    session.getTransaction().commit();
-	    return "Department added successfully!....";
-	   }else {
-	   
-	    /*   session.getTransaction().commit();
-	     */   return "Department already exists";
-	   }
-
-	  }catch(ConstraintViolationException e) {
-	   System.out.println("Duplicate Entry");
-	   session.getTransaction().rollback();
-	   return "Department already exists";
-	  }
-	}
-
-	@Override
-	public List<TblDepartment> getDetails() {
-		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-
-		Query q = session.createQuery("from TblDepartment where isactive=1");
-		System.out.println("dept");
-		List<TblDepartment> emp1 = q.list();
-		session.getTransaction().commit();
-		return (emp1);
-	}
-
-	@Override
-	public void updateDetails(TblDepartment tbl) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteDetails(int id) {
-		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-
-		TblDepartment deptdel = session.load(TblDepartment.class, id);
-		session.delete(deptdel);
-		System.out.println("Object Deleted successfully.....!!");
-		session.getTransaction().commit();
 	
+	@Override
+	public String saveDepartment(int id,String dname,boolean active,String cby,String uby) {
 		
-	}
+				try(Session  s=HibernateUtil.getSessionFactory().openSession())
+				{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_department");
+				query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(3,Boolean.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(4,String.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(5,Date.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(6,String.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(7,Date.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(8,Integer.class, ParameterMode.OUT);
+			
+				
+				query.setParameter(1,id);
+				query.setParameter(2,dname);
+				query.setParameter(3,active);
+				query.setParameter(4,cby);
+				query.setParameter(5,new Date());
+				query.setParameter(6,uby);
+				query.setParameter(7,new Date());
+		
+				int a=(int) query.getOutputParameterValue(8);
+				query.execute();
+				System.out.println(a);
+				
+				}catch(Exception e)
+				{
+					
+					System.out.println(e);
+				return "Department already exists";
+				}
+				
+				return "Department Updated Successfully";	
+		}
 	
 	@Override
 	 public TblDepartment getById(int id) {
@@ -83,10 +68,23 @@ public class DepartmentService implements DepartmentDao {
 	  session.getTransaction().commit();
 	  return deptdel;
 	 }
-	
+
 	@Override
+	public List<TblDepartment> getDetails() {
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+
+		Query q = session.createQuery("from TblDepartment");
+		System.out.println("dept");
+		List<TblDepartment> emp1 = q.list();
+		session.getTransaction().commit();
+		return (emp1);
+	}
+}
+	
+	 /*@Override
 	  public String updateDetails(int id,String newDep,String toDate) {
-	   /*Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+	  Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 	   try {
 	   session.beginTransaction();
 	   TblDepartment deptdel = session.load(TblDepartment.class, id);
@@ -108,6 +106,5 @@ public class DepartmentService implements DepartmentDao {
 	    session.getTransaction().rollback();
 	    return "Department is Already Exists.Please try Again";
 	          }*/
-		return null;
-	}
-}
+	
+	

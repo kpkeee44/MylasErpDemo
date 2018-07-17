@@ -121,7 +121,7 @@
 						</div>
 					</div>
 				</div>
-  <td><c:if test="${msg.equals('Department added successfully!....')}">
+  <td><c:if test="${msg.equals('Department Updated Successfully')}">
          <h4 style="color: green;">${msg}</h4>
         </c:if></td>
                 <td><c:if test="${msg.equals('Department already exists')}">
@@ -148,7 +148,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-6">
+				<!-- 			<div class="col-md-6">
 								<div class="form-group">
 									<div class="input-group addon-line">
 										<div class="form-line">
@@ -161,7 +161,7 @@
 									</div>
 								</div>
 
-							</div>
+							</div> -->
 							
 							<div class="clearfix"></div>
 							<div style="text-align: center;">
@@ -194,7 +194,7 @@
 											<th data-tablesaw-sortable-col data-tablesaw-priority="3">Department
 												Name</th>
                                             <th data-tablesaw-sortable-col data-tablesaw-priority="2">From</th>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="4">To</th>
+											
 											<th data-tablesaw-sortable-col data-tablesaw-priority="4">Active State</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="1"
 												class="actiontabel">Action</th>
@@ -215,43 +215,40 @@
 											<tr>
 
 												
-												<td>${dep.getDepartment()}</td>
-                                                 <td>${dep.getFromdate()}</td>
-                                                 <c:if test="${dep.getTodate() == null}">
-                                                 <td>--/--/--</td></c:if>
-                                                 <c:if test="${dep.getTodate() != null}">
-                                                 <td>${dep.getTodate()}</td></c:if>
-                                                 <c:if test="${dep.getActivestate() == true}">
+												<td>${dep.getDepartmentname()}</td>
+                                                 <td>${dep.getCreateddate()}</td>
+                                     
+                                                 <c:if test="${dep.getIsactive() == true}">
 													<td><i class="${green}"></i></td>
 												</c:if>
-												<c:if test="${dep.getActivestate() == false}">
+												<c:if test="${dep.getIsactive() == false}">
 													<td><i class="${red}"></i></td>
 												</c:if>
 
-												<td>
+											<td>
 													<ul class="tabelaction">
 														<li class="dropdown"><a href="javascript:void(0);"
 															class="dropdown-toggle" data-toggle="dropdown"
 															role="button" aria-haspopup="true" aria-expanded="false">
 																<i class="material-icons">more_vert</i>
-														</a><c:if test="${dep.getActivestate() == true}">
+														</a><%-- <c:if test="${dep.getIsactive() == true}"> --%>
 															<ul class="dropdown-menu pull-right">
-																<li><a href="${contextRoot}/${role}/departments/edit/${dep.getDepartmentId()}"><i
+																<li><a href="${contextRoot}/${role}/departments/edit/${dep.getDepartmentid()}"><i
 																		class="material-icons">edit</i>Edit</a></li>
-																<li><a Onclick="return ConfirmDelete()"
-																	href="${contextRoot}/${role}/departments/delete/${dep.getDepartmentId()}"><i
+																<%-- <li><a
+																	href="${contextRoot}/${role}/departments/delete/${dep.getDepartmentid()}"><i
 																		class="material-icons">delete</i>Delete</a></li>
-
-															</ul></c:if>
-															<c:if test="${dep.getActivestate() != true}">
+ --%>
+														<%-- 	</ul></c:if> --%>
+															<%-- <c:if test="${dep.getActivestate() != true}">
 															<ul class="dropdown-menu pull-right">
-																<li><a Onclick="return ConfirmDelete()"
-																	href="${contextRoot}/${role}/departments/delete/${dep.getDepartmentId()}"><i
+																<li><a
+																	href="${contextRoot}/${role}/departments/delete/${dep.getDepartmentid()}"><i
 																		class="material-icons">delete</i>Delete</a></li>
 
-															</ul></c:if>  </li>
+															</ul></c:if>   --%></li>
 													</ul>
-												</td>
+												</td> 
 												
 
 											</tr>
@@ -294,16 +291,7 @@
 	<!-- LAYOUT JS -->
 	<script src="${js}/demo.js"></script>
 	<script src="${js}/layout.js"></script>
-<script>
-function ConfirmDelete()
-{
-  var x = confirm("Are you sure you want to delete?");
-  if (x)
-      return true;
-  else
-    return false;
-}
-</script>
+
 
 
 <script>
@@ -335,7 +323,6 @@ $(document).ready(function(){
     });
 });
 </script>
-
 
 </body>
 
