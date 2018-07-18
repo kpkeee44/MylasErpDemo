@@ -56,7 +56,7 @@ padding : 12px;
 <%@page import="java.time.LocalDate"%>
 <%@page import="java.time.temporal.ChronoUnit" %>
 <%@page import="java.time.*" %>
-<% 
+<%-- <% 
 EmpLeaveRequestService tbllev=new EmpLeaveRequestService();
 List<TblEmpLeavereq> allempleave = tbllev.view();
 for(TblEmpLeavereq tbl:allempleave){
@@ -76,7 +76,7 @@ Date displaydate2=new Date();
  // tbllev.EmailSend();
   
 }
-%>
+%> --%>
 		
 		
 		
@@ -84,7 +84,7 @@ Date displaydate2=new Date();
 		<!-- END Left navbar-->
 		<!-- START Right Navbar-->
 		<ul class="nav navbar-nav navbar-right">
-		<li><h4 class="fontname">Welcome: ${User.getFname()} ${User.getLname()}</h4></li>
+		<li><h4 class="fontname">Welcome: ${User.getEmplfirstname()} ${User.getEmpllastname()}</h4></li>
 			<li class="visible-lg"><a href="#" data-toggle-fullscreen="">
 					<em class="material-icons">fullscreen</em>
 			</a></li>

@@ -94,15 +94,17 @@
 
 
 
-								<form action="${contextRoot}/admin/updatedetails/edit/${edetais.id}"
+								<form action="${contextRoot}/admin/empdetais/edit/${edetais.id}"
 									method="post" onsubmit="return Validate()" name="form">
-									<div class="col-md-6">
+									
+									
+																	<div class="col-md-6">
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>First Name</label>  --><input type="text"
-														name="firstname" id="firstname" class="form-control"
-														placeholder="First Name" required="required">
+													<!-- <label>First Name</label> --><input type="text"
+														name="firstname1" id="firstname1" class="form-control"
+														required="required" size="50" maxlength="50" placeholder="First Name">
 												</div>
 											</div>
 										</div>
@@ -111,9 +113,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Last Name </label> --> <input type="text"
-														name="lastname" id="lastname" class="form-control"
-														placeholder="Last Name " required="required">
+													<!-- <label>Last Name </label> --><input type="text"
+														name="lastname1" id="lastname1" class="form-control"
+														required="required" size="50" maxlength="50" placeholder="Last Name">
 												</div>
 											</div>
 										</div>
@@ -122,9 +124,21 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Username</label>  --><input type="text" name="uname"
-														id="uname" class="form-control" placeholder="Username"
-														required="required">
+													<!-- <label>Employee ID </label> --><input type="text" name="empid"
+														id="empid" class="form-control" required="required"
+														size="15" maxlength="15" placeholder="Employee ID">
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<div class="input-group addon-line">
+												<div class="form-line">
+													<!-- <label>Email</label> --><input type="email" name="email"
+														id="email" class="form-control" required="required"
+														size="50" maxlength="50" placeholder="Email">
 												</div>
 											</div>
 										</div>
@@ -133,9 +147,23 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Email</label> --> <input type="email" name="email"
-														id="email" class="form-control" placeholder="Email"
-														required="required">
+													<!-- <label>Employee ID </label> --><input type="text" name="uname"
+														id="uname" class="form-control" required="required"
+														size="15" maxlength="15" placeholder="UserName">
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<div class="input-group addon-line">
+												<div class="form-line">
+													<!-- <label>Password </label> --><input type="password" name="pswd"
+														id="pswd" class="form-control"
+														pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+														title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+														required="required" placeholder="Password">
 												</div>
 											</div>
 										</div>
@@ -144,20 +172,9 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Password </label>  --><input type="password" name="pswd"
-														id="pswd" class="form-control" placeholder="Password"
-														pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required="required">
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<div class="input-group addon-line">
-												<div class="form-line">
-													<!-- <label>Confirm Password </label>  --><input type="password"
+													<!-- <label>Confirm Password </label> --><input type="password"
 														name="cpswd" id="cpswd" class="form-control"
-														placeholder="Confirm Password" required="required">
+														required="required" placeholder="Confirm Password">
 												</div>
 											</div>
 										</div>
@@ -166,9 +183,21 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Employee ID </label>  --><input type="text" name="empid"
-														id="empid" class="form-control" placeholder="Employee ID"
-														required="required">
+													<!-- <label>Username</label> --><input type="text"
+													 name="aadhar" id="aadhar" class="form-control"
+													  required="required" size="50" maxlength="50" placeholder="Aadhar Number">
+												</div>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-md-6">
+										<div class="form-group">
+											<div class="input-group addon-line">
+												<div class="form-line">
+													<!-- <label>Phone </label> --><input type="text" name="phone"
+														id="phone" class="form-control" required="required"
+														size="10" maxlength="10" placeholder="Phone" pattern="[0-9]{10}">
 												</div>
 											</div>
 										</div>
@@ -177,77 +206,63 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Joining Date </label>  --><input type="date" name="joindate" id="joindate"
-														class="form-control" placeholder="Joining Date">
-												</div>
-												<span class="input-group-addon"><i
-													class="material-icons">date_range </i></span>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<div class="input-group addon-line">
-												<div class="form-line">
-													<!-- <label>Phone </label>  --><input type="text" name="phone"
-														id="phone" class="form-control" placeholder="Phone"
-														required="required" pattern="[0-9]{10}">
+													<!-- <label>Phone </label> --><input type="text" name="address"
+														id="address" class="form-control" required="required"
+														size="50" maxlength="50" placeholder="Address" ">
 												</div>
 											</div>
 										</div>
 									</div>
+									
 									<c:if test="${Role.equals('ADMIN_ROLE')}">
-									<div class="col-md-6">
-										<div class="form-group">
-											<div class="form-line">
-												<!-- <label>Company</label>  --><input type="text" name="company"
-														id="company" class="form-control" placeholder="Company"
-														required="required">
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<div class="form-line">
-												<!-- <label>Department</label> --> <select class="form-control"
-													size="1" name="department" id="department" required="required">
-													<option value="">Select Department</option>
-													<c:forEach items="${departments}" var="deper">
-													<option value="${deper.getDepartment()}">${deper.getDepartment()}</option>
-													</c:forEach>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-6">
-										<div class="form-group">
-											<div class="input-group addon-line">
+									<!-- 	<div class="col-md-6">
+											<div class="form-group">
 												<div class="form-line">
-													<!-- <label>Relieving Date </label> --> <input type="date" name="relievingdate" id="relievingdate"
-														class="form-control" placeholder="Relieving Date">
+													<label>Company</label>
+													<input type="text" name="company"
+														id="company" class="form-control" 
+														required="required" size="50" maxlength="50">
+													<select class="form-control" size="1" name="company"
+														id="company" required="required">
+														<option value="">Select Company</option>
+														<option value="mylasit">MylasIT</option>
+
+													</select>
 												</div>
-												<span class="input-group-addon"><i
-													class="material-icons">date_range </i></span>
+											</div>
+										</div> -->
+										<div class="col-md-6">
+											<div class="form-group">
+												<div class="form-line">
+													<!-- <label>Department</label> --><select class="form-control"
+														size="1" name="department" id="department"
+														required="required">
+														<option value="">Select Department</option>
+														<c:forEach items="${departments}" var="deper">
+															<option value="${deper.getDepartmentid()}">${deper.getDepartmentid()}${deper.getDepartmentname()}</option>
+														</c:forEach>
+													</select>
+												</div>
 											</div>
 										</div>
-									</div>
 									</c:if>
-									<c:if test="${Role.equals('MANAGER_ROLE')}">									
-									<div class="col-md-6">
-										<div class="form-group">
-											<div class="form-line">
-												<!-- <label>Designation</label>  --><select class="form-control"
-													size="1" name="designation" id="designation" required="required">
-													<option value="0">Select Designation</option>
-													<c:forEach items="${designations}" var="desig">
-													<c:if test="${desig.getDesignation()!='Manager'}">
-													<option value="${desig.getDesignation()}">${desig.getDesignation()}</option></c:if>
-													</c:forEach>
-												</select>
+									<%-- <c:if test="${Role.equals('MANAGER_ROLE')}"> --%>
+										<div class="col-md-6">
+											<div class="form-group">
+												<div class="form-line">
+													<!-- <label>Designation</label>  --><select class="form-control"
+														size="1" name="designation" id="designation"
+														>
+														<option value="">Select Designations</option>
+														<c:forEach items="${designations}" var="desig">
+															<%-- <c:if test="${desig.getDesignation()!='Manager'}"> --%>
+																<option value="${desig.getDesignationid()}">${desig.getDesignationid()}${desig.getDesignation()}</option>
+														<%-- 	</c:if> --%>
+														</c:forEach>
+													</select>
+												</div>
 											</div>
 										</div>
-									</div>
-									</c:if>
 									<div class="clearfix"></div>
 									<div class="form-actions">
 										<div style="text-align: center;">
@@ -336,22 +351,20 @@ function Validate() {
 }
 </script>
 <script>
-		document.getElementById("firstname").value = "${edetais.getFname()}";
-		document.getElementById("lastname").value = "${edetais.getLname()}";
-		document.getElementById("uname").value = "${edetais.getUname()}";
-		document.getElementById("email").value = "${edetais.getEmail()}";
+		document.getElementById("firstname1").value = "${edetais.getEmplfirstname()}";
+		document.getElementById("lastname1").value = "${edetais.getEmpllastname()}";
 		document.getElementById("empid").value = "${edetais.getEid()}";
-		document.getElementById("joindate").value = "${edetais.getJdate()}";
+		document.getElementById("email").value = "${edetais.getEmail()}";
+		document.getElementById("uname").value = "${edetais.getUname()}";
+		document.getElementById("aadhar").value = "${edetais.getAadharno()}";
 		document.getElementById("phone").value = "${edetais.getPhone()}";
-		document.getElementById("pswd").value = "${edetais.getCpswd()}";
-		document.getElementById("cpswd").value = "${edetais.getPswd()}";
-		document.getElementById("company").value = "${edetais.getCompName()}";
-		document.getElementById("departments").value = "${edetais.getDepartment()}";
-		document.getElementById("designations").value = "${edetais.getDesignation()}";
-		firstname.focus();
+		document.getElementById("address").value = "${edetais.getAddress()}";
 		
-		/* document.getElementById("joindate").value = "${edetais.getJdate()}"; */
+		firstname.focus(); 
+		
+		
 	</script>
+
 
 </body>
 

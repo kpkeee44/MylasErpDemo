@@ -142,7 +142,7 @@ public class ManagerPageController {
 		mav.addObject("employees", emp1);
 		return mav;		
 	}
-	@RequestMapping(value="/manager/allemp/register", method=RequestMethod.POST)
+	/*@RequestMapping(value="/manager/allemp/register", method=RequestMethod.POST)
 	public ModelAndView saveEmpPage(HttpServletRequest request, HttpServletResponse response) throws ConstraintViolationException{
 
 		EmpDetails emp = new EmpDetails(null, request.getParameter("cpswd"), null, request.getParameter("empid"), request.getParameter("email"), request.getParameter("firstname1"), null, request.getParameter("lastname1"), false, null, request.getParameter("pswd"), null, request.getParameter("uname"), null,null,null,null);
@@ -186,7 +186,7 @@ public class ManagerPageController {
 		mav.addObject("employee", emp);
 
 		return mav;		
-	}
+	}*/
 
 	@RequestMapping(value="/manager/allemp/register/{id}/employeedetails")
 	public ModelAndView eachEmpDetailsPage(@PathVariable("id") int id) {
@@ -269,7 +269,7 @@ public class ManagerPageController {
 		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
 
 
-		empleave.setManagerid(user.getManagerid());
+		//empleave.setManagerid(user.getManagerid());
 		empleave.setEmployeeid(user.getEid());
 		empleave.setStatus(null);
 		try {
@@ -280,8 +280,8 @@ public class ManagerPageController {
 			mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
 			
 			emailSubject = "New Leave Request For:";
-			emailMessage = "A new Leave Request For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getFname()+" "+user.getLname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
-			emailToRecipient = c.getMail(user.getManagerid());
+			emailMessage = "A new Leave Request For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getEmplfirstname()+" "+user.getEmpllastname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
+			emailToRecipient = c.getMail(user.getCreatedby());
 			//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 			emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
 			System.out.println("send mail");
@@ -438,7 +438,7 @@ public class ManagerPageController {
 
 		TblEmpAttendanceNew attedance = new TblEmpAttendanceNew(null, null, null, null, Integer.parseInt(request.getParameter("day1")), Integer.parseInt(request.getParameter("day2")), Integer.parseInt(request.getParameter("day3")), Integer.parseInt(request.getParameter("day4")), Integer.parseInt(request.getParameter("day5")), Integer.parseInt(request.getParameter("day6")), Integer.parseInt(request.getParameter("day7")), Integer.parseInt(request.getParameter("day8")), Integer.parseInt(request.getParameter("day9")), Integer.parseInt(request.getParameter("day10")), Integer.parseInt(request.getParameter("day11")), Integer.parseInt(request.getParameter("day12")), Integer.parseInt(request.getParameter("day13")), Integer.parseInt(request.getParameter("day14")), Integer.parseInt(request.getParameter("day15")), Integer.parseInt(request.getParameter("day16")), Integer.parseInt(request.getParameter("day17")), Integer.parseInt(request.getParameter("day18")), Integer.parseInt(request.getParameter("day19")), Integer.parseInt(request.getParameter("day20")), Integer.parseInt(request.getParameter("day21")), Integer.parseInt(request.getParameter("day22")), Integer.parseInt(request.getParameter("day23")), Integer.parseInt(request.getParameter("day24")), Integer.parseInt(request.getParameter("day25")), Integer.parseInt(request.getParameter("day26")), Integer.parseInt(request.getParameter("day27")), Integer.parseInt(request.getParameter("day28")), null, null, null, null, null,null);
 		attedance.setEmpid(user.getEid());
-		attedance.setManagerid(user.getManagerid());
+		//attedance.setManagerid(user.getManagerid());
 		attedance.setStatas(null);
 		attedance.setMonth(request.getParameter("month"));
 		attedance.setYear(Integer.parseInt(request.getParameter("year")));
@@ -476,8 +476,8 @@ public class ManagerPageController {
 		mav.addObject("employees", emp1);
 		
 		emailSubject = "New Time Sheet For:";
-		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getFname()+" "+user.getLname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
-		emailToRecipient = c.getMail(user.getManagerid());
+		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getEmplfirstname()+" "+user.getEmpllastname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
+		emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
 		System.out.println("send mail");
@@ -580,8 +580,8 @@ public class ManagerPageController {
 		mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());
 		emailSubject = "Leave Request Status For:";
-		emailMessage = "A new Leave Request was approved :"+"On: "+new Date()+" By:  "+user.getFname()+" "+user.getLname();
-		emailToRecipient = c.getMail(user.getManagerid());
+		emailMessage = "A new Leave Request was approved :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
+		emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		return mav;
@@ -603,8 +603,8 @@ public class ManagerPageController {
 		mav.addObject("manservices", mandao.list());
 		
 		emailSubject = "Leave Request Status For:";
-		emailMessage = "A new Leave Request was declined :"+"On: "+new Date()+" By:  "+user.getFname()+" "+user.getLname();
-		emailToRecipient = c.getMail(user.getManagerid());
+		emailMessage = "A new Leave Request was declined :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
+		emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 
@@ -629,8 +629,8 @@ public class ManagerPageController {
 		
 		
 		emailSubject = "Time Sheet Request Status For:";
-		emailMessage = "A new Time Sheet Request was approved :"+"On: "+new Date()+" By:  "+user.getFname()+" "+user.getLname();
-		emailToRecipient = c.getMail(user.getManagerid());
+		emailMessage = "A new Time Sheet Request was approved :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
+		emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		return mav;
@@ -648,8 +648,8 @@ public class ManagerPageController {
 		attimpl.update(status, id);
 		
 		emailSubject = "Time Sheet Request Status For:";
-		emailMessage = "A new Time Sheet Request was declined :"+"On: "+new Date()+" By:  "+user.getFname()+" "+user.getLname();
-		emailToRecipient = c.getMail(user.getManagerid());
+		emailMessage = "A new Time Sheet Request was declined :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
+		emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
      

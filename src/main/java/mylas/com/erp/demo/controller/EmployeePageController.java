@@ -227,7 +227,7 @@ public class EmployeePageController {
 
 		attedance.setEmpid(user.getEid());
 		attedance.setStatas(null);
-		attedance.setManagerid(user.getManagerid());
+		//attedance.setManagerid(user.getManagerid());
 		attedance.setMonth(request.getParameter("month"));
 		attedance.setYear(Integer.parseInt(request.getParameter("year")));
 		
@@ -321,7 +321,7 @@ public class EmployeePageController {
 		else
 			dayCount=(int) (daysNegative1-1);
 		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
-		empleave.setManagerid(user.getManagerid());
+		//empleave.setManagerid(user.getManagerid());
 		empleave.setEmployeeid(user.getEid());
 		empleave.setStatus(null);
 		empleavereq.save(empleave);		
@@ -338,7 +338,7 @@ public class EmployeePageController {
 		mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
 		mav.addObject("Role",role);
 		emailSubject = "New Leave Request For:";
-		emailMessage = "A new Leave Request For Approval has Been Sent  :"+"On: "+new Date()+"\n Employee Name:  "+user.getFname()+" "+user.getLname()+"\n Employee id:"+user.getEid()+"\n  Manager:"+user.getManagerid()+"\n  Type of Absence Requested for:"+request.getParameter("leavetype")+"\n Dates of Absence: "+"\n From:"+request.getParameter("fromdate")+"                     To:"+ request.getParameter("todate");
+		emailMessage = "A new Leave Request For Approval has Been Sent  :"+"On: "+new Date()+"\n Employee Name:  "+user.getEmpllastname()+" "+user.getEmpllastname()+"\n Employee id:"+user.getEid()+"\n  Manager:"+user.getAadharno()+"\n  Type of Absence Requested for:"+request.getParameter("leavetype")+"\n Dates of Absence: "+"\n From:"+request.getParameter("fromdate")+"                     To:"+ request.getParameter("todate");
 		emailToRecipient = "kpraveen@mylastech.com";
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);

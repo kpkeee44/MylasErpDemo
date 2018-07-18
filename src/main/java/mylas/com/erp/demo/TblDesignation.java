@@ -1,5 +1,5 @@
 package mylas.com.erp.demo;
-// Generated Jul 17, 2018 11:13:53 AM by Hibernate Tools 5.3.0.Beta2
+// Generated Jul 18, 2018 2:23:08 PM by Hibernate Tools 5.3.0.Beta2
 
 import java.util.Date;
 
@@ -10,7 +10,6 @@ public class TblDesignation implements java.io.Serializable {
 
 	private Integer designationid;
 	private String designation;
-	private String departmentname;
 	private Boolean isactive;
 	private String createdBy;
 	private Date createddate;
@@ -20,15 +19,13 @@ public class TblDesignation implements java.io.Serializable {
 	public TblDesignation() {
 	}
 
-	public TblDesignation(String designation, String departmentname) {
+	public TblDesignation(String designation) {
 		this.designation = designation;
-		this.departmentname = departmentname;
 	}
 
-	public TblDesignation(String designation, String departmentname, Boolean isactive, String createdBy,
-			Date createddate, String updatedby, Date updateddate) {
+	public TblDesignation(String designation, Boolean isactive, String createdBy, Date createddate, String updatedby,
+			Date updateddate) {
 		this.designation = designation;
-		this.departmentname = departmentname;
 		this.isactive = isactive;
 		this.createdBy = createdBy;
 		this.createddate = createddate;
@@ -50,14 +47,6 @@ public class TblDesignation implements java.io.Serializable {
 
 	public void setDesignation(String designation) {
 		this.designation = designation;
-	}
-
-	public String getDepartmentname() {
-		return this.departmentname;
-	}
-
-	public void setDepartmentname(String departmentname) {
-		this.departmentname = departmentname;
 	}
 
 	public Boolean getIsactive() {

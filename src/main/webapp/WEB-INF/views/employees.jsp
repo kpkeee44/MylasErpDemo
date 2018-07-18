@@ -262,7 +262,7 @@
 														required="required">
 														<option value="">Select Department</option>
 														<c:forEach items="${departments}" var="deper">
-															<option value="${deper.getDepartmentname()}">${deper.getDepartmentname()}</option>
+															<option value="${deper.getDepartmentid()}">${deper.getDepartmentname()}</option>
 														</c:forEach>
 													</select>
 												</div>
@@ -279,7 +279,7 @@
 														<option value="">Select Designations</option>
 														<c:forEach items="${designations}" var="desig">
 															<%-- <c:if test="${desig.getDesignation()!='Manager'}"> --%>
-																<option value="${desig.getDesignation()}">${desig.getDesignation()}</option>
+																<option value="${desig.getDesignationid()}">${desig.getDesignation()}</option>
 														<%-- 	</c:if> --%>
 														</c:forEach>
 													</select>
@@ -382,11 +382,11 @@
 							</thead>
 							<tbody>
 							 <c:set var="manager" value="${User.getEid()}" />
-								<c:set var="compname" value="${User.getCompName()}" />
+								<%-- <c:set var="compname" value="${User.getCompName()}" /> --%>
 
 								<c:forEach items="${employees}" var="empl">
-									<c:if test="${empl.getCompName() == compname}">
-									<c:if test="${empl.getManagerid() ==  manager}">
+									<%-- <c:if test="${empl.getCompName() == compname}">
+									<c:if test="${empl.getManagerid() ==  manager}"> --%>
 
 
 
@@ -398,8 +398,8 @@
 													<a
 														href="<%=request.getContextPath()%>/${role}/allemp/register/${empl.getId()}/employeedetails">
 														<img src="${images}/mail/one.jpg" alt="Contact Person">
-														<div class="profiletitlewidth hideOverflow ">${empl.getFname()}${empl.getLname()}</div>
-														<div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div>
+														<div class="profiletitlewidth hideOverflow ">${empl.getEmplfirstname()}${empl.getEmpllastname()}</div>
+														<%-- <div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div> --%>
 													</a>
 												</div>
 											</td>
@@ -436,23 +436,23 @@
 
 
 
-									</c:if>
-									</c:if>
+									<%-- </c:if>
+									</c:if> --%>
 								</c:forEach>
 								<c:if test="${Role.equals('ADMIN_ROLE')}">
 									<c:forEach items="${employees}" var="empl">
-										<c:if test="${empl.getManagerid() !=  manager}">
-											<c:if test="${empl.getManagerid() !=  null}">
+										<%-- <c:if test="${empl.getManagerid() !=  manager}"> --%>
+											<%-- <c:if test="${empl.getManagerid() !=  null}"> --%>
 												<tr style="background: #ededed;">
 													<td>
 														<div class="chip">
 															<a
 																href="<%=request.getContextPath()%>/admin/allemp/register/${empl.getId()}/employeedetails">
 																<img src="${images}/mail/one.jpg" alt="Contact Person">
-																<div class="profiletitlewidth hideOverflow ">${empl.getFname()}
-																	${empl.getLname()}</div>
+																<div class="profiletitlewidth hideOverflow ">${empl.getEmplfirstname()}
+																	${empl.getEmpllastname()}</div>
 
-																<div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div>
+																<%-- <div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div> --%>
 
 															</a>
 
@@ -487,8 +487,8 @@
 														</ul>
 													</td>
 												</tr>
-											</c:if>
-										</c:if>
+											<%-- </c:if> --%>
+										<%-- </c:if> --%>
 									</c:forEach>
 								</c:if>
 							</tbody>

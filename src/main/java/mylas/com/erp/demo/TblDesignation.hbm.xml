@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Jul 17, 2018 11:13:53 AM by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 18, 2018 2:23:08 PM by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
     <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.TblDesignation" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_designation">
         <id name="designationid" type="java.lang.Integer">
@@ -7,10 +7,7 @@
             <generator class="identity"/>
         </id>
         <property generated="never" lazy="false" name="designation" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="designation" not-null="true"/>
-        </property>
-        <property generated="never" lazy="false" name="departmentname" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="departmentname" not-null="true"/>
+            <column length="50" name="designation" not-null="true" unique="true"/>
         </property>
         <property generated="never" lazy="false" name="isactive" optimistic-lock="true" type="java.lang.Boolean" unique="false">
             <column name="isactive"/>

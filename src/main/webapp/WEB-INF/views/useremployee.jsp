@@ -92,7 +92,7 @@
                     <h2>Employee</h2>
                 </div>
 
-<c:out value="${User.getFname()} ${User.getLname()}"></c:out>
+<c:out value="${User.getEmplfirstname()} ${User.getEmpllastname()}"></c:out>
 
    
 				
@@ -102,8 +102,8 @@
                                     <div class="user-card">
                                         <img class="img-responsive" src="${images}/mail/1.jpg" alt="" />
                                         <div class="user-card-info">
-                                            <h6>${User.getFname()} ${User.getLname()}</h6>
-                                            <span>${User.getDesignation()}</span>
+                                            <h6>${User.getEmplfirstname()} ${User.getEmpllastname()}</h6>
+                                            <%-- <span>${User.getDesignation()}</span> --%>
                                             <div class="user-card-socials">
                                                 <a href="#" title=""><i class="fa fa-twitter"></i></a>
                                                 <a href="#" title=""><i class="fa fa-facebook"></i></a>
@@ -130,22 +130,22 @@
 		  <td>:</td>
 		 <td>${User.getUname()}</td>
 		 </tr>
-		   <tr>
+		  <%--  <tr>
 		 <td>Joining Date:</td>
 		  <td>:</td>
 		 <td>${User.getJdate()}</td>
-		 </tr>
+		 </tr> --%>
 		  <tr>
 		 <td>Phone:</td>
 		  <td>:</td>
 		 <td>${User.getPhone()}</td>
 		 </tr>
-		  <tr>
+		<%--   <tr>
 		 <td>Company:</td>
 		  <td>:</td>
 		 <td>${User.getCompName()}</td>
 		 </tr>
-		  </table>
+ --%>		  </table>
 		  
 		  </div>				
 		  
@@ -161,7 +161,7 @@
 								</div>
 
 							</div>
-                        <div class="col-md-12">
+                       <%--  <div class="col-md-12">
                         
                          <table class="table tablesaw table-striped table-bordered table-hover">
                         <tr> <th data-tablesaw-sortable-col
@@ -207,7 +207,7 @@
 
 													</tbody>
 													</c:forEach>
-													<%-- <tbody>
+													<tbody>
 														<tr>
 														<th data-tablesaw-sortable-col
 												data-tablesaw-sortable-default-col
@@ -231,12 +231,12 @@
 
 														</tr>
 
-													</tbody> --%>
+													</tbody>
 
 
 								</table>
                    
-                   </div>
+                   </div> --%>
                    
                     </div>
              

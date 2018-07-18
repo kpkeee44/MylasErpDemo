@@ -279,8 +279,8 @@
 												<td>
 													<div class="chip">
 														<img src="${images}/mail/one.jpg" alt="Contact Person">
-														<span>${User.getFname()} ${User.getLname()}</span>
-														<div style="text-align: center">${User.getEid()}</div>
+														<span>${User.getEmplfirstname} ${User.getEmpllastname()}</span>
+														<div style="text-align: center">${User.getId()}</div>
 													</div>
 												</td>
 												<td>${empleaveslist.getLeavetype()}</td>

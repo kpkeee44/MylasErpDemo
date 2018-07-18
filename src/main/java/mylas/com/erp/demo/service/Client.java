@@ -71,7 +71,7 @@ public class Client implements EmployeeDao {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		EmpDetails emp = session.load(EmpDetails.class,id);
-		emp.setCompName(empl.getCompName());
+		//emp.setCompName(empl.getCompName());
 
 		session.update(emp);
 		session.getTransaction().commit();
@@ -140,7 +140,7 @@ public class Client implements EmployeeDao {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		EmpDetails employe = session.load(EmpDetails.class, id);
-		employe.setMantrans(mantrans);
+		//employe.setMantrans(mantrans);
 		try {
 			session.update(employe);session.getTransaction().commit();return "Updated";
 		}catch(Exception e){			session.getTransaction().rollback();
@@ -165,7 +165,7 @@ return "error occured while updating";}
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		EmpDetails employe = session.load(EmpDetails.class, id);
-		employe.setMantrans(null);;
+		//employe.setMantrans(null);;
 		try {
 			session.update(employe);session.getTransaction().commit();return "Updated";
 		}catch(Exception e){			session.getTransaction().rollback();
@@ -178,7 +178,7 @@ return "error occured while updating";}
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		EmpDetails employe = session.load(EmpDetails.class, id);
-		employe.setMantrans(tomanagerid);;
+		//employe.setMantrans(tomanagerid);;
 		try {
 			session.update(employe);session.getTransaction().commit();return "Updated";
 		}catch(Exception e){			session.getTransaction().rollback();
@@ -192,8 +192,8 @@ return "error occured while updating";}
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		EmpDetails  empdt = session.load(EmpDetails .class, id);
-		empdt.setFname(firstname);empdt.setLname(lastname);empdt.setUname(uname);empdt.setEid(empid);empdt.setPswd(pswd);
-		empdt.setCpswd(cpswd);empdt.setJdate(joindate);empdt.setPhone(phone);empdt.setCompName(company);empdt.setDepartment(department);empdt.setLastworkingday(lastworkingday);
+		//empdt.setFname(firstname);empdt.setLname(lastname);empdt.setUname(uname);empdt.setEid(empid);empdt.setPswd(pswd);
+		//empdt.setCpswd(cpswd);empdt.setJdate(joindate);empdt.setPhone(phone);empdt.setCompName(company);empdt.setDepartment(department);empdt.setLastworkingday(lastworkingday);
 		session.saveOrUpdate(empdt);
 		System.out.println("updated");
 		session.getTransaction().commit();
@@ -281,7 +281,7 @@ return "error occured while updating";}
 	
 		// iterate a list and filter by tagName
 		for (EmpDetails tag : emp1) {
-			if (tag.getFname().contains(tagName)) {
+			if (tag.getEmplfirstname().contains(tagName)) {
 				result.add(tag);
 			}
 		}
@@ -300,7 +300,7 @@ return "error occured while updating";}
 	
 		// iterate a list and filter by tagName
 		for (EmpDetails tag : emp1) {
-			if (tag.getFname().contains(tagName)) {
+			if (tag.getEmpllastname().contains(tagName)) {
 				result.add(tag);
 			}
 		}
@@ -343,20 +343,22 @@ query.registerStoredProcedureParameter(7,Boolean.class, ParameterMode.IN);query.
 query.registerStoredProcedureParameter(9,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(10,String.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(11,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(12,Date.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(13,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(14,Date.class, ParameterMode.IN);
-query.registerStoredProcedureParameter(15,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(16,String.class, ParameterMode.IN);
-query.registerStoredProcedureParameter(17,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(18,String.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(15,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(16,Integer.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(17,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(18,String.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(19,Integer.class, ParameterMode.OUT);
-System.out.println(id);
-
+int deptid=Integer.parseInt(dept);int desid=Integer.parseInt(des);
 query.setParameter(1,id);query.setParameter(2,empid);query.setParameter(3,fname);query.setParameter(4,lname);query.setParameter(5,email);query.setParameter(6,pswd);
 query.setParameter(7,true);query.setParameter(8,addres);query.setParameter(9,ph);query.setParameter(10,adr);query.setParameter(11,crby);query.setParameter(12,new Date());
-query.setParameter(13,upby);query.setParameter(14,new Date());query.setParameter(15,role);query.setParameter(16,dept);query.setParameter(17,des);query.setParameter(18,uname);
+query.setParameter(13,upby);query.setParameter(14,new Date());query.setParameter(15,role);
+query.setParameter(16,deptid);query.setParameter(17,desid);query.setParameter(18,uname);
 query.execute();
-int a=(int) query.getOutputParameterValue(9);
+
+int a=(int) query.getOutputParameterValue(19);
 	System.out.println(a);
 		}
 		catch(Exception e)
 		{
+			System.out.println(e);
 			return "Employee already Exits";
 		}
 	return "Employee added successfully";

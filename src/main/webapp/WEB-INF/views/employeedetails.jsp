@@ -91,8 +91,8 @@
 							<div class="user-card">
 								<img class="img-responsive" src="${images}/mail/1.jpg" alt="" />
 								<div class="user-card-info">
-									<h6>${employee.getFname()}${employee.getLname()}</h6>
-									<span>${employee.getDesignation()}</span>
+									<h6>${employee.getEmplfirstname()}${employee.getEmpllastname()}</h6>
+									<%-- <span>${employee.getDesignation()}</span> --%>
 									<div class="user-card-socials">
 										<a href="#" title=""><i class="fa fa-twitter"></i></a> <a
 											href="#" title=""><i class="fa fa-facebook"></i></a>
@@ -119,21 +119,21 @@
 									<td>:</td>
 									<td>${employee.getEid()}</td>
 								</tr>
-								<tr>
+								 <tr>
 									<td>Joining Date:</td>
 									<td>:</td>
-									<td>${employee.getJdate()}</td>
-								</tr>
+									<td>${employee.getCreatedDate()}</td>
+								</tr> 
 								<tr>
 									<td>Phone:</td>
 									<td>:</td>
 									<td>${employee.getPhone()}</td>
 								</tr>
-								<tr>
+								<%-- <tr>
 									<td>Company:</td>
 									<td>:</td>
 									<td>${employee.getCompName()}</td>
-								</tr>
+								</tr> --%>
 							</table>
 							
 							
