@@ -83,7 +83,7 @@ public class ManagerPageController {
    
 	Client c = new Client();
     
-	@RequestMapping(value= "/manager/leave/register")
+/*	@RequestMapping(value= "/manager/leave/register")
 	public ModelAndView empLeavePage(HttpSession session) {
 		ModelAndView mav = new ModelAndView("empleaverequests");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -111,8 +111,8 @@ public class ManagerPageController {
 		mav.addObject("nleave",numofleaves);
 		return mav;
 	}
-
-	@RequestMapping(value="/manager/allemp/register")
+*/
+/*	@RequestMapping(value="/manager/allemp/register")
 	public ModelAndView allEmpPage() {
 		ModelAndView mav = new ModelAndView("employees");
 		mav.addObject("manservices", mandao.list());	
@@ -141,7 +141,7 @@ public class ManagerPageController {
 		mav.addObject("User",user);
 		mav.addObject("employees", emp1);
 		return mav;		
-	}
+	}*/
 	/*@RequestMapping(value="/manager/allemp/register", method=RequestMethod.POST)
 	public ModelAndView saveEmpPage(HttpServletRequest request, HttpServletResponse response) throws ConstraintViolationException{
 
@@ -187,7 +187,7 @@ public class ManagerPageController {
 
 		return mav;		
 	}*/
-
+/*
 	@RequestMapping(value="/manager/allemp/register/{id}/employeedetails")
 	public ModelAndView eachEmpDetailsPage(@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("employeedetails");
@@ -213,11 +213,11 @@ public class ManagerPageController {
 		mav.addObject("employees", emp1);
 		return mav;		
 	}
-
+*/
 	/*
 	 * Post Method Handelling method
 	 */
-	@RequestMapping(value= "/manager/leave/register", method=RequestMethod.POST)
+/*	@RequestMapping(value= "/manager/leave/register", method=RequestMethod.POST)
 	public ModelAndView manLeaveRequestPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
 
@@ -231,15 +231,15 @@ public class ManagerPageController {
 		String role = user.getRole();
 		mav.addObject("Role",role);
 
-		/**
+		*//**
 		 * Handling request from empleaverequests.jsp form with post action.
-		 */
+		 *//*
 
 		String fromdate = request.getParameter("fromdate");
 		//String[] date = fromdate.split("-");
 		String todate = request.getParameter("todate");
 		SimpleDateFormat formatfromdate = new SimpleDateFormat("yyyy-mm-dd");
-		/*Date reqfromDate = null;
+		Date reqfromDate = null;
 		Date reqtoDate = null;
 		try {
 			reqfromDate = formatfromdate.parse(fromdate);
@@ -247,7 +247,7 @@ public class ManagerPageController {
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}*/
+		}
 
 		LocalDate Day1 = LocalDate.parse(fromdate);
 		LocalDate Day2 = LocalDate.parse(todate);
@@ -302,9 +302,9 @@ public class ManagerPageController {
 			return mav;
 		}
 
-	}
+	}*/
 
-	@RequestMapping(value= "/manager/profile/register")
+/*	@RequestMapping(value= "/manager/profile/register")
 	public ModelAndView empProfilePage() {
 		ModelAndView mav = new ModelAndView("useremployee");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -327,7 +327,7 @@ public class ManagerPageController {
 		Set<String> keys = using.keySet();
 		Iterator itr = keys.iterator();
 		int pleave=0;
-	/*	for(Tblleaves li:numofleaves) {
+		for(Tblleaves li:numofleaves) {
 			System.out.println(li.getLeavetype());
 			System.out.println(using);
 			while(itr.hasNext())
@@ -349,7 +349,7 @@ public class ManagerPageController {
 		System.out.println(pending);
 		mav.addObject("pleave",pending);
 		mav.addObject("using",using);
-		mav.addObject("nleave",numofleaves);*/
+		mav.addObject("nleave",numofleaves);
 		mav.addObject("medical",a[0]);
 		mav.addObject("casual",a[1]);
 		mav.addObject("sick",a[2]);
@@ -360,9 +360,9 @@ public class ManagerPageController {
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
 		return mav;
-	}
+	}*/
 
-	@RequestMapping(value= "/manager/timesheet/register")
+/*	@RequestMapping(value= "/manager/timesheet/register")
 	public ModelAndView indvidtimesheet(HttpSession session) {
 		ModelAndView mav = new ModelAndView("emptimesheet");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -387,8 +387,8 @@ public class ManagerPageController {
 		mav.addObject("User", user);
 		mav.addObject("employees", emp1);
 		return mav;
-	}
-	@RequestMapping(value= "/manager/timesheet/register/{id}")
+	}*/
+/*	@RequestMapping(value= "/manager/timesheet/register/{id}")
 	public ModelAndView indvidtimesheets(HttpSession session,@PathVariable("id") String id) {
 
 		ModelAndView mav = new ModelAndView("emptimesheet");
@@ -423,7 +423,7 @@ public class ManagerPageController {
 
 		return mav;
 	}
-	
+	*/
 	@RequestMapping(value= "/manager/timesheet/register", method=RequestMethod.POST)
 	public ModelAndView timesheetSave(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("emptimesheet");
@@ -460,15 +460,15 @@ public class ManagerPageController {
 */		attimpl.save(attedance);
 		List<TblEmpAttendanceNew> attendances =  attimpl.viewbyid(user.getEid());
 		System.out.println(attendances);
-		List<TblEmpLeavereq> allempleave = ers.view();
-		int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
+		//List<TblEmpLeavereq> allempleave = ers.view();
+		//int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
 		
 		
 			
 		mav.addObject("empattendances",empattendances);
-		mav.addObject("allempleave", allempleave);
-		mav.addObject("count",count);
+	//	mav.addObject("allempleave", allempleave);
+	//	mav.addObject("count",count);
 		mav.addObject("attendancelist",attendances);
 		mav.addObject("manservices", mandao.list());
 		mav.addObject("User", user);
@@ -477,7 +477,7 @@ public class ManagerPageController {
 		
 		emailSubject = "New Time Sheet For:";
 		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getEmplfirstname()+" "+user.getEmpllastname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
-		emailToRecipient = c.getMail(user.getCreatedby());
+	//	emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
 		System.out.println("send mail");
@@ -487,7 +487,7 @@ public class ManagerPageController {
 	}
 
 
-
+/*
 	@RequestMapping(value= "manager/leaverequests/register")
 	public ModelAndView allleaverequests(HttpSession session) {
 		ModelAndView mav = new ModelAndView("allempleaverequests");
@@ -510,9 +510,9 @@ public class ManagerPageController {
 		mav.addObject("count",count);
 		return mav;
 	}
+*/
 
-
-	@RequestMapping(value= "manager/employeetimesheets/register")
+/*	@RequestMapping(value= "manager/employeetimesheets/register")
 	public ModelAndView allAttRequests(HttpSession session) {
 		ModelAndView mav = new ModelAndView("allemptimesheetrequests");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -535,9 +535,9 @@ public class ManagerPageController {
 		mav.addObject("User",user);
 		mav.addObject("manservices", mandao.list());	
 		return mav;
-	}
+	}*/
 
-	@RequestMapping(value= "/manager/leave/delete/{id}")
+	/*@RequestMapping(value= "/manager/leave/delete/{id}")
 	public ModelAndView empLeavedeletePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/manager/leave/register");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -545,10 +545,10 @@ public class ManagerPageController {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblEmpLeavereq> leavereq =  ers.viewbyid(user.getEid());
-		String DelMsg = ers.delete(id);
-		List<TblEmpLeavereq> allempleave = ers.view();
-		int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
+	//	List<TblEmpLeavereq> leavereq =  ers.viewbyid(user.getEid());
+		//String DelMsg = ers.delete(id);
+		//List<TblEmpLeavereq> allempleave = ers.view();
+		//int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
 		mav.addObject("empleave", leavereq);
@@ -556,8 +556,8 @@ public class ManagerPageController {
 		mav.addObject("manservices", mandao.list());	
 		List<EmpDetails> emp1 = userDetails.getDetails();
 		mav.addObject("employees", emp1);
-		return mav;
-	}
+		return mav;*/
+	
 
 	/*
 	 * Leave Approve and Decline Handlers
@@ -571,17 +571,17 @@ public class ManagerPageController {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblEmpLeavereq> leavereq =  ers.view();
+		//List<TblEmpLeavereq> leavereq =  ers.view();
 		String reason = "Approved";
 		boolean status = true;
-		String UMsg = ers.update(id,reason,status);
+	//	String UMsg = ers.update(id,reason,status);
 		
-		mav.addObject("empleave", leavereq);
-		mav.addObject("UMsg", UMsg+" "+reason);
+		//mav.addObject("empleave", leavereq);
+	//	mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());
 		emailSubject = "Leave Request Status For:";
 		emailMessage = "A new Leave Request was approved :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
-		emailToRecipient = c.getMail(user.getCreatedby());
+		//emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		return mav;
@@ -594,17 +594,17 @@ public class ManagerPageController {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblEmpLeavereq> leavereq =  ers.view();
+		//List<TblEmpLeavereq> leavereq =  ers.view();
 		String reason = "Decline";
 		boolean status = false;
-		String UMsg = ers.update(id,reason,status);
-		mav.addObject("empleave", leavereq);
-		mav.addObject("UMsg", UMsg+" "+reason);
+		//String UMsg = ers.update(id,reason,status);
+		//mav.addObject("empleave", leavereq);
+		//mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());
 		
 		emailSubject = "Leave Request Status For:";
 		emailMessage = "A new Leave Request was declined :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
-		emailToRecipient = c.getMail(user.getCreatedby());
+	//	emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 
@@ -630,7 +630,7 @@ public class ManagerPageController {
 		
 		emailSubject = "Time Sheet Request Status For:";
 		emailMessage = "A new Time Sheet Request was approved :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
-		emailToRecipient = c.getMail(user.getCreatedby());
+	//	emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		return mav;
@@ -649,7 +649,7 @@ public class ManagerPageController {
 		
 		emailSubject = "Time Sheet Request Status For:";
 		emailMessage = "A new Time Sheet Request was declined :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
-		emailToRecipient = c.getMail(user.getCreatedby());
+	//	emailToRecipient = c.getMail(user.getCreatedby());
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
      
@@ -691,7 +691,7 @@ public class ManagerPageController {
 		mav.addObject("manservices", mandao.list());	
 		return mav;
 	}
-    @RequestMapping(value= "/manager/timesheet/search")
+/*    @RequestMapping(value= "/manager/timesheet/search")
  public ModelAndView indvidtimesheetSearch(HttpSession session,HttpServletRequest request) {
   ModelAndView mav = new ModelAndView("emptimesheet");
   Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -717,8 +717,8 @@ public class ManagerPageController {
   mav.addObject("User", user);
   mav.addObject("employees", emp1);
   return mav;
- }
-    @RequestMapping(value="/manager/search/register")
+ }*/
+/*    @RequestMapping(value="/manager/search/register")
 	public ModelAndView empLeaveSearch(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("allempleaverequests");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -741,8 +741,8 @@ public class ManagerPageController {
 		mav.addObject("manservices", mandao.list());	
 		mav.addObject("count",count);
 		return mav;
-	}
-    @RequestMapping(value= "/manager/leave/search")
+	}*/
+ /*   @RequestMapping(value= "/manager/leave/search")
     public ModelAndView managerLeaveSearch(HttpServletRequest request) {
      ModelAndView mav = new ModelAndView("empleaverequests");
      Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -766,14 +766,14 @@ public class ManagerPageController {
      mav.addObject("employees", emp1);
      mav.addObject("count",count);
      return mav;
-   }
+   }*/
     @RequestMapping(value= "/manager/timesheet/delete/{id}")
 	public ModelAndView empTimeSheetdeletePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/manager/timesheet/register");
 		String DelMsg = attimpl.delete(id);
 		return mav;
 	}
-    @RequestMapping(value="/manager/employee/search", method=RequestMethod.POST)
+/*    @RequestMapping(value="/manager/employee/search", method=RequestMethod.POST)
 	public ModelAndView searchBars(HttpServletRequest req) {
 
 		String firstname = req.getParameter("firstname");
@@ -818,7 +818,7 @@ public class ManagerPageController {
 
 		mav.addObject(user);
 		return mav;		
-	}
+	}*/
     
     @RequestMapping(value="/manager/employee/search")
     public ModelAndView empSearchBars() {
@@ -888,7 +888,7 @@ public class ManagerPageController {
 		mav.addObject("Role",role);
 		//List<TblEmpLeavereq> allempleave = ers.view();
 		//List<TblEmpLeavereq> leavereq =  ers.viewbyid(id);
-		TblEmpLeavereq leavereq=ers.getById(id);
+		//TblEmpLeavereq leavereq=ers.getById(id);
 		//int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
 		//List<EmpDetails> emp1 = userDetails.getDetails();
 		//List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
@@ -896,8 +896,8 @@ public class ManagerPageController {
 	//	mav.addObject("allempleave", allempleave);
 	//	mav.addObject("count",count);
 		mav.addObject("User", user);
-		mav.addObject("empleave", leavereq);
-		System.out.println(leavereq);
+		/*mav.addObject("empleave", leavereq);
+		System.out.println(leavereq);*/
 		//mav.addObject("manservices", mandao.list());
 		//mav.addObject("employees", emp1);
 		//mav.addObject("count",count);
@@ -912,7 +912,7 @@ public class ManagerPageController {
 			
 	}
 
-	@RequestMapping(value="manager/leave/upload/{id}")
+	/*@RequestMapping(value="manager/leave/upload/{id}")
 	public ModelAndView updateLeaveRequest(HttpServletRequest request,@PathVariable("id") int id) {
 		//ModelAndView mav = new ModelAndView("redirect:/admin/search/register");
 		String fromdate = request.getParameter("fromdate");
@@ -943,7 +943,7 @@ public class ManagerPageController {
 		ModelAndView mav = new ModelAndView("redirect:/manager/leaverequests/register");
 		return mav;
 
-	}
+	}*/
 
 	
 

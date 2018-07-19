@@ -1,5 +1,6 @@
 package mylas.com.erp.demo.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,8 @@ import mylas.com.erp.demo.TblEmpLeavereq;
 
 public interface EmpLeaveRequestDao {
 
-	public void save(TblEmpLeavereq empleavereq);
+	public String saveLeaveRequest();
+	/*public void save(TblEmpLeavereq empleavereq);
 	public List<TblEmpLeavereq> view();
 	public List<TblEmpLeavereq> viewbyid(String empid);
 	public List<TblEmpLeavereq> viewbyManagerid(String mgrid);
@@ -26,5 +28,5 @@ public interface EmpLeaveRequestDao {
 	public TblEmpLeavereq getById(int id);
 	public void EmailSend(int id,int count);
 	public int[] countSum(String eid);
-	public Map count(String eid);
+	public Map count(String eid);*/
 }

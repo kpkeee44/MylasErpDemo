@@ -1,5 +1,5 @@
 package mylas.com.erp.demo;
-// Generated Jul 17, 2018 11:03:26 AM by Hibernate Tools 5.3.0.Beta2
+// Generated Jul 19, 2018 12:46:33 PM by Hibernate Tools 5.3.0.Beta2
 
 import java.util.Date;
 
@@ -11,9 +11,9 @@ public class TblDepartment implements java.io.Serializable {
 	private Integer departmentid;
 	private String departmentname;
 	private Boolean isactive;
-	private String createdby;
+	private Integer createdby;
 	private Date createddate;
-	private String updatedby;
+	private Integer updatedby;
 	private Date updateddate;
 
 	public TblDepartment() {
@@ -23,8 +23,8 @@ public class TblDepartment implements java.io.Serializable {
 		this.departmentname = departmentname;
 	}
 
-	public TblDepartment(String departmentname, Boolean isactive, String createdby, Date createddate, String updatedby,
-			Date updateddate) {
+	public TblDepartment(String departmentname, Boolean isactive, Integer createdby, Date createddate,
+			Integer updatedby, Date updateddate) {
 		this.departmentname = departmentname;
 		this.isactive = isactive;
 		this.createdby = createdby;
@@ -57,11 +57,11 @@ public class TblDepartment implements java.io.Serializable {
 		this.isactive = isactive;
 	}
 
-	public String getCreatedby() {
+	public Integer getCreatedby() {
 		return this.createdby;
 	}
 
-	public void setCreatedby(String createdby) {
+	public void setCreatedby(Integer createdby) {
 		this.createdby = createdby;
 	}
 
@@ -73,11 +73,11 @@ public class TblDepartment implements java.io.Serializable {
 		this.createddate = createddate;
 	}
 
-	public String getUpdatedby() {
+	public Integer getUpdatedby() {
 		return this.updatedby;
 	}
 
-	public void setUpdatedby(String updatedby) {
+	public void setUpdatedby(Integer updatedby) {
 		this.updatedby = updatedby;
 	}
 

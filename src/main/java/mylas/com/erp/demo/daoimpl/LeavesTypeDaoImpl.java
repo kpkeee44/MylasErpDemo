@@ -7,7 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
 
-import mylas.com.erp.demo.Holidays;
+
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.Tblleavestype;
 import mylas.com.erp.demo.appservices.GetSession;
@@ -72,7 +72,7 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 			}
 
 
-
+/*
 		@Override
 		public String updateLeaveType(int id,String leavetype,String eid,String active) throws org.hibernate.exception.ConstraintViolationException{
 		System.out.println();
@@ -106,7 +106,7 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 		
 			
 		}
-
+*/
 		@Override
 		public Tblleavestype getLeaveTypeById(int id) {
 
@@ -116,5 +116,11 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 				session.getTransaction().commit();
 				return tlt;
 			}
+
+@Override
+public String updateLeaveType(int id, String leavetype, String eid, String active) {
+	// TODO Auto-generated method stub
+	return null;
+}
 			
 		}

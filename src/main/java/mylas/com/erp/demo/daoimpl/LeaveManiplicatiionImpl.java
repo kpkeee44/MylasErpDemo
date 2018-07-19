@@ -24,7 +24,7 @@ import org.springframework.stereotype.Repository;
 
 
 import mylas.com.erp.demo.EmpDetails;
-import mylas.com.erp.demo.Holidays;
+
 import mylas.com.erp.demo.LeaveAddition;
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.Tblleaves;
@@ -48,7 +48,7 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 		return empatt;
 	}
 
-	@Override
+	/*@Override
 	public String save(String Ltype,int count,String uid) {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -65,9 +65,9 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 		Session session1 = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		try {
 			session1.beginTransaction();
-			Tblleaves add=new Tblleaves(id, count,true,uid, new Date(),null,null); 
+			//Tblleaves add=new Tblleaves(id, count,true,uid, new Date(),null,null); 
 			System.out.println("object created");
-			int num = (Integer) session1.save(add);
+			//int num = (Integer) session1.save(add);
 			System.out.println(num);
 			if(num!=0) {
 				System.out.println("LeaveType added successfully!....");
@@ -76,8 +76,8 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 				return "LeaveType added successfully!....";
 			}else {
 			
-				/*			session.getTransaction().commit();
-				 */			return "LeaveType already exists";
+							session.getTransaction().commit();
+				 			return "LeaveType already exists";
 			}
 
 		}catch(ConstraintViolationException e) {
@@ -86,7 +86,7 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 			return "LeaveType already exists";
 		}
 			
-		}
+		}*/
 
 	@Override
 	public List<LeaveAddition> getDetailsofleavetye() {
@@ -146,7 +146,7 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 		//deptdel.setLeavetype(leave.getLeavetype());
 		System.out.println("hi");
 		deptdel.setNumleavedays(day);
-		deptdel.setUpdatedby(eid);
+		//deptdel.setUpdatedby(eid);
 		deptdel.setUpdateddate(new Date());
 		System.out.println(active);
 		if(active.equals("true")) {
@@ -221,6 +221,12 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 			
 		}
 	return null;
+	}
+
+	@Override
+	public String save(String leavetype, int count, String uid) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

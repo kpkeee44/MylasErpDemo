@@ -1,5 +1,5 @@
 package mylas.com.erp.demo;
-// Generated Jul 18, 2018 2:23:08 PM by Hibernate Tools 5.3.0.Beta2
+// Generated Jul 19, 2018 12:46:33 PM by Hibernate Tools 5.3.0.Beta2
 
 import java.util.Date;
 
@@ -10,22 +10,25 @@ public class TblDesignation implements java.io.Serializable {
 
 	private Integer designationid;
 	private String designation;
+	private String departmentname;
 	private Boolean isactive;
-	private String createdBy;
+	private Integer createdBy;
 	private Date createddate;
-	private String updatedby;
+	private Integer updatedby;
 	private Date updateddate;
 
 	public TblDesignation() {
 	}
 
-	public TblDesignation(String designation) {
+	public TblDesignation(String designation, String departmentname) {
 		this.designation = designation;
+		this.departmentname = departmentname;
 	}
 
-	public TblDesignation(String designation, Boolean isactive, String createdBy, Date createddate, String updatedby,
-			Date updateddate) {
+	public TblDesignation(String designation, String departmentname, Boolean isactive, Integer createdBy,
+			Date createddate, Integer updatedby, Date updateddate) {
 		this.designation = designation;
+		this.departmentname = departmentname;
 		this.isactive = isactive;
 		this.createdBy = createdBy;
 		this.createddate = createddate;
@@ -49,6 +52,14 @@ public class TblDesignation implements java.io.Serializable {
 		this.designation = designation;
 	}
 
+	public String getDepartmentname() {
+		return this.departmentname;
+	}
+
+	public void setDepartmentname(String departmentname) {
+		this.departmentname = departmentname;
+	}
+
 	public Boolean getIsactive() {
 		return this.isactive;
 	}
@@ -57,11 +68,11 @@ public class TblDesignation implements java.io.Serializable {
 		this.isactive = isactive;
 	}
 
-	public String getCreatedBy() {
+	public Integer getCreatedBy() {
 		return this.createdBy;
 	}
 
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -73,11 +84,11 @@ public class TblDesignation implements java.io.Serializable {
 		this.createddate = createddate;
 	}
 
-	public String getUpdatedby() {
+	public Integer getUpdatedby() {
 		return this.updatedby;
 	}
 
-	public void setUpdatedby(String updatedby) {
+	public void setUpdatedby(Integer updatedby) {
 		this.updatedby = updatedby;
 	}
 

@@ -1,5 +1,5 @@
 package mylas.com.erp.demo;
-// Generated Jul 12, 2018 11:02:01 AM by Hibernate Tools 5.3.0.Beta2
+// Generated Jul 19, 2018 12:46:33 PM by Hibernate Tools 5.3.0.Beta2
 
 import java.util.Date;
 
@@ -12,9 +12,9 @@ public class Tblleaves implements java.io.Serializable {
 	private int leavetypeid;
 	private Integer numleavedays;
 	private Boolean isactive;
-	private String createdby;
+	private Integer createdby;
 	private Date createddate;
-	private String updatedby;
+	private Integer updatedby;
 	private Date updateddate;
 
 	public Tblleaves() {
@@ -24,8 +24,8 @@ public class Tblleaves implements java.io.Serializable {
 		this.leavetypeid = leavetypeid;
 	}
 
-	public Tblleaves(int leavetypeid, Integer numleavedays, Boolean isactive, String createdby, Date createddate,
-			String updatedby, Date updateddate) {
+	public Tblleaves(int leavetypeid, Integer numleavedays, Boolean isactive, Integer createdby, Date createddate,
+			Integer updatedby, Date updateddate) {
 		this.leavetypeid = leavetypeid;
 		this.numleavedays = numleavedays;
 		this.isactive = isactive;
@@ -67,11 +67,11 @@ public class Tblleaves implements java.io.Serializable {
 		this.isactive = isactive;
 	}
 
-	public String getCreatedby() {
+	public Integer getCreatedby() {
 		return this.createdby;
 	}
 
-	public void setCreatedby(String createdby) {
+	public void setCreatedby(Integer createdby) {
 		this.createdby = createdby;
 	}
 
@@ -83,11 +83,11 @@ public class Tblleaves implements java.io.Serializable {
 		this.createddate = createddate;
 	}
 
-	public String getUpdatedby() {
+	public Integer getUpdatedby() {
 		return this.updatedby;
 	}
 
-	public void setUpdatedby(String updatedby) {
+	public void setUpdatedby(Integer updatedby) {
 		this.updatedby = updatedby;
 	}
 

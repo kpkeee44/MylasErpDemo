@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated Jul 12, 2018 11:02:02 AM by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 19, 2018 12:46:33 PM by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
     <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.Tblleaves" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tblleaves">
         <id name="id" type="java.lang.Integer">
@@ -7,7 +7,7 @@
             <generator class="identity"/>
         </id>
         <property generated="never" lazy="false" name="leavetypeid" optimistic-lock="true" type="int" unique="false">
-            <column name="leavetypeid" not-null="true"/>
+            <column name="leavetypeid" not-null="true" unique="true"/>
         </property>
         <property generated="never" lazy="false" name="numleavedays" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="numleavedays"/>
@@ -15,14 +15,14 @@
         <property generated="never" lazy="false" name="isactive" optimistic-lock="true" type="java.lang.Boolean" unique="false">
             <column name="isactive"/>
         </property>
-        <property generated="never" lazy="false" name="createdby" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="createdby"/>
+        <property generated="never" lazy="false" name="createdby" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="createdby"/>
         </property>
         <property generated="never" lazy="false" name="createddate" optimistic-lock="true" type="timestamp" unique="false">
             <column length="23" name="createddate"/>
         </property>
-        <property generated="never" lazy="false" name="updatedby" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="updatedby"/>
+        <property generated="never" lazy="false" name="updatedby" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="updatedby"/>
         </property>
         <property generated="never" lazy="false" name="updateddate" optimistic-lock="true" type="timestamp" unique="false">
             <column length="23" name="updateddate"/>

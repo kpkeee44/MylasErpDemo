@@ -1,5 +1,5 @@
- package mylas.com.erp.demo;
-// Generated Jul 18, 2018 12:10:13 PM by Hibernate Tools 5.3.0.Beta2
+package mylas.com.erp.demo;
+// Generated Jul 19, 2018 12:46:33 PM by Hibernate Tools 5.3.0.Beta2
 
 import java.util.Date;
 
@@ -15,18 +15,18 @@ public class EmpDetails implements java.io.Serializable {
 	private String email;
 	private String pswd;
 	private Boolean isactive;
-	private String address;
+	private String adderss;
 	private String phone;
 	private String aadharno;
-	private String createdby;
+	private Integer createdby;
 	private Date createdDate;
-	private String updatedBy;
+	private Integer updatedBy;
 	private Date updatedDate;
 	private String role;
-	private String uname;
+	private String mantrans;
 	private Integer departmentid;
 	private Integer designationid;
-	private Integer superiorid;
+	private String uname;
 
 	public EmpDetails() {
 	}
@@ -37,16 +37,16 @@ public class EmpDetails implements java.io.Serializable {
 	}
 
 	public EmpDetails(String eid, String emplfirstname, String empllastname, String email, String pswd,
-			Boolean isactive, String address, String phone, String aadharno, String createdby, Date createdDate,
-			String updatedBy, Date updatedDate, String role, String uname, Integer departmentid, Integer designationid,
-			Integer superiorid) {
+			Boolean isactive, String adderss, String phone, String aadharno, Integer createdby, Date createdDate,
+			Integer updatedBy, Date updatedDate, String role, String mantrans, Integer departmentid,
+			Integer designationid, String uname) {
 		this.eid = eid;
 		this.emplfirstname = emplfirstname;
 		this.empllastname = empllastname;
 		this.email = email;
 		this.pswd = pswd;
 		this.isactive = isactive;
-		this.address = address;
+		this.adderss = adderss;
 		this.phone = phone;
 		this.aadharno = aadharno;
 		this.createdby = createdby;
@@ -54,10 +54,10 @@ public class EmpDetails implements java.io.Serializable {
 		this.updatedBy = updatedBy;
 		this.updatedDate = updatedDate;
 		this.role = role;
-		this.uname = uname;
+		this.mantrans = mantrans;
 		this.departmentid = departmentid;
 		this.designationid = designationid;
-		this.superiorid = superiorid;
+		this.uname = uname;
 	}
 
 	public Integer getId() {
@@ -116,12 +116,12 @@ public class EmpDetails implements java.io.Serializable {
 		this.isactive = isactive;
 	}
 
-	public String getAddress() {
-		return this.address;
+	public String getAdderss() {
+		return this.adderss;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAdderss(String adderss) {
+		this.adderss = adderss;
 	}
 
 	public String getPhone() {
@@ -140,11 +140,11 @@ public class EmpDetails implements java.io.Serializable {
 		this.aadharno = aadharno;
 	}
 
-	public String getCreatedby() {
+	public Integer getCreatedby() {
 		return this.createdby;
 	}
 
-	public void setCreatedby(String createdby) {
+	public void setCreatedby(Integer createdby) {
 		this.createdby = createdby;
 	}
 
@@ -156,11 +156,11 @@ public class EmpDetails implements java.io.Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public String getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return this.updatedBy;
 	}
 
-	public void setUpdatedBy(String updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -180,12 +180,12 @@ public class EmpDetails implements java.io.Serializable {
 		this.role = role;
 	}
 
-	public String getUname() {
-		return this.uname;
+	public String getMantrans() {
+		return this.mantrans;
 	}
 
-	public void setUname(String uname) {
-		this.uname = uname;
+	public void setMantrans(String mantrans) {
+		this.mantrans = mantrans;
 	}
 
 	public Integer getDepartmentid() {
@@ -204,12 +204,12 @@ public class EmpDetails implements java.io.Serializable {
 		this.designationid = designationid;
 	}
 
-	public Integer getSuperiorid() {
-		return this.superiorid;
+	public String getUname() {
+		return this.uname;
 	}
 
-	public void setSuperiorid(Integer superiorid) {
-		this.superiorid = superiorid;
+	public void setUname(String uname) {
+		this.uname = uname;
 	}
 
 }

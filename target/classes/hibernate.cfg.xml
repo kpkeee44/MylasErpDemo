@@ -26,12 +26,12 @@
   
  <!--   <mapping class="mylas.com.erp.demo.TblEmpAttendanceNewId" />-->
    <mapping resource="mylas/com/erp/demo/EmpDetails.hbm.xml"/>
-  <mapping resource="mylas/com/erp/demo/Email.hbm.xml"/>
+  <mapping resource="mylas/com/erp/demo/TblHolidays.hbm.xml"/>
+  <mapping resource="mylas/com/erp/demo/TblDepartment.hbm.xml"/>
   <mapping resource="mylas/com/erp/demo/TblDesignation.hbm.xml"/>
-  <mapping resource="mylas/com/erp/demo/TblEmpLeavereq.hbm.xml"/>
-    <mapping resource="mylas/com/erp/demo/Tblleavestype.hbm.xml"/> 
+    <mapping resource="mylas/com/erp/demo/TblEmpLeavereq.hbm.xml"/> 
      <mapping resource="mylas/com/erp/demo/Tblleaves.hbm.xml"/>
-        <mapping resource="mylas/com/erp/demo/TblHolidays.hbm.xml"/>
-         <mapping resource="mylas/com/erp/demo/TblDepartment.hbm.xml"/>
+        <mapping resource="mylas/com/erp/demo/TblLeavestatus.hbm.xml"/>
+         <mapping resource="mylas/com/erp/demo/Tblleavestype.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureQuery;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -17,6 +20,7 @@ import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.Tblleaves;
 import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.appservices.GetSession;
+import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.EmpLeaveRequestDao;
 
 
@@ -27,9 +31,72 @@ public class EmpLeaveRequestService implements EmpLeaveRequestDao {
 
 	static String emailToRecipient, emailSubject, emailMessage;
 
-
-
+	
+	
 	@Override
+	public String saveLeaveRequest() {
+		System.out.println("enter");
+			try(Session  s=HibernateUtil.getSessionFactory().openSession()){
+			System.out.println("inside try");
+			
+			StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_empleavereq");
+			query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(2,Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(3,String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(4,Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(5,String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(6,Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(7,Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(8,Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(9,Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(10,Boolean.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(11,Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(12,Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(13,Integer.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(14,Date.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(15,Integer.class, ParameterMode.OUT);
+		
+			System.out.println("exev proc");
+		query.setParameter(1,0);
+		query.setParameter(2,3);
+		query.setParameter(3,"njhcv");
+		System.out.println("before date");
+		query.setParameter(4,new Date());
+		System.out.println("aftre date");
+		query.setParameter(5,"lreason");
+		query.setParameter(6,2);
+		query.setParameter(7,3);
+		query.setParameter(8,3);
+		System.out.println("before date");
+		query.setParameter(9,new Date());
+		System.out.println("after date");
+		query.setParameter(10,true);
+		query.setParameter(11,1);
+		System.out.println("before date");
+		query.setParameter(12,new Date());
+		System.out.println("after date");
+		query.setParameter(13,1);
+		System.out.println("before date");
+		query.setParameter(14,new Date());
+		System.out.println("after date");
+		
+		query.execute();
+		
+		int a=(int) query.getOutputParameterValue(15);
+		System.out.println(a);
+		System.out.println("after exec");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			/*	return "Leave Request Failed to Send";*/
+			}
+		return "Your Leave Request has been sent. Wait for manager Approval";
+		}
+			
+
+
+	/*@Override
 	public void save(TblEmpLeavereq empleave) {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -381,10 +448,10 @@ return "error occured while updating";}
 		
 		int countcasual=0,countmedical=0,countsick=0;
 		List<TblEmpLeavereq> empleave=this.view();
-		/*Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		Query q =session.createQuery("from TblEmpLeavereq");
-		List<TblEmpLeavereq> empleave = q.list();*/
+		List<TblEmpLeavereq> empleave = q.list();
 		
 		for(TblEmpLeavereq  tbl:empleave)
 		{
@@ -398,12 +465,12 @@ return "error occured while updating";}
 		 int[] sum = new int[]{countmedical,countcasual,countsick}; 
 		//countleave[0]=countmedical;countleave[1]=countcasual;
 		System.out.println(countmedical);System.out.println(countcasual);
-		/*session.getTransaction().commit();*/
+		session.getTransaction().commit();
 	return sum;	
 	}
 	
 	
-	/*public Map count() {
+	public Map count() {
 		Map leavecount = new HashMap();
 		List<TblEmpLeavereq> empleave=this.view();
 		LeaveManiplicatiionImpl leave = new LeaveManiplicatiionImpl();
@@ -420,11 +487,11 @@ return "error occured while updating";}
 		}
 		return leavecount;
 	}
-*/
+
 	@Override
 	public Map count(String eid) {
 		Map leavecount = new HashMap();
-		/*List<TblEmpLeavereq> empleave=this.view();
+		List<TblEmpLeavereq> empleave=this.view();
 		LeaveManiplicatiionImpl leave = new LeaveManiplicatiionImpl();
 		List<Tblleaves> leavesCount = leave.getDetailsofleavetye();
 		for(Tblleaves leavename:  leavesCount) {
@@ -442,8 +509,8 @@ return "error occured while updating";}
 		}
 		
 		System.out.println(leavecount);
-		System.out.println("hi");*/
+		System.out.println("hi");
 		return leavecount;
-	}
+	}*/
 	
 }

@@ -78,17 +78,17 @@ public class EmployeePageController {
 		}
 		String role = user.getRole();
 		ModelAndView mav = new ModelAndView("empleaverequests");
-		List<TblEmpLeavereq> leavereq =  empleavereq.viewbyid(user.getEid());
+		//List<TblEmpLeavereq> leavereq =  empleavereq.viewbyid(user.getEid());
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
-		mav.addObject("empleave", leavereq);
+	//	mav.addObject("empleave", leavereq);
 		mav.addObject("empservices", empservicesdao.list());
 		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
 		mav.addObject("nleave",numofleaves);
 		return mav;
 	}
 
-	@RequestMapping(value= "/employee/profile/register")
+/*	@RequestMapping(value= "/employee/profile/register")
 	public ModelAndView empProfilePage() {
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		EmpDetails user=null;
@@ -96,15 +96,15 @@ public class EmployeePageController {
 			user = ((EmpDetails)principal);
 		}
 		String role = user.getRole();
-		int a[]=empleavereq.countSum(user.getEid());
+	//	int a[]=empleavereq.countSum(user.getEid());
 		ModelAndView mav = new ModelAndView("useremployee");
 		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
-		Map<String,Integer> using=empleavereq.count(user.getEid());
+		//Map<String,Integer> using=empleavereq.count(user.getEid());
 		Map<String,Integer> pending=new HashMap<>();
-		Set<String> keys = using.keySet();
-		Iterator itr = keys.iterator();
+		//Set<String> keys = using.keySet();
+		//Iterator itr = keys.iterator();
 		int pleave=0;
-		/*for(Tblleaves li:numofleaves) {
+		for(Tblleaves li:numofleaves) {
 			System.out.println(li.getLeavetype());
 			System.out.println(using);
 			while(itr.hasNext())
@@ -126,7 +126,7 @@ public class EmployeePageController {
 		System.out.println(pending);
 		mav.addObject("pleave",pending);
 		mav.addObject("using",using);
-		mav.addObject("nleave",numofleaves);*/
+		mav.addObject("nleave",numofleaves);
 		mav.addObject("Role", role);
 		mav.addObject("User", user);
 		mav.addObject("medical",a[0]);
@@ -138,7 +138,7 @@ public class EmployeePageController {
 		mav.addObject("empservices", empservicesdao.list());	
 		return mav;
 	}
-
+*/
 	/*
 	 * Test Comment
 	 */
@@ -320,21 +320,21 @@ public class EmployeePageController {
 			dayCount=3;
 		else
 			dayCount=(int) (daysNegative1-1);
-		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
+		TblEmpLeavereq empleave = new TblEmpLeavereq();
 		//empleave.setManagerid(user.getManagerid());
 		empleave.setEmployeeid(user.getEid());
-		empleave.setStatus(null);
-		empleavereq.save(empleave);		
+		//empleave.setStatus(null);
+		//empleavereq.save(empleave);		
 		System.out.println("Req Sent to Save");
 
 	
 		List<EmpDetails> emp1 = cl.getDetails();
-		List<TblEmpLeavereq> leavereq =  empleavereq.viewbyid(user.getEid());
+		//List<TblEmpLeavereq> leavereq =  empleavereq.viewbyid(user.getEid());
 		mav.addObject("employees", emp1);
-		mav.addObject("empleave", leavereq);
+		//mav.addObject("empleave", leavereq);
 		mav.addObject("empservices", empservicesdao.list());	
 		mav.addObject("employees", emp1);
-		mav.addObject("empleave", leavereq);
+		//mav.addObject("empleave", leavereq);
 		mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
 		mav.addObject("Role",role);
 		emailSubject = "New Leave Request For:";
@@ -359,11 +359,11 @@ public class EmployeePageController {
 	  String role = user.getRole();
 	  ModelAndView mav = new ModelAndView("empleaverequests");
 	  System.out.println(request.getParameter("month"));
-	  List<TblEmpLeavereq> leavereq =  empleavereq.empLeaveSearch(user.getEid(),request.getParameter("month"), request.getParameter("status"));
+	//  List<TblEmpLeavereq> leavereq =  empleavereq.empLeaveSearch(user.getEid(),request.getParameter("month"), request.getParameter("status"));
 	   
 	  mav.addObject("Role",role);
 	  mav.addObject("User", user);
-	  mav.addObject("empleave", leavereq);
+	 // mav.addObject("empleave", leavereq);
 	  mav.addObject("empservices", empservicesdao.list());
 	  return mav;
 	 }
@@ -382,7 +382,7 @@ public class EmployeePageController {
 	@RequestMapping(value= "/employee/leave/delete/{id}")
 	public ModelAndView empLeavedeletePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/employee/leave/register");
-		String DelMsg = empleavereq.delete(id);
+		//String DelMsg = empleavereq.delete(id);
 		return mav;
 	}
 	@RequestMapping(value= "/employee/timesheet/delete/{id}")

@@ -87,10 +87,22 @@ return "Save Failed";
 	}
 
 	@Override
+	public String returnToMainManager(String manid, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String changeMainManager(String frommanid, String tomanid, int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+/*	@Override
 	public String returnToMainManager(String manid , int id) {		
 		List<EmpDetails> employees = client.getByManid(manid);
 		List<TblEmpAttendanceNew> attrequests = empattreq.viewbymanagerid(manid);
-		List<TblEmpLeavereq> leaverequests = empleavereq.viewbyManagerid(manid);
+		//List<TblEmpLeavereq> leaverequests = empleavereq.viewbyManagerid(manid);
 		if(employees != null) {
 			for(EmpDetails employee : employees) {
 				client.ChangeManager(employee.getId());
@@ -115,10 +127,10 @@ return "Save Failed";
 		session.update(roletransfer);
 		session.getTransaction().commit();
 		return null;
-	}
+	}*/
 
 	
-	@Override
+	/*@Override
 	 public String changeMainManager(String frommanid, String tomanid, int id) {
 	  List<EmpDetails> employees = client.getByManid(frommanid);
 	  List<TblEmpAttendanceNew> attrequests = empattreq.viewbymanagerid(frommanid);
@@ -151,7 +163,7 @@ return "Save Failed";
 	  session.update(roletransfer);
 	  session.getTransaction().commit();
 	  return null;
-	 }
+	 }*/
 	
 
 }
