@@ -137,6 +137,25 @@
 									</div>
 								</div>
 							</div>
+								<div class="col-md-8 col-xs-8">
+                                            <ul class="list-inline">
+                                                <li class="eagle-checkbox">
+                                                    <label class="eagle-check custom-radio">
+                                                        <input id="active1" name="active" value="true" type="radio" class="eagle-check-input" >
+                                                        <span class="eagle-check-indicator"></span>
+                                                        <span class="eagle-check-description">Active</span>
+                                                    </label>
+                                                </li>
+                                                <li class="eagle-checkbox">
+                                                    <label class="eagle-check custom-radio">
+                                                        <input id="active1" name="active" value="false" type="radio" class="eagle-check-input">
+                                                        <span class="eagle-check-indicator"></span>
+                                                        <span class="eagle-check-description">InActive</span>
+                                                    </label>
+                                                </li>
+                                               
+                                            </ul>
+                                        </div>
 			<!-- 				<div class="col-md-6">
 								<div class="form-group">
 									<div class="input-group addon-line">

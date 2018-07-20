@@ -23,35 +23,36 @@ public class DesignationService implements DesignationDao {
 
 
 	@Override
-	 public String saveDetails(int id,String dname,String deptname,boolean active,String cby,String uby){
-		//System.out.println(id+" 1"+name+" 2"+dt+"3 "+active+"4 "+eid+"5 "+cdt+"5 "+upby+"6 "+update);
+	 public String saveDetails(int id,String dname,String active,int cby,int uby){
+		System.out.println(id+" 1\t"+dname+" 2\t"+active+"4\t "+cby+"5\t "+uby);
 		try(Session  s=HibernateUtil.getSessionFactory().openSession())
 		{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_designation");
 		query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);
 		query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(3,String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(4,Boolean.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(5,String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(6,Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(7,String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(8,Date.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter(9,Integer.class, ParameterMode.OUT);
+		query.registerStoredProcedureParameter(3,Boolean.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(4,Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(5,Date.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(6,Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(7,Date.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(8,Integer.class, ParameterMode.OUT);
 		System.out.println(id);
 	query.setParameter(1,id);
 	query.setParameter(2,dname);
-	query.setParameter(3,deptname);
-	query.setParameter(4,active);
-	query.setParameter(5,cby);
-	query.setParameter(6,new Date());
-	query.setParameter(7,uby);
-	query.setParameter(8,new Date());
+	if(active.equals("false")) {
+	query.setParameter(3,false);}
+	else{query.setParameter(3,true);}
+	query.setParameter(4,cby);
+	query.setParameter(5,new Date());
+	query.setParameter(6,uby);
+	query.setParameter(7,new Date());
 	query.execute();
 	
-	int a=(int) query.getOutputParameterValue(9);
+	int a=(int) query.getOutputParameterValue(8	);
 	System.out.println(a);
 		}
 		catch(Exception e)
 		{
+			System.out.println(e);
 			return "Designation name already Exits";
 		}
 	return "updated successfully";
@@ -62,7 +63,7 @@ public class DesignationService implements DesignationDao {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();	
 		System.out.println("5aa");
-		Query q = session.createQuery("from TblDesignation");
+		Query q = session.createQuery("from TblDesignation where isactive=1");
 		System.out.println("12");
 		List<TblDesignation> emp1 = q.list();
 		System.out.println("14");
@@ -130,6 +131,16 @@ public class DesignationService implements DesignationDao {
 		  TblDesignation deptdel = session.get(TblDesignation.class, id);
 		  session.getTransaction().commit();
 		  return deptdel;
+	}
+
+	@Override
+	public List<TblDesignation> getDetailsview() {
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();	
+		Query q = session.createQuery("from TblDesignation");
+		List<TblDesignation> emp1 = q.list();
+		session.getTransaction().commit();
+		return (emp1);
 	}
 
 

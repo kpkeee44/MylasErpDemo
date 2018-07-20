@@ -2,7 +2,11 @@ package mylas.com.erp.demo.daoimpl;
 
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceException;
+import javax.persistence.StoredProcedureQuery;
+
 import org.hibernate.Session;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.query.Query;
@@ -11,6 +15,7 @@ import org.hibernate.query.Query;
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.Tblleavestype;
 import mylas.com.erp.demo.appservices.GetSession;
+import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.LeavesTypeDao;
 
 	public class LeavesTypeDaoImpl implements LeavesTypeDao {
@@ -121,6 +126,41 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 public String updateLeaveType(int id, String leavetype, String eid, String active) {
 	// TODO Auto-generated method stub
 	return null;
+}
+
+@Override
+public String saveLeave(int id, String ltype, String active, int cby, int uby) {
+
+	try(Session  s=HibernateUtil.getSessionFactory().openSession())
+	{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insupdLeavetype");
+	query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);
+	query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
+	query.registerStoredProcedureParameter(3,Boolean.class, ParameterMode.IN);
+	query.registerStoredProcedureParameter(4,Integer.class, ParameterMode.IN);
+	query.registerStoredProcedureParameter(5,Date.class, ParameterMode.IN);
+	query.registerStoredProcedureParameter(6,Integer.class, ParameterMode.IN);
+	query.registerStoredProcedureParameter(7,Date.class, ParameterMode.IN);
+	query.registerStoredProcedureParameter(8,Integer.class, ParameterMode.OUT);
+	System.out.println(id);
+query.setParameter(1,id);
+query.setParameter(2,ltype);
+if(active.equals("false")) {query.setParameter(3,false);}
+else {query.setParameter(3,true);}
+query.setParameter(4,cby);
+query.setParameter(5,new Date());
+query.setParameter(6,uby);
+query.setParameter(7,new Date());
+query.execute();
+
+int a=(int) query.getOutputParameterValue(8);
+System.out.println(a);
+	}
+	catch(Exception e)
+	{
+		return "Leavetype already exists";
+	}
+return "updated successfully";
+
 }
 			
 		}

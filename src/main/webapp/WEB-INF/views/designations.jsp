@@ -140,7 +140,7 @@
 
 							</div>
 
-							<div class="col-md-6">
+							<%-- <div class="col-md-6">
 								<div class="form-group">
 									<div class="form-line">
 										<label>Department</label> <select class="form-control"
@@ -153,7 +153,7 @@
 										</select>
 									</div>
 								</div>
-							</div>
+							</div> --%>
 							<!-- <div class="col-md-6">
 
 								<div class="form-group">
@@ -200,7 +200,7 @@
 										<tr>
 
 											<th data-tablesaw-sortable-col data-tablesaw-priority="3">Designation</th>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="4">Department</th>
+										<!-- 	<th data-tablesaw-sortable-col data-tablesaw-priority="4">Department</th> -->
 											<!-- <th data-tablesaw-sortable-col data-tablesaw-priority="4">From</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="4">To</th> -->
 											<th data-tablesaw-sortable-col data-tablesaw-priority="4">Active
@@ -221,7 +221,7 @@
 
 											<tr>
 												<td>${desig.getDesignation()}</td>
-												<td>${desig.getDepartmentname()}</td>
+											<%-- 	<td>${desig.getDepartmentname()}</td> --%>
 												<%-- <td>${desig.getCreateddate()}</td> --%>
 												<%-- <c:if test="${desig.getTodate() == null}">
 													<td>--/--/--</td>

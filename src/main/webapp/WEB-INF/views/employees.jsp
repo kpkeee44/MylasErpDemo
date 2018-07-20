@@ -384,9 +384,9 @@
 							 <c:set var="manager" value="${User.getEid()}" />
 								<%-- <c:set var="compname" value="${User.getCompName()}" /> --%>
 
-								<c:forEach items="${employees}" var="empl">
-									<%-- <c:if test="${empl.getCompName() == compname}">
-									<c:if test="${empl.getManagerid() ==  manager}"> --%>
+								<%-- <c:forEach items="${employees}" var="empl">
+									<c:if test="${empl.getCompName() == compname}">
+									<c:if test="${empl.getManagerid() ==  manager}">
 
 
 
@@ -399,16 +399,16 @@
 														href="<%=request.getContextPath()%>/${role}/allemp/register/${empl.getId()}/employeedetails">
 														<img src="${images}/mail/one.jpg" alt="Contact Person">
 														<div class="profiletitlewidth hideOverflow ">${empl.getEmplfirstname()}${empl.getEmpllastname()}</div>
-														<%-- <div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div> --%>
+														<div class="userprofile_sub" style="text-align: center">${empl.getDesignation()}</div>
 													</a>
 												</div>
 											</td>
 											<td>${empl.getEid()}</td>
 											<td>${empl.getUname()}</td>
 											<td>${empl.getEmail()}</td>
-											<%-- <td>${empl.getJdate()}</td> --%>
+											<td>${empl.getJdate()}</td>
 											<td>${empl.getPhone()}</td>
-											<%-- <td>${empl.getCompName()}</td> --%>
+											<td>${empl.getCompName()}</td>
 											<td>
 
 												<ul class="tabelaction">
@@ -436,9 +436,9 @@
 
 
 
-									<%-- </c:if>
-									</c:if> --%>
-								</c:forEach>
+									</c:if>
+									</c:if>
+								</c:forEach> --%>
 								<c:if test="${Role.equals('ADMIN_ROLE')}">
 									<c:forEach items="${employees}" var="empl">
 										<%-- <c:if test="${empl.getManagerid() !=  manager}"> --%>
@@ -447,7 +447,7 @@
 													<td>
 														<div class="chip">
 															<a
-																href="<%=request.getContextPath()%>/admin/allemp/register/${empl.getId()}/employeedetails">
+																href="${contextRoot}/admin/profile/register/${empl.getId()}">
 																<img src="${images}/mail/one.jpg" alt="Contact Person">
 																<div class="profiletitlewidth hideOverflow ">${empl.getEmplfirstname()}
 																	${empl.getEmpllastname()}</div>
@@ -477,11 +477,11 @@
 																			href="${contextRoot}/admin/empdetais/edit/${empl.getId()}"
 																			class=" waves-effect waves-classic"><i
 																				class="material-icons">edit</i>Edit</a></li>
-																		<li><a
+																		<%-- <li><a
 																			href="${contextRoot}/admin/allemp/delete/${empl.getId()}"
 																			class=" waves-effect waves-classic"><i
 																				class="material-icons">delete</i>Delete</a></li>
-
+ --%>
 																	</ul></li>
 															</c:if>
 														</ul>
@@ -492,7 +492,7 @@
 									</c:forEach>
 								</c:if>
 							</tbody>
-						</table> --%>
+						</table> 
 		</section>
 		<!-- FOOTER-->
 		<footer>

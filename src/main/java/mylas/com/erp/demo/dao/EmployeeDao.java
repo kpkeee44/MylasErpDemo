@@ -6,6 +6,7 @@ import org.hibernate.Query;
 
 import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.TblEmployees;
+import mylas.com.erp.demo.procedures.EmployeeViewPage;
 
 public interface EmployeeDao {
 	
@@ -26,6 +27,7 @@ public interface EmployeeDao {
 	 public List<EmpDetails> simulateSearchResultLastName(String tagName);
 	 public String getMail(String mngid);
 	 /*new methods*/
-	 public String saveEmpDetails(int id,String empid,String fname,String lname,String email,String uname,String pswd,String addres,String ph,String adr,String crby,String upby,String role,String dept,String des);
+	 public String saveEmpDetails(int id,String empid,String fname,String lname,String email,String uname,String pswd,String addres,String ph,String adr,int crby,int upby,String role,String dept,String des,String status);
 	 public List<TblEmployees> getDetails1();
+	 public List<EmployeeViewPage> view(int id);
 }

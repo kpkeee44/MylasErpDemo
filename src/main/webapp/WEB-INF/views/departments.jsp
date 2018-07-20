@@ -193,7 +193,7 @@
 											
 											<th data-tablesaw-sortable-col data-tablesaw-priority="3">Department
 												Name</th>
-                                            <th data-tablesaw-sortable-col data-tablesaw-priority="2">From</th>
+                                            <!-- <th data-tablesaw-sortable-col data-tablesaw-priority="2">From</th> -->
 											
 											<th data-tablesaw-sortable-col data-tablesaw-priority="4">Active State</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="1"
@@ -216,7 +216,7 @@
 
 												
 												<td>${dep.getDepartmentname()}</td>
-                                                 <td>${dep.getCreateddate()}</td>
+                                                 <%-- <td>${dep.getCreateddate()}</td> --%>
                                      
                                                  <c:if test="${dep.getIsactive() == true}">
 													<td><i class="${green}"></i></td>

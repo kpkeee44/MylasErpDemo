@@ -167,8 +167,8 @@
 
 														<tr>
 															<th><a
-																href="${contextRoot}/${role}/profile/register">${User.getFname()}
-																	${User.getLname()}</a></th>
+																href="${contextRoot}/${role}/profile/register">${User.getEmplfirstname()}
+																	${User.getEmpllastname()}</a></th>
 
 															<td><select class="form-control" size="1"
 																name="year" id="year" required>

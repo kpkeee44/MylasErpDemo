@@ -1,5 +1,8 @@
 package mylas.com.erp.demo.service;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +17,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.internal.SessionImpl;
 import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.EmpDetails;
@@ -22,6 +26,7 @@ import mylas.com.erp.demo.TblEmployees;
 import mylas.com.erp.demo.appservices.GetSession;
 import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.EmployeeDao;
+import mylas.com.erp.demo.procedures.EmployeeViewPage;
 
 @Repository("userDetails")
 public class Client implements EmployeeDao {
@@ -332,24 +337,61 @@ return "error occured while updating";}
 
 	@Override
 	public String saveEmpDetails(int id,String empid, String fname, String lname, String email,String uname, String pswd, String addres,String ph,String adr,
-			String crby, String upby, String role, String dept, String des) {
+			int crby, int upby, String role, String dept, String des,String status) {
 		// TODO Auto-generated method stub
+	/*	1@id int,
+		2@eid varchar(30),
+		3@emplfirstname varchar(30),
+		4@empllastname varchar(30),
+		5@email varchar(30),
+		6@pswd varchar(30),
+		7@isactive bit,
+		8@address varchar(50),
+		9@mobileno varchar(20),
+		10@aadharno varchar(20),
+		11@createdBy int,  
+		12@createdDate datetime,
+		13@updatedBy int,
+		14@updatedDate datetime,
+		15@role varchar(30),
+		16@department int,
+		17@designation int,
+		18@uname varchar(30),
+		19@retval int out*/
 		try(Session  s=HibernateUtil.getSessionFactory().openSession())
 		{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_employee");
 query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
+
 query.registerStoredProcedureParameter(3,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(4,String.class, ParameterMode.IN);
+System.out.println(01);
 query.registerStoredProcedureParameter(5,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(6,String.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(7,Boolean.class, ParameterMode.IN);query.registerStoredProcedureParameter(8,String.class, ParameterMode.IN);
+System.out.println(02);
 query.registerStoredProcedureParameter(9,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(10,String.class, ParameterMode.IN);
-query.registerStoredProcedureParameter(11,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(12,Date.class, ParameterMode.IN);
-query.registerStoredProcedureParameter(13,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(14,Date.class, ParameterMode.IN);
+query.registerStoredProcedureParameter(11,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(12,Date.class, ParameterMode.IN);
+System.out.println(03);
+query.registerStoredProcedureParameter(13,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(14,Date.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(15,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(16,Integer.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(17,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(18,String.class, ParameterMode.IN);
+
 query.registerStoredProcedureParameter(19,Integer.class, ParameterMode.OUT);
+System.out.println("04");
 int deptid=Integer.parseInt(dept);int desid=Integer.parseInt(des);
+System.out.println("05");
+
 query.setParameter(1,id);query.setParameter(2,empid);query.setParameter(3,fname);query.setParameter(4,lname);query.setParameter(5,email);query.setParameter(6,pswd);
-query.setParameter(7,true);query.setParameter(8,addres);query.setParameter(9,ph);query.setParameter(10,adr);query.setParameter(11,crby);query.setParameter(12,new Date());
+System.out.println("06");
+if(status.equalsIgnoreCase("false"))
+{System.out.println("08");
+	query.setParameter(7,false);
+}else {
+	query.setParameter(7,true);
+	System.out.println("08t");
+}
+
+query.setParameter(8,addres);query.setParameter(9,ph);query.setParameter(10,adr);query.setParameter(11,crby);query.setParameter(12,new Date());
 query.setParameter(13,upby);query.setParameter(14,new Date());query.setParameter(15,role);
+System.out.println("h");
 query.setParameter(16,deptid);query.setParameter(17,desid);query.setParameter(18,uname);
 query.execute();
 
@@ -359,6 +401,7 @@ int a=(int) query.getOutputParameterValue(19);
 		catch(Exception e)
 		{
 			System.out.println(e);
+		
 			return "Employee already Exits";
 		}
 	return "Employee added successfully";
@@ -375,6 +418,45 @@ int a=(int) query.getOutputParameterValue(19);
 		session.getTransaction().commit();
 		return (emp1);
 	
+	}
+
+	@Override
+	public List<EmployeeViewPage> view(int id) {
+		List<EmployeeViewPage> data=new ArrayList<>();
+		try(Session  session=HibernateUtil.getSessionFactory().openSession()){
+			session.beginTransaction();
+			CallableStatement cst = null;
+	        ResultSet rst = null;
+	        SessionImpl sessionImpl = (SessionImpl) session; Connection con = sessionImpl.connection();
+	        cst = con.prepareCall("{call sp_vwempdetails(?)}");
+	        cst.setInt(1, id);
+            cst.execute();
+            rst = cst.getResultSet();
+            
+            while(rst.next()) {
+            	EmployeeViewPage emp=new EmployeeViewPage();
+  emp.setId(rst.getInt(1));emp.setEid(rst.getString(2));emp.setEmplfirstname(rst.getString(3));emp.setEmpllastname(rst.getString(4));
+  emp.setEmail(rst.getString(5));emp.setIsactive(rst.getBoolean(6));emp.setAdderss(rst.getString(7));emp.setPhone(rst.getString(8));
+  emp.setAadharno(rst.getString(9));emp.setCreatedby(rst.getInt(10));emp.setCreatedDate(rst.getDate(11));emp.setUpdatedBy(rst.getInt(12));
+  emp.setUpdatedDate(rst.getDate(13));emp.setRole(rst.getString(14));emp.setUname(rst.getString(15));emp.setDepartmentnameid(rst.getInt(16));
+  emp.setDesignationid(rst.getInt(17));
+            	data.add(emp);
+            }
+	      
+			
+			if(!data.isEmpty())
+			for(EmployeeViewPage ll:data)
+			{
+				System.out.println(ll.getUname());
+			}
+			else {
+				System.out.println("nodata");
+			}
+	}catch(Exception e) {
+		System.out.println(e);
+	}
+		return data;
+		
 	}
 }
 

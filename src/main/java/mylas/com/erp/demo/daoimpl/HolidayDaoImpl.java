@@ -19,7 +19,7 @@ import mylas.com.erp.demo.dao.HolidayDao;
 public class HolidayDaoImpl implements HolidayDao {
 
 	@Override
-	public String saveHoliday(int id,String name,String dt,boolean active,String eid,Date cdt,String upby,Date update) {
+	public String saveHoliday(int id,String name,String dt,boolean active,int eid,Date cdt,int upby,Date update) {
 		System.out.println(id+" 1"+name+" 2"+dt+"3 "+active+"4 "+eid+"5 "+cdt+"5 "+upby+"6 "+update);
 			try(Session  s=HibernateUtil.getSessionFactory().openSession())
 			{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_holidays");
@@ -27,9 +27,9 @@ public class HolidayDaoImpl implements HolidayDao {
 			query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter(3,String.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter(4,Boolean.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter(5,String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(5,Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter(6,Date.class, ParameterMode.IN);
-			query.registerStoredProcedureParameter(7,String.class, ParameterMode.IN);
+			query.registerStoredProcedureParameter(7,Integer.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter(8,Date.class, ParameterMode.IN);
 			query.registerStoredProcedureParameter(9,Integer.class, ParameterMode.OUT);
 			System.out.println(id);
@@ -39,7 +39,7 @@ public class HolidayDaoImpl implements HolidayDao {
 		query.setParameter(4,active);
 		query.setParameter(5,eid);
 		query.setParameter(6,new Date());
-		query.setParameter(7,eid);
+		query.setParameter(7,upby);
 		query.setParameter(8,new Date());
 		query.execute();
 		

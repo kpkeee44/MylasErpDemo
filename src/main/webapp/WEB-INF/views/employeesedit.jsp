@@ -239,7 +239,7 @@
 														required="required">
 														<option value="">Select Department</option>
 														<c:forEach items="${departments}" var="deper">
-															<option value="${deper.getDepartmentid()}">${deper.getDepartmentid()}${deper.getDepartmentname()}</option>
+															<option value="${deper.getDepartmentid()}">${deper.getDepartmentname()}</option>
 														</c:forEach>
 													</select>
 												</div>
@@ -256,13 +256,32 @@
 														<option value="">Select Designations</option>
 														<c:forEach items="${designations}" var="desig">
 															<%-- <c:if test="${desig.getDesignation()!='Manager'}"> --%>
-																<option value="${desig.getDesignationid()}">${desig.getDesignationid()}${desig.getDesignation()}</option>
+																<option value="${desig.getDesignationid()}">${desig.getDesignation()}</option>
 														<%-- 	</c:if> --%>
 														</c:forEach>
 													</select>
 												</div>
 											</div>
 										</div>
+										<div class="col-md-8 col-xs-8">
+                                            <ul class="list-inline">
+                                                <li class="eagle-checkbox">
+                                                    <label class="eagle-check custom-radio">
+                                                        <input id="active1" name="active" value="true" type="radio" class="eagle-check-input" >
+                                                        <span class="eagle-check-indicator"></span>
+                                                        <span class="eagle-check-description">Active</span>
+                                                    </label>
+                                                </li>
+                                                <li class="eagle-checkbox">
+                                                    <label class="eagle-check custom-radio">
+                                                        <input id="active1" name="active" value="false" type="radio" class="eagle-check-input">
+                                                        <span class="eagle-check-indicator"></span>
+                                                        <span class="eagle-check-description">InActive</span>
+                                                    </label>
+                                                </li>
+                                               
+                                            </ul>
+                                        </div>
 									<div class="clearfix"></div>
 									<div class="form-actions">
 										<div style="text-align: center;">
@@ -351,19 +370,21 @@ function Validate() {
 }
 </script>
 <script>
-		document.getElementById("firstname1").value = "${edetais.getEmplfirstname()}";
+		document.getElementById("firstname1").value = "${edetais.getEmplfirstname()}"
 		document.getElementById("lastname1").value = "${edetais.getEmpllastname()}";
 		document.getElementById("empid").value = "${edetais.getEid()}";
 		document.getElementById("email").value = "${edetais.getEmail()}";
 		document.getElementById("uname").value = "${edetais.getUname()}";
 		document.getElementById("aadhar").value = "${edetais.getAadharno()}";
 		document.getElementById("phone").value = "${edetais.getPhone()}";
-		document.getElementById("address").value = "${edetais.getAddress()}";
+		document.getElementById("address").value = "${edetais.getAdderss()}";
+		$("#department").val("${edetais.getDepartmentnameid()}");
+		$("#designation").val("${edetais.getDesignationid()}");
+		$("#active1").val("${isIsactive}");
+		firstname1.focus(); 
 		
-		firstname.focus(); 
 		
-		
-	</script>
+	</script> 
 
 
 </body>

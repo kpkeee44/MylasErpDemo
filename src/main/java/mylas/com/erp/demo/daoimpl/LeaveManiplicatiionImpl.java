@@ -41,7 +41,7 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 		
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Query q = session.createQuery("from Tblleavestype");
+		Query q = session.createQuery("from Tblleavestype where isactive=1");
 		List<Tblleavestype> empatt = q.list();
 		session.getTransaction().commit();
 		System.out.println(empatt);

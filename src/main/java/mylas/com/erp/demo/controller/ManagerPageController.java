@@ -32,7 +32,7 @@ import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.LeaveAddition;
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.TblDesignation;
-import mylas.com.erp.demo.TblEmpAttendanceNew;
+//import mylas.com.erp.demo.TblEmpAttendanceNew;
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblManRoleTransfer;
 import mylas.com.erp.demo.Tblleaves;
@@ -436,7 +436,7 @@ public class ManagerPageController {
 		String role = user.getRole();
 		mav.addObject("Role",role);
 
-		TblEmpAttendanceNew attedance = new TblEmpAttendanceNew(null, null, null, null, Integer.parseInt(request.getParameter("day1")), Integer.parseInt(request.getParameter("day2")), Integer.parseInt(request.getParameter("day3")), Integer.parseInt(request.getParameter("day4")), Integer.parseInt(request.getParameter("day5")), Integer.parseInt(request.getParameter("day6")), Integer.parseInt(request.getParameter("day7")), Integer.parseInt(request.getParameter("day8")), Integer.parseInt(request.getParameter("day9")), Integer.parseInt(request.getParameter("day10")), Integer.parseInt(request.getParameter("day11")), Integer.parseInt(request.getParameter("day12")), Integer.parseInt(request.getParameter("day13")), Integer.parseInt(request.getParameter("day14")), Integer.parseInt(request.getParameter("day15")), Integer.parseInt(request.getParameter("day16")), Integer.parseInt(request.getParameter("day17")), Integer.parseInt(request.getParameter("day18")), Integer.parseInt(request.getParameter("day19")), Integer.parseInt(request.getParameter("day20")), Integer.parseInt(request.getParameter("day21")), Integer.parseInt(request.getParameter("day22")), Integer.parseInt(request.getParameter("day23")), Integer.parseInt(request.getParameter("day24")), Integer.parseInt(request.getParameter("day25")), Integer.parseInt(request.getParameter("day26")), Integer.parseInt(request.getParameter("day27")), Integer.parseInt(request.getParameter("day28")), null, null, null, null, null,null);
+		/*TblEmpAttendanceNew attedance = new TblEmpAttendanceNew(null, null, null, null, Integer.parseInt(request.getParameter("day1")), Integer.parseInt(request.getParameter("day2")), Integer.parseInt(request.getParameter("day3")), Integer.parseInt(request.getParameter("day4")), Integer.parseInt(request.getParameter("day5")), Integer.parseInt(request.getParameter("day6")), Integer.parseInt(request.getParameter("day7")), Integer.parseInt(request.getParameter("day8")), Integer.parseInt(request.getParameter("day9")), Integer.parseInt(request.getParameter("day10")), Integer.parseInt(request.getParameter("day11")), Integer.parseInt(request.getParameter("day12")), Integer.parseInt(request.getParameter("day13")), Integer.parseInt(request.getParameter("day14")), Integer.parseInt(request.getParameter("day15")), Integer.parseInt(request.getParameter("day16")), Integer.parseInt(request.getParameter("day17")), Integer.parseInt(request.getParameter("day18")), Integer.parseInt(request.getParameter("day19")), Integer.parseInt(request.getParameter("day20")), Integer.parseInt(request.getParameter("day21")), Integer.parseInt(request.getParameter("day22")), Integer.parseInt(request.getParameter("day23")), Integer.parseInt(request.getParameter("day24")), Integer.parseInt(request.getParameter("day25")), Integer.parseInt(request.getParameter("day26")), Integer.parseInt(request.getParameter("day27")), Integer.parseInt(request.getParameter("day28")), null, null, null, null, null,null);
 		attedance.setEmpid(user.getEid());
 		//attedance.setManagerid(user.getManagerid());
 		attedance.setStatas(null);
@@ -451,25 +451,25 @@ public class ManagerPageController {
 			attedance.setDay30(Integer.parseInt(request.getParameter("day30")));
 		}else if(attedance.getMonth().equals("Febraury") && (attedance.getYear()%4==0)) {
 			attedance.setDay29(Integer.parseInt(request.getParameter("day29")));
-		}
+		}*/
 		/*emailSubject = "New Time Sheet For:"+attedance.getMonth()+" "+attedance.getYear()+"";
 		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+attedance.getManagerid()+"On: "+new Date();
 		emailToRecipient = "krishnavarma.java@gmail.com";
 		System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		//emailsender.javaMailService("bojagangadhar@gmail.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
-*/		attimpl.save(attedance);
-		List<TblEmpAttendanceNew> attendances =  attimpl.viewbyid(user.getEid());
-		System.out.println(attendances);
+*/		//attimpl.save(attedance);
+	/*	List<TblEmpAttendanceNew> attendances =  attimpl.viewbyid(user.getEid());
+		System.out.println(attendances);*/
 		//List<TblEmpLeavereq> allempleave = ers.view();
 		//int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
-		List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
+	//	List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
 		
 		
 			
-		mav.addObject("empattendances",empattendances);
+		//mav.addObject("empattendances",empattendances);
 	//	mav.addObject("allempleave", allempleave);
 	//	mav.addObject("count",count);
-		mav.addObject("attendancelist",attendances);
+		//mav.addObject("attendancelist",attendances);
 		mav.addObject("manservices", mandao.list());
 		mav.addObject("User", user);
 		List<EmpDetails> emp1 = userDetails.getDetails();
@@ -625,7 +625,7 @@ public class ManagerPageController {
 		}
 		String reason = "Approved";
 		boolean status = true;
-		attimpl.update(status, id);	
+		//attimpl.update(status, id);	
 		
 		
 		emailSubject = "Time Sheet Request Status For:";
@@ -645,7 +645,7 @@ public class ManagerPageController {
 		}
 		String reason = "Decline";
 		boolean status = false;
-		attimpl.update(status, id);
+	//	attimpl.update(status, id);
 		
 		emailSubject = "Time Sheet Request Status For:";
 		emailMessage = "A new Time Sheet Request was declined :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
@@ -770,7 +770,7 @@ public class ManagerPageController {
     @RequestMapping(value= "/manager/timesheet/delete/{id}")
 	public ModelAndView empTimeSheetdeletePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/manager/timesheet/register");
-		String DelMsg = attimpl.delete(id);
+		//String DelMsg = attimpl.delete(id);
 		return mav;
 	}
 /*    @RequestMapping(value="/manager/employee/search", method=RequestMethod.POST)
@@ -843,11 +843,11 @@ public class ManagerPageController {
 		mav.addObject("manservices", mandao.list());
 		String role = user.getRole();
 		mav.addObject("Role",role);
-		List<TblEmpAttendanceNew> attendances =  attimpl.viewSearch(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("month"), request.getParameter("status"));
+		//List<TblEmpAttendanceNew> attendances =  attimpl.viewSearch(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("month"), request.getParameter("status"));
 		List<EmpDetails> emp1 = userDetails.getDetails();
 		mav.addObject("User",user);
 		mav.addObject("employees", emp1);
-		mav.addObject("attendancelist",attendances);
+	//	mav.addObject("attendancelist",attendances);
 		return mav;		
 	}
 /*

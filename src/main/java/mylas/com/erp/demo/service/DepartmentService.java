@@ -23,23 +23,26 @@ public class DepartmentService implements DepartmentDao {
 	
 	
 	@Override
-	public String saveDepartment(int id,String dname,boolean active,String cby,String uby) {
+	public String saveDepartment(int id,String dname,String active,int cby,int uby) {
 		
 				try(Session  s=HibernateUtil.getSessionFactory().openSession())
 				{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_department");
 				query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);
 				query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
 				query.registerStoredProcedureParameter(3,Boolean.class, ParameterMode.IN);
-				query.registerStoredProcedureParameter(4,String.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(4,Integer.class, ParameterMode.IN);
 				query.registerStoredProcedureParameter(5,Date.class, ParameterMode.IN);
-				query.registerStoredProcedureParameter(6,String.class, ParameterMode.IN);
+				query.registerStoredProcedureParameter(6,Integer.class, ParameterMode.IN);
 				query.registerStoredProcedureParameter(7,Date.class, ParameterMode.IN);
 				query.registerStoredProcedureParameter(8,Integer.class, ParameterMode.OUT);
 			
 				
 				query.setParameter(1,id);
 				query.setParameter(2,dname);
-				query.setParameter(3,active);
+				if(active.equals("false")) {
+					query.setParameter(3,false);	
+				}else {
+				query.setParameter(3,true);}
 				query.setParameter(4,cby);
 				query.setParameter(5,new Date());
 				query.setParameter(6,uby);
@@ -71,6 +74,18 @@ public class DepartmentService implements DepartmentDao {
 
 	@Override
 	public List<TblDepartment> getDetails() {
+		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+
+		Query q = session.createQuery("from TblDepartment where isactive=1");
+		System.out.println("dept");
+		List<TblDepartment> emp1 = q.list();
+		session.getTransaction().commit();
+		return (emp1);
+	}
+
+	@Override
+	public List<TblDepartment> getDetailsview() {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 
