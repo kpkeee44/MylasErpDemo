@@ -1,27 +1,23 @@
 package mylas.com.erp.demo.daoimpl;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.ParameterMode;
 import javax.persistence.StoredProcedureQuery;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.internal.SessionImpl;
 import org.springframework.stereotype.Repository;
 
-import mylas.com.erp.demo.TblEmpLeavereq;
-import mylas.com.erp.demo.Tblleaves;
 import mylas.com.erp.demo.appservices.EmailSender;
-import mylas.com.erp.demo.appservices.GetSession;
 import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.EmpLeaveRequestDao;
+import mylas.com.erp.demo.procedures.EmpLeaveRequestJoin;
 
 
 @Repository("ers")
@@ -34,8 +30,9 @@ public class EmpLeaveRequestService implements EmpLeaveRequestDao {
 	
 	
 	@Override
-	public String saveLeaveRequest() {
-		System.out.println("enter");
+	public String saveLeaveRequest(int id,int leavecount,String eid,Date fdate,String lreason,int ltypeid,int mgrid,int lstatusid,Date todate,boolean isactive,int cby,Date cdate,int uby,Date udate) {
+	
+		System.out.println("fdate");
 			try(Session  s=HibernateUtil.getSessionFactory().openSession()){
 			System.out.println("inside try");
 			
@@ -57,43 +54,92 @@ public class EmpLeaveRequestService implements EmpLeaveRequestDao {
 			query.registerStoredProcedureParameter(15,Integer.class, ParameterMode.OUT);
 		
 			System.out.println("exev proc");
-		query.setParameter(1,0);
-		query.setParameter(2,3);
-		query.setParameter(3,"njhcv");
-		System.out.println("before date");
-		query.setParameter(4,new Date());
-		System.out.println("aftre date");
-		query.setParameter(5,"lreason");
-		query.setParameter(6,2);
-		query.setParameter(7,3);
-		query.setParameter(8,3);
-		System.out.println("before date");
-		query.setParameter(9,new Date());
-		System.out.println("after date");
-		query.setParameter(10,true);
-		query.setParameter(11,1);
-		System.out.println("before date");
-		query.setParameter(12,new Date());
-		System.out.println("after date");
-		query.setParameter(13,1);
-		System.out.println("before date");
-		query.setParameter(14,new Date());
-		System.out.println("after date");
+		query.setParameter(1,id);
+		query.setParameter(2,leavecount);
+		query.setParameter(3,eid);
+		query.setParameter(4,fdate);
+		query.setParameter(5,lreason);
+		query.setParameter(6,ltypeid);
+		query.setParameter(7,mgrid);
+		query.setParameter(8,lstatusid);
+		query.setParameter(9,todate);
+		query.setParameter(10,isactive);
+		query.setParameter(11,cby);
+		query.setParameter(12,cdate);
+		query.setParameter(13,uby);
+		query.setParameter(14,udate);
 		
 		query.execute();
 		
-		int a=(int) query.getOutputParameterValue(15);
+	  int a=(int) query.getOutputParameterValue(15);
 		System.out.println(a);
 		System.out.println("after exec");
 			}
 			catch(Exception e)
 			{
-				e.printStackTrace();
-			/*	return "Leave Request Failed to Send";*/
+				
+				return "Leave Request Failed to Send";
 			}
 		return "Your Leave Request has been sent. Wait for manager Approval";
 		}
-			
+
+
+
+	@Override
+	public List<EmpLeaveRequestJoin> viewAll(int id) {
+		System.out.println("entrance");
+		List<EmpLeaveRequestJoin> empleavejoin=new ArrayList<>();
+		System.out.println("join entry");
+			try(Session  session=HibernateUtil.getSessionFactory().openSession()){
+				session.beginTransaction();
+				CallableStatement cst = null;
+		        ResultSet rst = null;
+		        SessionImpl sessionImpl = (SessionImpl) session; Connection con = sessionImpl.connection();
+		        System.out.println("session open");
+		        cst = con.prepareCall("{call sp_viewempleaves(?)}");
+		        cst.setInt(1,id);
+		        cst.execute();
+		        rst = cst.getResultSet();
+		        System.out.println(rst);
+		        System.out.println("proc call");
+		        
+		        while(rst.next()) {
+		        	System.out.println("entering while");
+		        	EmpLeaveRequestJoin empleaves=new EmpLeaveRequestJoin();
+		        	empleaves.setId(rst.getInt(1));
+		        	empleaves.setLeavecount(rst.getInt(2));
+		        	empleaves.setEmployeeid(rst.getString(3));
+		        	empleaves.setFromdate(rst.getDate(4));
+		        	empleaves.setLeavereason(rst.getString(5));
+		        	empleaves.setLeavetypeid(rst.getInt(6));
+		        	empleaves.setManagerid(rst.getInt(7));
+		        	empleaves.setLeavestatusid(rst.getInt(8));
+		        	empleaves.setTodate(rst.getDate(9));
+		        	empleaves.setIsactive(rst.getBoolean(10));
+		        	empleaves.setCreatedby(rst.getInt(11));
+		        	empleaves.setCreateddate(rst.getDate(12));
+		        	empleaves.setUpdatedby(rst.getInt(13));
+		        	empleaves.setUpdateddate(rst.getDate(14));
+		        	empleaves.setLeavetype(rst.getString(15));
+		        	empleaves.setLeavestatus(rst.getString(16));
+		        	empleaves.setEid(rst.getString(17));
+		        	empleavejoin.add(empleaves);
+		        }
+		        if(!empleavejoin.isEmpty())
+					for(EmpLeaveRequestJoin elrj:empleavejoin)
+					{
+						System.out.println(elrj.getEmployeeid());
+					}
+					else {
+						System.out.println("nodata");
+					}
+			}catch(Exception e) {
+				System.out.println(e);
+			}
+				return empleavejoin;
+				
+	}
+
 
 
 	/*@Override

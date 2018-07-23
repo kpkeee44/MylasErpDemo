@@ -132,8 +132,8 @@
 										<label>Leave Type</label> <select class="form-control"
 											size="1" name="leavetype" id="leavetype" required="required">
 											<option value="">PleaseSelect</option>
-											<c:forEach items="${nleave}" var="nleave">
-											<option value="${nleave.getLeavetype()}">${nleave.getLeavetype()}</option>
+											<c:forEach items="${leavetypes}" var="leavetypes">
+											<option value="${leavetypes.getId()}">${leavetypes.getLeavetype()}</option>
 											</c:forEach>
 											<!-- <option value="Casual Leave">Casual Leave 12 Days</option>
 											<option value="Medical Leave">Medical Leave</option> -->
@@ -271,7 +271,7 @@
 									</thead>
 									<div class="clearfix"></div>
 
-									<c:forEach items="${empleave}" var="empleaveslist">
+									<c:forEach items="${empleaves}" var="empleaves">
 										<tbody>
 
 
@@ -279,30 +279,30 @@
 												<td>
 													<div class="chip">
 														<img src="${images}/mail/one.jpg" alt="Contact Person">
-														<span>${User.getEmplfirstname} ${User.getEmpllastname()}</span>
-														<div style="text-align: center">${User.getId()}</div>
+														<span>${User.getEmplfirstname()} ${User.getEmpllastname()}</span>
+														<div style="text-align: center">${User.getEid()}</div>
 													</div>
 												</td>
-												<td>${empleaveslist.getLeavetype()}</td>
-												<td>${empleaveslist.getFromdate()}</td>
-												<td>${empleaveslist.getTodate()}</td>
-												<td>${empleaveslist.getCount()}days</td>
-												<td>${empleaveslist.getLeavereason()}</td>
+												<td>${empleaves.getLeavetype()}</td>
+												<td>${empleaves.getFromdate()}</td>
+												<td>${empleaves.getTodate()}</td>
+												<td>${empleaves.getLeavecount()}days</td>
+												<td>${empleaves.getLeavereason()}</td>
 												<td>
 
 													<div class="btn-group">
-														<c:if test="${empleaveslist.getStatus() == null}">
+														<c:if test="${empleaves.getLeavestatus() == 'Hold'}">
 															<button type="button"
 																class="btn btn-primary btn-outline btn-rounded waves-effect"
 																data-toggle="dropdown" aria-haspopup="true"
 																aria-expanded="false">Pending</button>
 														</c:if>
-														<c:if test="${empleaveslist.getStatus() == false}">
+														<c:if test="${empleaves.getLeavestatus() == 'Denied'}">
 															<button type="button"
 																class="btn btn-primary  btn-outline btn-rounded waves-effect colorred">Declined
 															</button>
 														</c:if>
-														<c:if test="${empleaveslist.getStatus() == true}">
+														<c:if test="${empleaves.getLeavestatus() == 'Approved'}">
 															<button type="button"
 																class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect "
 																data-toggle="dropdown" aria-haspopup="true"
@@ -316,11 +316,11 @@
 															class="dropdown-toggle" data-toggle="dropdown"
 															role="button" aria-haspopup="true" aria-expanded="false">
 																<i class="material-icons">more_vert</i>
-														</a><c:if test="${empleaveslist.getStatus() == null}">
+														</a><c:if test="${empleaves.getLeavestatus() == null}">
 															<ul class="dropdown-menu pull-right">
 																
 																	<li><a
-																		href="${contextRoot}/${role}/leave/delete/${empleaveslist.getId()}"><i
+																		href="${contextRoot}/${role}/leave/delete/${empleaves.getId()}"><i
 																			class="material-icons">delete</i>Delete</a></li>
 																
 															</ul></c:if></li>
@@ -406,7 +406,7 @@ function Validate() {
 
 		});
 	</script>
-	<script>
+	<!-- <script>
      function Search(){
 	 var mon = document.getElementById("month").value;
 	 var sta = document.getElementById("status").value;
@@ -417,7 +417,7 @@ function Validate() {
 		 }
 
 }
-  </script>
+  </script> -->
    <script>
 $(document).ready(function(){
     $("button").click(function(){

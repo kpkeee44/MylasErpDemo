@@ -370,7 +370,7 @@ function Validate() {
 }
 </script>
 <script>
-		document.getElementById("firstname1").value = "${edetais.getEmplfirstname()}"
+		document.getElementById("firstname1").value = "${edetais.isIsactive()}"
 		document.getElementById("lastname1").value = "${edetais.getEmpllastname()}";
 		document.getElementById("empid").value = "${edetais.getEid()}";
 		document.getElementById("email").value = "${edetais.getEmail()}";
@@ -378,9 +378,12 @@ function Validate() {
 		document.getElementById("aadhar").value = "${edetais.getAadharno()}";
 		document.getElementById("phone").value = "${edetais.getPhone()}";
 		document.getElementById("address").value = "${edetais.getAdderss()}";
+		document.getElementById("active1").innerHTML ="${edetais.isIsactive()}";
 		$("#department").val("${edetais.getDepartmentnameid()}");
 		$("#designation").val("${edetais.getDesignationid()}");
-		$("#active1").val("${isIsactive}");
+		 
+		//$("#active1").val("${edetais.isIsactive()}");
+		$("#active1 value='${edetais.isIsactive()}'").prop("checked,true");
 		firstname1.focus(); 
 		
 		

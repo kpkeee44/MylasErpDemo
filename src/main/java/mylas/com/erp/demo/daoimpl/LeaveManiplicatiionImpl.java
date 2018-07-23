@@ -32,6 +32,7 @@ import mylas.com.erp.demo.Tblleavestype;
 import mylas.com.erp.demo.appservices.GetSession;
 import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.LeaveManiplication;
+import mylas.com.erp.demo.procedures.EmployeeViewPage;
 
 @Repository("leave")
 public class LeaveManiplicatiionImpl implements LeaveManiplication {
@@ -89,9 +90,43 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 		}*/
 
 	@Override
-	public List<LeaveAddition> getDetailsofleavetye() {
+	public List<LeaveAddition> getDetailsofleavetye(int id) {
+		List<LeaveAddition> data=new ArrayList<>();
+		try(Session  session=HibernateUtil.getSessionFactory().openSession()){
+			session.beginTransaction();
+			CallableStatement cst = null;
+	        ResultSet rs = null;
+	        SessionImpl sessionImpl = (SessionImpl) session; Connection con = sessionImpl.connection();
+	        cst = con.prepareCall("{call sp_vwLeaves(?)}");
+	        cst.setInt(1, id);
+            cst.execute();
+            rs = cst.getResultSet();
+            
+            while(rs.next()) {
+            	LeaveAddition lea=new LeaveAddition();
+            	lea.setId(1);
+    			lea.setLeavetypeid(rs.getInt(2));
+    			lea.setLeaveType(rs.getString(3));
+    			lea.setNumleavedays(rs.getInt(4));
+    			lea.setIsactive(rs.getBoolean(5));
+    			data.add(lea);
+            }
+	      
+			
+			if(!data.isEmpty())
+			for(LeaveAddition ll:data)
+			{
+				System.out.println(ll.getLeavetypeid());
+			}
+			else {
+				System.out.println("nodata");
+			}
+	}catch(Exception e) {
+		System.out.println(e);
+	}
+		return data;
 		
-		System.out.println("comes");
+	/*	System.out.println("comes");
 		List<LeaveAddition> data=new ArrayList<>();
 		try {
 		PreparedStatement ps = null;
@@ -121,7 +156,7 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 			
 		}
 		System.out.println("end");
-		return data;
+		return data;*/
 		
 		
 	
@@ -224,9 +259,37 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 	}
 
 	@Override
-	public String save(String leavetype, int count, String uid) {
-		// TODO Auto-generated method stub
-		return null;
+	public String save(int id,int leavetypeid,int count,int cid,int uid,boolean active) {
+		try(Session  s=HibernateUtil.getSessionFactory().openSession())
+		{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insupdLeaves");
+		query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(2,Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(3,Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(4,Boolean.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(5,Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(6,Date.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(7,Integer.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(8,Date.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter(9,Integer.class, ParameterMode.OUT);
+		
+	query.setParameter(1,id);
+	query.setParameter(2,leavetypeid);
+	query.setParameter(3,count);
+	query.setParameter(4,active);
+	query.setParameter(5,cid);
+	query.setParameter(6,new Date());
+	query.setParameter(7,uid);
+	query.setParameter(8,new Date());
+	query.execute();
+	int a=(int) query.getOutputParameterValue(9);
+	System.out.println(a);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+			return "Leave is Already Exists.Please try Again";
+		}
+		return "UpDated Successfully";
 	}
 	
 	

@@ -206,8 +206,8 @@
 									<c:if test="${Role.equals('EMPLOYEE_ROLE')}">
 										<c:set var="role" value="employee" />
 									</c:if>
-									<c:forEach items="${empleave}" var="empleaveslist">
-										<c:if test="${User.getRole().equals('MANAGER_ROLE')}">
+									<c:forEach items="${empleaves}" var="empleaves">
+										<%-- <c:if test="${User.getRole().equals('MANAGER_ROLE')}">
 										<c:if test="${empleaveslist.getReferenceid()!=0}">
 											<c:set var="user" value="${User.getEid()}" />
 											<c:if test="${empleaveslist.getEmployeeid() != user}">
@@ -311,9 +311,9 @@
 												</c:if>
 												</c:if>
 											</c:if>
-										</c:if>
+										</c:if> --%>
 										<c:if test="${User.getRole().equals('ADMIN_ROLE')}">
-											<c:if test="${empleaveslist.getReferenceid()!=0}">
+										<%-- 	<c:if test="${empleaveslist.getReferenceid()!=0}"> --%>
 
 
 
@@ -323,64 +323,64 @@
 															<div class="chip">
 
 																<img src="${images}/mail/one.jpg" alt="Contact Person">
-																<span>${empleaveslist.getEmployeeid()}</span>
+																<span>${empleaves.getEmployeeid()}</span>
 																<div style="text-align: center"></div>
-															</div> <c:if test="${empleaveslist.getReferenceid()>0}">
+															</div> <%-- <c:if test="${empleaveslist.getReferenceid()>0}">
 																<button style="border: none; background: none;"
 																	id="${empleaveslist.getReferenceid()}"
 																	data-target="#leavehistory" data-toggle="modal"
 																	onclick="displayhistory(this.id)">
 																	<i class="material-icons">bubble_chart</i>
 																</button>
-															</c:if>
+															</c:if> --%>
 														</td>
-														<td>${empleaveslist.getLeavetype()}</td>
-														<td>${empleaveslist.getFromdate()}</td>
-														<td>${empleaveslist.getTodate()}</td>
-														<td>${empleaveslist.getCount()}days</td>
-														<td>${empleaveslist.getLeavereason()}</td>
+														<td>${empleaves.getLeavetype()}</td>
+														<td>${empleaves.getFromdate()}</td>
+														<td>${empleaves.getTodate()}</td>
+														<td>${empleaves.getLeavecount()}days</td>
+														<td>${empleaves.getLeavereason()}</td>
 
 														<td>
 
 															<div class="btn-group">
 
-																<c:if test="${empleaveslist.getStatus() == null}">
+																<c:if test="${empleaves.getLeavestatus() == 'Hold'}">
 																	<button type="button"
 																		class="btn btn-primary btn-outline btn-rounded waves-effect"
 																		data-toggle="dropdown" aria-haspopup="true"
 																		aria-expanded="false">Pending</button>
 																</c:if>
-																<c:if test="${empleaveslist.getStatus() == false}">
+																<c:if test="${empleaves.getLeavestatus() == 'Denied'}">
 																	<button type="button"
 																		class="btn btn-primary  btn-outline btn-rounded waves-effect colorred"
 																		data-toggle="dropdown" aria-haspopup="true"
 																		aria-expanded="false">Declined</button>
-																	<ul class="dropdown-menu pull-right">
+										<%-- 							<ul class="dropdown-menu pull-right">
 																		<li><a
 																			href="${contextRoot}/admin/leavereq/edit/${empleaveslist.getId()}">
 																				Edit</a></li>
 
 
-																	</ul>
+																	</ul> --%>
 																</c:if>
-																<c:if test="${empleaveslist.getStatus() == true}">
+																<c:if test="${empleaveslist.getLeavestatus() == 'Approved'}">
 																	<button type="button"
 																		class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect "
 																		data-toggle="dropdown" aria-haspopup="true"
 																		aria-haspopup="true" aria-expanded="false">Approved
 																	</button>
-																	<ul class="dropdown-menu pull-right">
+									<%-- 								<ul class="dropdown-menu pull-right">
 																		<li><a
 																			href="${contextRoot}/admin/leavereq/edit/${empleaveslist.getId()}">
 																				Edit</a></li>
 
 
-																	</ul>
+																	</ul> --%>
 																</c:if>
-																<c:set var="eid" value="${User.getEid()}"></c:set>
+																<%-- <c:set var="eid" value="${User.getEid()}"></c:set>
 																<c:if
 																	test="${empleaveslist.getManagerid() == eid || empleaveslist.getMantrans() == eid}">
-																	<c:if test="${empleaveslist.getStatus() == null}">
+																	<c:if test="${empleaveslist.getLeavestatus() == null}">
 
 																		<ul class="dropdown-menu bullet">
 
@@ -401,19 +401,14 @@
 																				</button></li>
 
 																		</ul>
-																	</c:if>
+																	</c:if> --%>
+																	
+																	</div>
+																	</td>
+																	</tr>
+																	</tbody>
 																</c:if>
-															</div>
-														</td>
-
-
-													</tr>
-
-												</tbody>
-
-											</c:if>
-										</c:if>
-									</c:forEach>
+														</c:forEach>
 
 
 								</table>

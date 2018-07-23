@@ -9,9 +9,9 @@ import mylas.com.erp.demo.Tblleavestype;
 
 public interface LeaveManiplication {
 	public List<Tblleavestype> getDetails();
-	public String save(String leavetype,int count,String uid);
+	public String save(int id,int leavetypeid,int count,int cid,int uid,boolean active);
 	
-	public List<LeaveAddition> getDetailsofleavetye();
+	public List<LeaveAddition> getDetailsofleavetye(int id);
 	public Tblleaves getDetaisById(int id);
 	public String updateLeave(int id,int days,String eid,String active);
 	public void deleteByid(int id);

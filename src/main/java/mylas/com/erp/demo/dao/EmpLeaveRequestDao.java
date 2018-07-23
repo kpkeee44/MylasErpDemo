@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import mylas.com.erp.demo.TblEmpLeavereq;
+import mylas.com.erp.demo.procedures.EmpLeaveRequestJoin;
 
 public interface EmpLeaveRequestDao {
 
-	public String saveLeaveRequest();
+	public String saveLeaveRequest(int id,int leavecount,String eid,Date fdate,String lreason,int ltypeid,int mgrid,int lstatusid,Date todate,boolean isactive,int cby,Date cdate,int uby,Date udate);
+	public List<EmpLeaveRequestJoin> viewAll(int id);
 	/*public void save(TblEmpLeavereq empleavereq);
 	public List<TblEmpLeavereq> view();
 	public List<TblEmpLeavereq> viewbyid(String empid);

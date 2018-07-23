@@ -107,8 +107,8 @@
 															<c:forEach items="${employees}" var="deper">
 																<c:if test="${deper.getRole().equals('MANAGER_ROLE')}">
 																	<c:if test="${deper.getEid() != User.getEid()}">
-																		<option value="${deper.getEid()}">${deper.getFname()}
-																			${deper.getLname()}</option>
+																		<option value="${deper.getEid()}">${deper.getEmplfirstname()}
+																			${deper.getEmpllastname()}</option>
 																	</c:if>
 																</c:if>
 															</c:forEach>

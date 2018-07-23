@@ -66,7 +66,7 @@
 				<div class="col-md-12 card" id="addnewemp">
 
 					<div class="body">
-						<form action="${contextRoot}/days/edit/${tblday.getId()}"
+						<form action="${contextRoot}/days/edit/${editdep.getId()}"
 							method="post">
 							<!-- <div class="col-md-6">
 								<div class="form-group">
@@ -79,6 +79,18 @@
 								</div>
 							</div>
 							 -->
+							 <div class="col-md-3 padding_col">
+									<div class="form-group">
+										<select id="leavetype" name="leavetype"
+											class="form-control" size="1">
+											<option value="">Select TypeOfLeave</option>
+											<c:forEach items="${tblday}" var="leavetype">
+												<option value="${leavetype.getId()}">
+													${leavetype.getLeavetype()}${editdep.getId()}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="form-line">
@@ -100,7 +112,7 @@
                                                 </li>
                                                 <li class="eagle-checkbox">
                                                     <label class="eagle-check custom-radio">
-                                                        <input id="active" name="active" value="false" type="radio" class="eagle-check-input">
+                                                        <input id="active1" name="active" value="false" type="radio" class="eagle-check-input">
                                                         <span class="eagle-check-indicator"></span>
                                                         <span class="eagle-check-description">InActive</span>
                                                     </label>
@@ -198,12 +210,13 @@
 	</script>
 
  -->
-	 <script type="text/javascript">
-		/* alert("${Holiday.getName()}"); */
-
-		document.getElementById("count").value = "${tblday.getNumleavedays()}";
+	<script>
+	$("#leavetype").val("${editdep.getLeavetypeid()}");
+	document.getElementById("count").value = "${editdep.getNumleavedays()}";
+	$('#active1').prop('checked', true);
+	
+	
 	</script>
- 
 
 
 </body>

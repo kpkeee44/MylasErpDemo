@@ -36,6 +36,7 @@ import mylas.com.erp.demo.TblDesignation;
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblManRoleTransfer;
 import mylas.com.erp.demo.Tblleaves;
+import mylas.com.erp.demo.Tblleavestype;
 import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.appservices.UserServiceImpl;
 import mylas.com.erp.demo.dao.DepartmentDao;
@@ -46,6 +47,9 @@ import mylas.com.erp.demo.dao.EmployeeDao;
 import mylas.com.erp.demo.dao.LeaveManiplication;
 import mylas.com.erp.demo.dao.ManagerServicesDao;
 import mylas.com.erp.demo.dao.RoleTrasforDao;
+import mylas.com.erp.demo.daoimpl.EmpLeaveRequestService;
+import mylas.com.erp.demo.daoimpl.LeavesTypeDaoImpl;
+import mylas.com.erp.demo.procedures.EmpLeaveRequestJoin;
 import mylas.com.erp.demo.service.Client;
 
 @Controller
@@ -78,40 +82,15 @@ public class ManagerPageController {
 
 
 	EmailSender emailsender = new EmailSender();
+	EmpLeaveRequestService elrs = new EmpLeaveRequestService();
+	LeavesTypeDaoImpl ltdi = new LeavesTypeDaoImpl();
 
 	static String emailToRecipient, emailSubject, emailMessage;
    
 	Client c = new Client();
     
-/*	@RequestMapping(value= "/manager/leave/register")
-	public ModelAndView empLeavePage(HttpSession session) {
-		ModelAndView mav = new ModelAndView("empleaverequests");
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		EmpDetails user=null;
-		if (principal instanceof EmpDetails) {
-			user = ((EmpDetails)principal);
-		}
 
-		String role = user.getRole();
-		mav.addObject("Role",role);
-		List<TblEmpLeavereq> allempleave = ers.view();
-		List<TblEmpLeavereq> leavereq =  ers.viewbyid(user.getEid());
-		int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
-		List<EmpDetails> emp1 = userDetails.getDetails();
-		List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
-		mav.addObject("empattendances",empattendances);
-		mav.addObject("allempleave", allempleave);
-		mav.addObject("count",count);
-		mav.addObject("User", user);
-		mav.addObject("empleave", leavereq);
-		mav.addObject("manservices", mandao.list());
-		mav.addObject("employees", emp1);
-		mav.addObject("count",count);
-		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
-		mav.addObject("nleave",numofleaves);
-		return mav;
-	}
-*/
+
 /*	@RequestMapping(value="/manager/allemp/register")
 	public ModelAndView allEmpPage() {
 		ModelAndView mav = new ModelAndView("employees");
@@ -217,92 +196,7 @@ public class ManagerPageController {
 	/*
 	 * Post Method Handelling method
 	 */
-/*	@RequestMapping(value= "/manager/leave/register", method=RequestMethod.POST)
-	public ModelAndView manLeaveRequestPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
-
-		ModelAndView mav = new ModelAndView("empleaverequests");
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		EmpDetails user=null;
-		if (principal instanceof EmpDetails) {
-			user = ((EmpDetails)principal);
-		}
-
-		String role = user.getRole();
-		mav.addObject("Role",role);
-
-		*//**
-		 * Handling request from empleaverequests.jsp form with post action.
-		 *//*
-
-		String fromdate = request.getParameter("fromdate");
-		//String[] date = fromdate.split("-");
-		String todate = request.getParameter("todate");
-		SimpleDateFormat formatfromdate = new SimpleDateFormat("yyyy-mm-dd");
-		Date reqfromDate = null;
-		Date reqtoDate = null;
-		try {
-			reqfromDate = formatfromdate.parse(fromdate);
-			reqtoDate = formatfromdate.parse(todate);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		LocalDate Day1 = LocalDate.parse(fromdate);
-		LocalDate Day2 = LocalDate.parse(todate);
-		LocalDate Day3=new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-		long daysNegative = ChronoUnit.DAYS.between(Day1, Day2);
-		long daysNegative1 = ChronoUnit.DAYS.between(Day3, Day1);
-		System.out.println(daysNegative1);
-		List<EmpDetails> emp1 = userDetails.getDetails();
-
-		mav.addObject("User", user);
-		mav.addObject("manservices", mandao.list());	
-		mav.addObject("employees", emp1);
-		int dayCount;
-		if(daysNegative1>3)
-			dayCount=3;
-		else
-			dayCount=(int) (daysNegative1-1);
-		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
-
-
-		//empleave.setManagerid(user.getManagerid());
-		empleave.setEmployeeid(user.getEid());
-		empleave.setStatus(null);
-		try {
-			ers.save(empleave);	
-			List<TblEmpLeavereq> leavereq =  ers.viewbyid(user.getEid());
-			mav.addObject("empleave", leavereq);
-			System.out.println("Req Sent to Save");
-			mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
-			
-			emailSubject = "New Leave Request For:";
-			emailMessage = "A new Leave Request For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getEmplfirstname()+" "+user.getEmpllastname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
-			emailToRecipient = c.getMail(user.getCreatedby());
-			//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
-			emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
-			System.out.println("send mail");
-		
-			
-					
-			List<TblEmpLeavereq> allempleave = ers.view();
-			int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
-			List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
-			mav.addObject("empattendances",empattendances);
-			mav.addObject("allempleave", allempleave);
-			mav.addObject("count",count);
-			List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
-			mav.addObject("nleave",numofleaves);
-			return mav;
-		}catch(DateTimeParseException e){
-			mav.addObject("errmsg", "Please enter the required fields");
-			return mav;
-		}
-
-	}*/
 
 /*	@RequestMapping(value= "/manager/profile/register")
 	public ModelAndView empProfilePage() {
@@ -906,7 +800,7 @@ public class ManagerPageController {
 		mav.addObject("id",id);
 		mav.addObject("manservices", mandao.list());
 		mav.addObject("User",user);
-		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye(0);
 		mav.addObject("nleave",numofleaves);
 		return mav;
 			
@@ -944,6 +838,150 @@ public class ManagerPageController {
 		return mav;
 
 	}*/
+
+	/*--------------------------------------------manager leave register-------------------------------------------------*/
+	@RequestMapping(value= "/manager/leave/register")
+	public ModelAndView empLeavePage(HttpSession session) {
+		ModelAndView mav = new ModelAndView("empleaverequests");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
+		mav.addObject("User", user);
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		List<Tblleavestype> leavetypes = ltdi.viewAll();
+		 mav.addObject("leavetypes",leavetypes);
+         List<EmpLeaveRequestJoin> empleaves = elrs.viewAll(0);
+         mav.addObject("empleaves",empleaves);
+         mav.addObject("manservices", mandao.list());
+		/*mav.addObject("empleave", leavereq);
+		
+		mav.addObject("employees", emp1);
+		mav.addObject("count",count);
+		List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+		mav.addObject("nleave",numofleaves);*/
+		return mav;
+	}
+	
+	
+		@RequestMapping(value= "/manager/leave/register", method=RequestMethod.POST)
+	public ModelAndView manLeaveRequestPage(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+
+
+		ModelAndView mav = new ModelAndView("empleaverequests");
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
+
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		List<Tblleavestype> leavetypes = ltdi.viewAll();
+		mav.addObject("leavetypes",leavetypes);
+			String leavetype = request.getParameter("leavetype");
+			String fromdate = request.getParameter("fromdate");
+			String todate = request.getParameter("todate");
+			String leavereason = request.getParameter("leavereason");
+			  
+		    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); 
+		    Date fromDate=null;
+		    Date toDate=null;
+			try
+			{
+		    fromDate = dateFormat.parse(fromdate);
+		    System.out.println(fromDate);
+		    toDate = dateFormat.parse(todate);
+		    System.out.println(toDate);
+				LocalDate Day1 = LocalDate.parse(fromdate);
+				LocalDate Day2 = LocalDate.parse(todate);
+				long count = ChronoUnit.DAYS.between(Day1, Day2);
+	     
+		    String s = elrs.saveLeaveRequest(0,(int)count,user.getEid(),fromDate,leavereason,Integer.parseInt(request.getParameter("leavetype")),(int)user.getCreatedby(),4,toDate,true,user.getId(),new Date(),(int)user.getCreatedby(),new Date());		
+		    }
+		    catch(Exception e)
+		    {
+		    	e.printStackTrace();
+		    }
+			mav.addObject("User",user);
+		     List<EmpLeaveRequestJoin> empleaves = elrs.viewAll(0);
+		        mav.addObject("empleaves",empleaves);
+				
+				mav.addObject("manservices", mandao.list());
+			return mav;
+		}
+		/**//**
+		 * Handling request from empleaverequests.jsp form with post action.
+		 *//*
+
+		String fromdate = request.getParameter("fromdate");
+		//String[] date = fromdate.split("-");
+		String todate = request.getParameter("todate");
+		SimpleDateFormat formatfromdate = new SimpleDateFormat("yyyy-mm-dd");
+		Date reqfromDate = null;
+		Date reqtoDate = null;
+		try {
+			reqfromDate = formatfromdate.parse(fromdate);
+			reqtoDate = formatfromdate.parse(todate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		LocalDate Day1 = LocalDate.parse(fromdate);
+		LocalDate Day2 = LocalDate.parse(todate);
+		LocalDate Day3=new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+		long daysNegative = ChronoUnit.DAYS.between(Day1, Day2);
+		long daysNegative1 = ChronoUnit.DAYS.between(Day3, Day1);
+		System.out.println(daysNegative1);
+		List<EmpDetails> emp1 = userDetails.getDetails();
+
+		mav.addObject("User", user);
+		mav.addObject("manservices", mandao.list());	
+		mav.addObject("employees", emp1);
+		int dayCount;
+		if(daysNegative1>3)
+			dayCount=3;
+		else
+			dayCount=(int) (daysNegative1-1);
+		TblEmpLeavereq empleave = new TblEmpLeavereq((int)daysNegative,null, request.getParameter("fromdate"),request.getParameter("leavereason"), request.getParameter("leavetype"), null, null,  request.getParameter("todate"),null,null,null,dayCount);
+
+
+		//empleave.setManagerid(user.getManagerid());
+		empleave.setEmployeeid(user.getEid());
+		empleave.setStatus(null);
+		try {
+			ers.save(empleave);	
+			List<TblEmpLeavereq> leavereq =  ers.viewbyid(user.getEid());
+			mav.addObject("empleave", leavereq);
+			System.out.println("Req Sent to Save");
+			mav.addObject("Submitmsg", "Your Leave Request Has Been Submitted Sucessfully! Please Wait for your Manager Approval");
+			
+			emailSubject = "New Leave Request For:";
+			emailMessage = "A new Leave Request For Approval has Been Sent to :"+"On: "+new Date()+"\n"+"\n Employee Name:  "+user.getEmplfirstname()+" "+user.getEmpllastname()+"\n Time Sheet request for the Month:  "+request.getParameter("month")+"("+request.getParameter("year")+")";
+			emailToRecipient = c.getMail(user.getCreatedby());
+			//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+			emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+			System.out.println("send mail");
+		
+			
+					
+			List<TblEmpLeavereq> allempleave = ers.view();
+			int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
+			List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
+			mav.addObject("empattendances",empattendances);
+			mav.addObject("allempleave", allempleave);
+			mav.addObject("count",count);
+			List<LeaveAddition> numofleaves=leave.getDetailsofleavetye();
+			mav.addObject("nleave",numofleaves);
+			return mav;
+		}catch(DateTimeParseException e){
+			mav.addObject("errmsg", "Please enter the required fields");
+			return mav;
+		}*/
 
 	
 

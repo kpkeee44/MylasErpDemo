@@ -104,12 +104,12 @@
 							method="post">
 								<div class="col-md-3 padding_col">
 									<div class="form-group">
-										<select id="department1" name="department1"
+										<select id="leavetype" name="leavetype"
 											class="form-control" size="1">
 											<option value="">Select TypeOfLeave</option>
-											<c:forEach items="${departments}" var="departments">
-												<option value="${departments.getLeavetype()}">
-													${departments.getLeavetype()}</option>
+											<c:forEach items="${leavetype}" var="leavetype">
+												<option value="${leavetype.getId()}">
+													${leavetype.getLeavetype()}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -167,7 +167,7 @@
 									<tbody>
 										<c:forEach items="${DaysList}" var="days">
 											<tr>
-												<td>${days.getLeaveType()}</td>
+												<td>${days.getLeaveType()}${days.getNumleavedays()}</td>
 												<td>${days.getNumleavedays()}</td>
 												 
 										     <c:if test="${days.isIsactive() == true}">
