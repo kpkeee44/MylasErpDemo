@@ -49,7 +49,7 @@
 					
 					</li>
 					
-				<li><a href="#layout" title="Layouts" data-toggle="collapse"
+				<!-- <li><a href="#layout" title="Layouts" data-toggle="collapse"
 					class="menu-toggle"> <em class="material-icons">computer</em> <span>Layouts</span>
 				</a>
 					<ul id="layout" class="nav sidebar-subnav collapse">
@@ -81,9 +81,9 @@
 						<li><a href="pages/layout/l_scrollbar.html"
 							title="Menu Scrollbar"> <span>Menu Scrollbar</span>
 						</a></li>
-					</ul></li>
-				<li class="nav-heading "><span>UI COMPONENTS</span></li>
-				<li><a href="#components" title="Components"
+					</ul></li> -->
+				<!-- <li class="nav-heading "><span>UI COMPONENTS</span></li> -->
+				<!-- <li><a href="#components" title="Components"
 					data-toggle="collapse" class="menu-toggle"> <em
 						class="material-icons">border_color</em> <span>Basic UI</span>
 				</a>
@@ -187,8 +187,8 @@
 						<li><a href="pages/basic-ui/typography.html"
 							title="Typography"> <span>Typography</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#advanceui" title="Advance UI"
+					</ul></li> -->
+				<!-- <li><a href="#advanceui" title="Advance UI"
 					data-toggle="collapse" class="menu-toggle"> <em
 						class="material-icons">format_color_fill</em> <span>Advance
 							UI</span>
@@ -264,8 +264,8 @@
 						<li><a href="pages/advance-ui/waves.html" title="Waves">
 								<span>Waves</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#elements" title="Elements" data-toggle="collapse"
+					</ul></li> -->
+				<!-- <li><a href="#elements" title="Elements" data-toggle="collapse"
 					class="menu-toggle"> <em class="material-icons">extension</em>
 						<span>Elements</span>
 				</a>
@@ -294,8 +294,8 @@
 						<li><a href="pages/elements/user-card.html" title="User Card">
 								<span>User Card</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#forms" title="Forms" data-toggle="collapse"
+					</ul></li> -->
+				<!-- <li><a href="#forms" title="Forms" data-toggle="collapse"
 					class="menu-toggle"> <em class="material-icons">assignment</em>
 						<span>Forms</span>
 				</a>
@@ -374,8 +374,8 @@
 						<li><a href="pages/forms/tinymce-editor.html"
 							title="Tinymce Editor"> <span>Tinymce Editor</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#charts" title="Charts" data-toggle="collapse"
+					</ul></li> -->
+				<!-- <li><a href="#charts" title="Charts" data-toggle="collapse"
 					class="menu-toggle"> <em class="material-icons">insert_chart</em>
 						<span>Charts</span>
 				</a>
@@ -409,8 +409,8 @@
 						<li><a href="pages/charts/jquery-knob.html"
 							title="Jquery Knob"> <span>Jquery Knob</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#tables" title="Tables" data-toggle="collapse"
+					</ul></li> -->
+				<!-- <li><a href="#tables" title="Tables" data-toggle="collapse"
 					class="menu-toggle"> <em class="material-icons">border_all</em>
 						<span>Tables</span>
 				</a>
@@ -433,8 +433,8 @@
 						</a></li>
 						<li><a href="pages/tables/jsgrid.html" title="Jsgrid"> <span>Jsgrid</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#widgets" title="Widgets" data-toggle="collapse"
+					</ul></li> -->
+				<!-- <li><a href="#widgets" title="Widgets" data-toggle="collapse"
 					class="menu-toggle"> <em class="material-icons">widgets</em> <span>Widgets</span>
 				</a>
 					<ul id="widgets" class="nav sidebar-subnav collapse">
@@ -457,9 +457,9 @@
 						<li><a href="pages/widgets/weather-widget.html"
 							title="Weather Widget"> <span>Weather Widget</span>
 						</a></li>
-					</ul></li>
-				<li class="nav-heading "><span>DEVELOPMENT</span></li>
-				<li><a href="#appview" title="App Views" data-toggle="collapse"
+					</ul></li> -->
+				<!-- <li class="nav-heading "><span>DEVELOPMENT</span></li> -->
+				<!-- <li><a href="#appview" title="App Views" data-toggle="collapse"
 					class="menu-toggle"> <em class="material-icons">apps</em> <span>App
 							Views</span>
 				</a>
@@ -500,8 +500,8 @@
 						<li><a href="pages/app-views/to_do.html" title="To Do"> <span>To
 									Do</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#ecommerce" title="Ecommerce"
+					</ul></li> -->
+				<!-- <li><a href="#ecommerce" title="Ecommerce"
 					data-toggle="collapse" class="menu-toggle"> <em
 						class="material-icons">shopping_cart</em> <span>Ecommerce</span>
 				</a>
@@ -525,8 +525,8 @@
 						<li><a href="pages/ecommerce/ec-order.html" title="Order">
 								<span>Order</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#pages" title="Pages" data-toggle="collapse"
+					</ul></li> -->
+				<!-- <li><a href="#pages" title="Pages" data-toggle="collapse"
 					class="menu-toggle"> <em class="material-icons">pages</em> <span>Pages</span>
 				</a>
 					<ul id="pages" class="nav sidebar-subnav collapse">
@@ -555,8 +555,8 @@
 						<li><a href="pages/extra-page/blank.html" title="Blank Page">
 								<span>Blank Page</span>
 						</a></li>
-					</ul></li>
-				<li><a href="#multilevel" title="Multilevel"
+					</ul></li> -->
+				<!-- <li><a href="#multilevel" title="Multilevel"
 					data-toggle="collapse" class="menu-toggle"> <em
 						class="material-icons">menu</em> <span>Multilevel</span>
 				</a>
@@ -591,7 +591,7 @@
 											</ul></li>
 									</ul></li>
 							</ul></li>
-					</ul></li>
+					</ul></li> -->
 			</ul>
 			<!-- END sidebar nav-->
 		</nav>

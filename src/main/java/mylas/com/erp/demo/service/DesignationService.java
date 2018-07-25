@@ -53,9 +53,9 @@ public class DesignationService implements DesignationDao {
 		catch(Exception e)
 		{
 			System.out.println(e);
-			return "Designation name already Exits";
+			return "Designation Name Already Exits";
 		}
-	return "updated successfully";
+	return "Designation Updated Successfully";
 	}
 		
 	@Override

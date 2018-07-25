@@ -334,7 +334,7 @@ public class PageController<JavaMailSender> {
 		System.out.println(dt1);
 		String name=request.getParameter("holiday");
 		//(int id,String name,Date dt,boolean active,String eid,Date cdt,String upby,Date update);
-		String msg=himpl.saveHoliday(0,name,dt1,true,user.getId(),new Date(),user.getId(),null);
+		String msg=himpl.saveHoliday(0,name,dt1,request.getParameter("active"),user.getId(),new Date(),user.getId(),null);
 		List<TblHolidays> holidays = himpl.viewAll();
 		mav.addObject("HolidaysList",holidays);
 		mav.addObject("services", servicesdao.list());
@@ -387,7 +387,7 @@ public class PageController<JavaMailSender> {
 		String name=request.getParameter("holiday");
 		//Holidays hday=new Holidays(name, dt);
 		System.out.println(id);
-		String msg=himpl.saveHoliday(id,name,dt,true,user.getId(),new Date(),user.getId(),new Date());
+		String msg=himpl.saveHoliday(id,name,dt,request.getParameter("active"),user.getId(),new Date(),user.getId(),new Date());
 		//String msg=himpl.updateHOliday(id, hday);
 		if(msg.equalsIgnoreCase("updated successfully")) {
 			mav = new ModelAndView("redirect:/admin/empholidays/register");
@@ -517,8 +517,9 @@ public class PageController<JavaMailSender> {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		String dgmsg=designationImpl.saveDetails(0,request.getParameter("designationname"),"true",user.getId(),user.getId());
-		List<TblDesignation> depts = designationImpl.getDetails();
+		
+		String dsmsg=designationImpl.saveDetails(0,request.getParameter("designationname"),"true",user.getId(),user.getId());
+		List<TblDesignation> desig = designationImpl.getDetailsview();
 		
 		mav.addObject("services", servicesdao.list());
 		
@@ -536,8 +537,9 @@ public class PageController<JavaMailSender> {
 		mav.addObject("count",count);*/
 		mav.addObject("TransferRoleList", transferrole);
 		String role = user.getRole();
+		mav.addObject("designations", desig);
 		mav.addObject("Role",role);
-		mav.addObject("dgmsg",dgmsg);
+		mav.addObject("dgmsg",dsmsg);
 		mav.addObject("User", user);
 		
 		return mav;		
@@ -589,11 +591,11 @@ public class PageController<JavaMailSender> {
 	  List<TblDesignation> design = designationImpl.getDetails();
 	  String dsmsg=designationImpl.saveDetails(id, request.getParameter("designationname"),request.getParameter("active"),user.getId(),user.getId());
 	  System.out.println(dsmsg);
-	  if(dsmsg.equalsIgnoreCase("updated successfully")) {
+	  if(dsmsg.equalsIgnoreCase("Designation Updated Successfully")) {
 	   mav = new ModelAndView("redirect:/admin/empdesig/register");
 	   return mav;
 	  }
-	  else if(dsmsg.equalsIgnoreCase("Designation name already Exits")) {
+	  else if(dsmsg.equalsIgnoreCase("Designation Name Already Exits")) {
 	   mav = new ModelAndView("designationsedit");
 	/*   mav.addObject("empattendances",empattendances);
 	   mav.addObject("allempleave", allempleave);
@@ -1360,7 +1362,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("DaysList",leavesCount);
 		mav.addObject("services", servicesdao.list());
 		
-		//mav.addObject("msg",msg);
+		mav.addObject("msg",msg);
 		return mav;		
 	}
 	@RequestMapping(value= "days/edit/{id}")
@@ -1414,21 +1416,21 @@ public class PageController<JavaMailSender> {
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());*/
 		//List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
 		//List<EmpDetails> emp1 = userDetails.getDetails();
-		String name=request.getParameter("type");		
-		int day=Integer.parseInt(request.getParameter("count"));
 		String active=request.getParameter("active");
 		boolean act=Boolean.parseBoolean(active);
+		//System.out.println(id+""+);
 		String msg=leave.save(id,Integer.parseInt(request.getParameter("leavetype")), Integer.parseInt(request.getParameter("count")), user.getId(), user.getId() ,act);
 		//String msg=leave.save(id, leavetypeid, count, cid, uid, active)
 		System.out.println(active);
-	   		mav.addObject("services", servicesdao.list());
+	   		
 		//Tblleaves lday=new Tblleaves(name,day);
 		//String msg=leave.updateLeave(id, day,user.getEid(),active);
 		if(msg.equalsIgnoreCase("UpDated Successfully")) {
 			mav = new ModelAndView("redirect:/admin/leavecount/register");
 			mav.addObject("services", servicesdao.list());
 			return mav;
-		}else if(msg.equalsIgnoreCase("LeaveType is Already Exists.Please try Again")) {
+		}else if(msg.equalsIgnoreCase("LeaveCount for the Leave Type is Already Assigned.Please try Again")) {
+			System.out.println("else block");
 			mav = new ModelAndView("leavesedit");
 			//mav.addObject("empattendances",empattendances);
 			mav.addObject("User",user);
@@ -1439,7 +1441,14 @@ public class PageController<JavaMailSender> {
 			mav.addObject("Role",role);
 			//Holidays holidays = himpl.getHolidayById(id);
 			//mav.addObject("Holiday",holidays);
-			Tblleaves tblday = leave.getDetaisById(id);
+			List<Tblleavestype> tblday = leave.getDetails();
+			List<LeaveAddition> leavesCount = leave.getDetailsofleavetye(id);
+			LeaveAddition editdep=null;
+			for(LeaveAddition list:leavesCount)
+			{
+				editdep=list;
+			}
+			mav.addObject("editdep",editdep);
 			mav.addObject("tblday",tblday);
 			mav.addObject("services", servicesdao.list());
 			mav.addObject("msg",msg);
@@ -1521,7 +1530,7 @@ public class PageController<JavaMailSender> {
 		List<Tblleavestype> leavetypes =  ltdi.viewAll();
 		mav.addObject("leavetypeslist",leavetypes);
 		mav.addObject("services", servicesdao.list());
-	 //  mav.addObject("msg",msg);
+	 mav.addObject("msg",msg);
 		return mav;
 	}
 	

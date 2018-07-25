@@ -76,12 +76,12 @@
 										<span> Leave Additions  </span>
 									</div>
 								</div>
-									<c:if test="${msgup.equals('HoliDay UpDated Successfully')}">
+								<%-- 	<c:if test="${msgup.equals('HoliDay UpDated Successfully')}">
 									<h4 style="color: green;">${msgup}</h4>
 								</c:if>
 								<c:if test="${msgup.equals('HoliDay is notUpdated.Please try Again')}">
 									<h4 style="color: red;">${msgup}</h4>
-									</c:if>
+									</c:if> --%>
 							</div>
 
 						</div>
@@ -89,10 +89,10 @@
 				</div>
                       
                       
-                        <td ><c:if test="${msg.equals('LeaveType added successfully!....')}">
+                        <td ><c:if test="${msg.equals('Number of Leaves for the Leave Type UpDated Successfully')}">
 									<h4 style="color: green;">${msg}</h4>
 								</c:if></td>
-						<td><c:if test="${msg.equals('LeaveType already exists')}">
+						<td><c:if test="${msg.equals('LeaveCount for the Leave Type is Already Assigned.Please try Again')}">
 									<h4 style="color: red;">${msg}</h4>
 								</c:if></td>
 								
@@ -106,7 +106,7 @@
 									<div class="form-group">
 										<select id="leavetype" name="leavetype"
 											class="form-control" size="1">
-											<option value="">Select TypeOfLeave</option>
+											<option value="">Select Leave Type</option>
 											<c:forEach items="${leavetype}" var="leavetype">
 												<option value="${leavetype.getId()}">
 													${leavetype.getLeavetype()}</option>
@@ -167,7 +167,7 @@
 									<tbody>
 										<c:forEach items="${DaysList}" var="days">
 											<tr>
-												<td>${days.getLeaveType()}${days.getNumleavedays()}</td>
+												<td>${days.getLeaveType()}</td>
 												<td>${days.getNumleavedays()}</td>
 												 
 										     <c:if test="${days.isIsactive() == true}">
@@ -185,7 +185,7 @@
 														</a>
 															<ul class="dropdown-menu pull-right">
 																<li><a
-																	href="${contextRoot}/days/edit/${days.getLeavetypeid()}"><i
+																	href="${contextRoot}/days/edit/${days.getId()}"><i
 																		class="material-icons">edit</i>Update</a></li>
 																
 													

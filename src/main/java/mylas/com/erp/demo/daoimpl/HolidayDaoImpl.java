@@ -19,7 +19,7 @@ import mylas.com.erp.demo.dao.HolidayDao;
 public class HolidayDaoImpl implements HolidayDao {
 
 	@Override
-	public String saveHoliday(int id,String name,String dt,boolean active,int eid,Date cdt,int upby,Date update) {
+	public String saveHoliday(int id,String name,String dt,String active,int eid,Date cdt,int upby,Date update) {
 		System.out.println(id+" 1"+name+" 2"+dt+"3 "+active+"4 "+eid+"5 "+cdt+"5 "+upby+"6 "+update);
 			try(Session  s=HibernateUtil.getSessionFactory().openSession())
 			{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_holidays");
@@ -36,7 +36,9 @@ public class HolidayDaoImpl implements HolidayDao {
 		query.setParameter(1,id);
 		query.setParameter(2,name);
 		query.setParameter(3,dt);
-		query.setParameter(4,active);
+		if(active.equals("false")) {
+			query.setParameter(4,false);}
+			else{query.setParameter(4,true);}
 		query.setParameter(5,eid);
 		query.setParameter(6,new Date());
 		query.setParameter(7,upby);

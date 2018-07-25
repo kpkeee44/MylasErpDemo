@@ -274,7 +274,7 @@
 											<div class="form-group">
 												<div class="form-line">
 													<!-- <label>Designation</label>  --><select class="form-control"
-														size="1" name="designation" id="designation"
+														size="1" name="designation" id="designation" required="required"
 														>
 														<option value="">Select Designations</option>
 														<c:forEach items="${designations}" var="desig">

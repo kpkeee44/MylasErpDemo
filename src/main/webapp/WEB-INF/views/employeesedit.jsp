@@ -263,20 +263,21 @@
 												</div>
 											</div>
 										</div>
-										<div class="col-md-8 col-xs-8">
-                                            <ul class="list-inline">
+							<div class="col-md-8 col-xs-8">
+                                            <ul class="list-inline" style="margin-top:10px;">
+                                            <li>Status:</li>
                                                 <li class="eagle-checkbox">
                                                     <label class="eagle-check custom-radio">
                                                         <input id="active1" name="active" value="true" type="radio" class="eagle-check-input" >
                                                         <span class="eagle-check-indicator"></span>
-                                                        <span class="eagle-check-description">Active</span>
+                                                        <span class="eagle-check-description">YES</span>
                                                     </label>
                                                 </li>
                                                 <li class="eagle-checkbox">
                                                     <label class="eagle-check custom-radio">
-                                                        <input id="active1" name="active" value="false" type="radio" class="eagle-check-input">
+                                                        <input id="active" name="active" value="false" type="radio" class="eagle-check-input">
                                                         <span class="eagle-check-indicator"></span>
-                                                        <span class="eagle-check-description">InActive</span>
+                                                        <span class="eagle-check-description">NO</span>
                                                     </label>
                                                 </li>
                                                
@@ -370,7 +371,7 @@ function Validate() {
 }
 </script>
 <script>
-		document.getElementById("firstname1").value = "${edetais.isIsactive()}"
+		document.getElementById("firstname1").value = "${edetais.getEmplfirstname()}"
 		document.getElementById("lastname1").value = "${edetais.getEmpllastname()}";
 		document.getElementById("empid").value = "${edetais.getEid()}";
 		document.getElementById("email").value = "${edetais.getEmail()}";
@@ -378,12 +379,14 @@ function Validate() {
 		document.getElementById("aadhar").value = "${edetais.getAadharno()}";
 		document.getElementById("phone").value = "${edetais.getPhone()}";
 		document.getElementById("address").value = "${edetais.getAdderss()}";
-		document.getElementById("active1").innerHTML ="${edetais.isIsactive()}";
 		$("#department").val("${edetais.getDepartmentnameid()}");
 		$("#designation").val("${edetais.getDesignationid()}");
-		 
-		//$("#active1").val("${edetais.isIsactive()}");
-		$("#active1 value='${edetais.isIsactive()}'").prop("checked,true");
+		
+		var active = "${edetais.isIsactive()}";
+		if(active == "true")
+		$('#active1').prop('checked', true);
+		else
+			$('#active').prop('checked', true);	
 		firstname1.focus(); 
 		
 		

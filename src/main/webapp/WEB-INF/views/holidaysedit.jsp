@@ -91,8 +91,29 @@
 								</div>
 
 							</div>
+							<div class="col-md-8 col-xs-8">
+                                            <ul class="list-inline" style="margin-top:10px;">
+                                            <li>Status:</li>
+                                                <li class="eagle-checkbox">
+                                                    <label class="eagle-check custom-radio">
+                                                        <input id="active1" name="active" value="true" type="radio" class="eagle-check-input" >
+                                                        <span class="eagle-check-indicator"></span>
+                                                        <span class="eagle-check-description">YES</span>
+                                                    </label>
+                                                </li>
+                                                <li class="eagle-checkbox">
+                                                    <label class="eagle-check custom-radio">
+                                                        <input id="active" name="active" value="false" type="radio" class="eagle-check-input">
+                                                        <span class="eagle-check-indicator"></span>
+                                                        <span class="eagle-check-description">NO</span>
+                                                    </label>
+                                                </li>
+                                               
+                                            </ul>
+                                        </div>
+							
 
-							<div style="text-align: center;">
+							<div class="col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
 								<button type="submit"
 									class="btn btn-primary btn-rounded waves-effect">Edit
 									Holiday</button>
@@ -162,6 +183,12 @@
 
 		document.getElementById("holiday").value = "${Holiday.getHolidayname()}";
 		document.getElementById("hdate").value = "${Holiday.getHolidaydate()}";
+		var active = "${Holiday.getIsactive()}";
+		if(active == "true")
+		$('#active1').prop('checked', true);
+		else
+			$('#active').prop('checked', true);	
+		holiday.focus(); 
 	</script>
 
 

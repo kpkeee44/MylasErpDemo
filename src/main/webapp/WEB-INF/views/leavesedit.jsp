@@ -79,18 +79,31 @@
 								</div>
 							</div>
 							 -->
-							 <div class="col-md-3 padding_col">
+							<%--  <div class="col-md-3 padding_col">
 									<div class="form-group">
 										<select id="leavetype" name="leavetype"
 											class="form-control" size="1">
 											<option value="">Select TypeOfLeave</option>
 											<c:forEach items="${tblday}" var="leavetype">
 												<option value="${leavetype.getId()}">
-													${leavetype.getLeavetype()}${editdep.getId()}</option>
+													${leavetype.getLeavetype()}${leavetype.getId()}</option>
 											</c:forEach>
 										</select>
 									</div>
-								</div>
+								</div> --%>
+								<div class="col-md-6"><div class="form-group">
+                                                <div class="form-line">
+                                                    <label>Leave Types</label>
+                                                   <select id="leavetype" name="leavetype"
+											class="form-control" size="1">
+                                                        <option value="">Select LeaveType</option>
+                                                       <c:forEach items="${tblday}" var="leavetype">
+												<option value="${leavetype.getId()}">
+													${leavetype.getLeavetype()}</option>
+											</c:forEach>
+                                                    </select>
+                                                </div>
+                                            </div></div>
 							<div class="col-md-6">
 								<div class="form-group">
 									<div class="form-line">
@@ -102,19 +115,20 @@
 								</div>
 							</div>
 								<div class="col-md-8 col-xs-8">
-                                            <ul class="list-inline">
+                                            <ul class="list-inline" style="margin-top:10px;">
+                                            <li>Status:</li>
                                                 <li class="eagle-checkbox">
                                                     <label class="eagle-check custom-radio">
                                                         <input id="active1" name="active" value="true" type="radio" class="eagle-check-input" >
                                                         <span class="eagle-check-indicator"></span>
-                                                        <span class="eagle-check-description">Active</span>
+                                                        <span class="eagle-check-description">YES</span>
                                                     </label>
                                                 </li>
                                                 <li class="eagle-checkbox">
                                                     <label class="eagle-check custom-radio">
-                                                        <input id="active1" name="active" value="false" type="radio" class="eagle-check-input">
+                                                        <input id="active" name="active" value="false" type="radio" class="eagle-check-input">
                                                         <span class="eagle-check-indicator"></span>
-                                                        <span class="eagle-check-description">InActive</span>
+                                                        <span class="eagle-check-description">NO</span>
                                                     </label>
                                                 </li>
                                                
@@ -145,7 +159,7 @@
 
 							</div> -->
 
-							<div style="text-align: center;">
+							<div class="col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
 								<button type="submit"
 									class="btn btn-primary btn-rounded waves-effect">Update
 									</button>
@@ -213,8 +227,12 @@
 	<script>
 	$("#leavetype").val("${editdep.getLeavetypeid()}");
 	document.getElementById("count").value = "${editdep.getNumleavedays()}";
+	var active = "${editdep.isIsactive()}";
+	if(active == "true")
 	$('#active1').prop('checked', true);
-	
+	else
+		$('#active').prop('checked', true);	
+	holiday.focus(); 
 	
 	</script>
 

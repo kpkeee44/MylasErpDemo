@@ -7,7 +7,7 @@ import mylas.com.erp.demo.TblHolidays;
 
 public interface HolidayDao {
 	
-	public String saveHoliday(int id,String name,String dt,boolean active,int eid,Date cdt,int upby,Date update);
+	public String saveHoliday(int id,String name,String dt,String active,int eid,Date cdt,int upby,Date update);
 	/*public void deleteHoliday(int id);
 
 	public String updateHOliday(int id,Holidays holiday);*/

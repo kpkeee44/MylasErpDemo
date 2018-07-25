@@ -104,7 +104,7 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
             
             while(rs.next()) {
             	LeaveAddition lea=new LeaveAddition();
-            	lea.setId(1);
+            	lea.setId(rs.getInt(1));
     			lea.setLeavetypeid(rs.getInt(2));
     			lea.setLeaveType(rs.getString(3));
     			lea.setNumleavedays(rs.getInt(4));
@@ -287,9 +287,10 @@ public class LeaveManiplicatiionImpl implements LeaveManiplication {
 		catch(Exception e)
 		{
 			System.out.println(e);
-			return "Leave is Already Exists.Please try Again";
+			System.out.println("error in leaves");
+			return "LeaveCount for the Leave Type is Already Assigned.Please try Again";
 		}
-		return "UpDated Successfully";
+		return "Number of Leaves for the Leave Type UpDated Successfully";
 	}
 	
 	

@@ -98,10 +98,10 @@
 						</div>
 					</div>
 				</div>
-<td><c:if test="${dsmsg.equals('Designation UpDated Successfully')}">
+<td><c:if test="${dsmsg.equals('Designation Updated Successfully')}">
          <h4 style="color: green;">${dsmsg}</h4>
         </c:if></td>
-      <td><c:if test="${dsmsg.equals('Designation already exists.Please try Again')}">
+      <td><c:if test="${dsmsg.equals('Designation Name Already Exits')}">
          <h4 style="color: red;">${dsmsg}</h4>
         </c:if></td>
 				<div class="col-md-12 card">
