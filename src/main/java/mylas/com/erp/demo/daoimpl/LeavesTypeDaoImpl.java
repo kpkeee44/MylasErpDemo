@@ -19,7 +19,7 @@ import mylas.com.erp.demo.appservices.HibernateUtil;
 import mylas.com.erp.demo.dao.LeavesTypeDao;
 
 	public class LeavesTypeDaoImpl implements LeavesTypeDao {
-
+/*
 		@Override
 		public String saveLeaveType(Tblleavestype lt) {
 			
@@ -32,8 +32,8 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 						session.getTransaction().commit();
 						return "leavetype added successfully!....";
 						}else {
-							/*			session.getTransaction().commit();
-							 */			return "Entered Leavetype already exists";
+										session.getTransaction().commit();
+							 			return "Entered Leavetype already exists";
 						}
 
 					}catch(ConstraintViolationException e) {
@@ -42,7 +42,7 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 						return "Entered Leavetype already exists";
 					}
 		}
-
+*/
 		@Override
 		 public Tblleavestype getById(int id) {
 		  Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
@@ -64,7 +64,7 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 
 		}
 
-		@Override
+	/*	@Override
 		public void deleteLeaveType(int id) {
 			
 				Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
@@ -74,7 +74,7 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 				session.delete(ltdel);
 				System.out.println("Object Deleted successfully.....!!");
 				session.getTransaction().commit(); 	
-			}
+			}*/
 
 
 /*
@@ -112,7 +112,7 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 			
 		}
 */
-		@Override
+	@Override
 		public Tblleavestype getLeaveTypeById(int id) {
 
 				Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
@@ -122,14 +122,10 @@ import mylas.com.erp.demo.dao.LeavesTypeDao;
 				return tlt;
 			}
 
-@Override
-public String updateLeaveType(int id, String leavetype, String eid, String active) {
-	// TODO Auto-generated method stub
-	return null;
-}
+
 
 @Override
-public String saveLeave(int id, String ltype, String active, int cby, int uby) {
+public String saveLeaveType(int id, String ltype, String active, int cby, int uby) {
 
 	try(Session  s=HibernateUtil.getSessionFactory().openSession())
 	{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insupdLeavetype");
@@ -157,9 +153,9 @@ System.out.println(a);
 	}
 	catch(Exception e)
 	{
-		return "Leavetype already exists";
+		return "Leavetype Already Exists";
 	}
-return "updated successfully";
+return "Leave Type Updated Successfully";
 
 }
 			

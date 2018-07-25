@@ -23,8 +23,8 @@ public interface EmployeeDao {
 	public String ChangeTransManager(int id,String tomanagerid);
 	 public void updateEditDetails(int id,String firstname,String lastname,String uname,String empid,String pswd,String cpswd,String joindate,String phone,String company,String department,String lastworkingday);
 	 public List<EmpDetails> viewSearch(String firstname, String lastname, String department, String designation);
-	 public List<EmpDetails> simulateSearchResult(String tagName);
-	 public List<EmpDetails> simulateSearchResultLastName(String tagName);
+	 public List<EmployeeViewPage> simulateSearchResult(String tagName);
+	 public List<EmployeeViewPage> simulateSearchResultLastName(String tagName);
 	 public String getMail(String mngid);
 	 /*new methods*/
 	 public String saveEmpDetails(int id,String empid,String fname,String lname,String email,String uname,String pswd,String addres,String ph,String adr,int crby,int upby,String role,String dept,String des,String status);

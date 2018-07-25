@@ -753,7 +753,7 @@ public class ManagerPageController {
 
 	}
 */
-	@RequestMapping(value = "/getTags", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/getTags", method = RequestMethod.GET)
 	public @ResponseBody
 	List<EmpDetails> getTags(@RequestParam String firstname) {
 		
@@ -768,7 +768,7 @@ public class ManagerPageController {
 
 		return userDetails.simulateSearchResultLastName(lastname);
 
-	}
+	}*/
 	@RequestMapping(value= "manager/leavereq/edit/{id}")
 	public ModelAndView empLeaveEdit(HttpSession session, @PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("empleaverequestedit");

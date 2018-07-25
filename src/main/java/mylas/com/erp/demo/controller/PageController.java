@@ -139,7 +139,6 @@ public class PageController<JavaMailSender> {
 		mav.addObject("count",count);*/
 	//	mav.addObject("TransferRoleList", transferrole);
 		List<TblDepartment> deptList = deptdao.getDetails();
-		
 		List<TblDesignation> designList = designationImpl.getDetails();
 		String role = user.getRole();
 		mav.addObject("Role",role);
@@ -148,7 +147,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("userClickReg", true);
 		String mesg = "hi";
 	//	List<EmpDetails> emp1 = userDetails.getDetails();
-		List<EmployeeViewPage>emp1=userDetails.view(0);
+		List<EmployeeViewPage> emp1=userDetails.view(0);
 		mav.addObject("employees", emp1);
 		mav.addObject("dupmsg", mesg);
 		mav.addObject("departments", deptList);
@@ -1425,7 +1424,7 @@ public class PageController<JavaMailSender> {
 	   		
 		//Tblleaves lday=new Tblleaves(name,day);
 		//String msg=leave.updateLeave(id, day,user.getEid(),active);
-		if(msg.equalsIgnoreCase("UpDated Successfully")) {
+		if(msg.equalsIgnoreCase("Number of Leaves for the Leave Type UpDated Successfully")) {
 			mav = new ModelAndView("redirect:/admin/leavecount/register");
 			mav.addObject("services", servicesdao.list());
 			return mav;
@@ -1526,7 +1525,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("User",user);
 		String leavetype=request.getParameter("leavetype");
 		//Tblleavestype lt=new Tblleavestype(leavetype,true,user.getEid(),new Date(),null,null);
-		String msg=ltdi.saveLeave(0, request.getParameter("leavetype"),"true",user.getId(),user.getId());                   
+		String msg=ltdi.saveLeaveType(0, request.getParameter("leavetype"),"true",user.getId(),user.getId());                   
 		List<Tblleavestype> leavetypes =  ltdi.viewAll();
 		mav.addObject("leavetypeslist",leavetypes);
 		mav.addObject("services", servicesdao.list());
@@ -1537,13 +1536,13 @@ public class PageController<JavaMailSender> {
 
 		
 	
-	@RequestMapping(value= "/admin/leavetype/delete/{id}")
+/*	@RequestMapping(value= "/admin/leavetype/delete/{id}")
 	public ModelAndView deleteLeaveType(HttpServletRequest request,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/admin/leavetype/register");	
 		ltdi.deleteLeaveType(id);
 		return mav;
 	}
-	
+	*/
 	@RequestMapping(value="/admin/leavetype/edit/{id}")
 	public ModelAndView editLeaveType(HttpServletRequest request, HttpServletResponse response,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("leavestypeedit");
@@ -1596,12 +1595,12 @@ public class PageController<JavaMailSender> {
 		mav.addObject("User",user);
 		
 	//String msg=ltdi.updateLeaveType(id,lt,user.getEid(),active);
-		String msg=ltdi.saveLeave(id, lt, active, user.getId(),user.getId());
-		if(msg.equalsIgnoreCase("updated successfully")) {
+		String msg=ltdi.saveLeaveType(id, lt, active, user.getId(),user.getId());
+		if(msg.equalsIgnoreCase("Leave Type Updated Successfully")) {
 			mav = new ModelAndView("redirect:/admin/leavetype/register");
 			
 			return mav;
-		}else if(msg.equalsIgnoreCase("Leavetype already exists")) {
+		}else if(msg.equalsIgnoreCase("Leavetype Already Exists")) {
 			mav = new ModelAndView("leavestypeedit");
 			//mav.addObject("empattendances",empattendances);
 			mav.addObject("User",user);
@@ -1644,6 +1643,22 @@ public class PageController<JavaMailSender> {
 		return mav;
 	}
 		
+		@RequestMapping(value = "/getTags", method = RequestMethod.GET)
+		public @ResponseBody
+		List<EmployeeViewPage> getTags(@RequestParam String firstname) {
+			System.out.println(firstname+"page");
+
+			return userDetails.simulateSearchResult(firstname);
+
+		}
+		@RequestMapping(value = "/lastNames", method = RequestMethod.GET)
+		public @ResponseBody
+		List<EmployeeViewPage> lastName(@RequestParam String lastname) {
+			
+
+			return userDetails.simulateSearchResultLastName(lastname);
+
+		}
 	
 	
 

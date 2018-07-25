@@ -95,10 +95,10 @@
 					</div>
 				</div>
 				
-				   <td ><c:if test="${msg.equals('leavetype added successfully!....')}">
+				   <td ><c:if test="${msg.equals('Leave Type Updated Successfully')}">
 									<h4 style="color: green;">${msg}</h4>
 								</c:if></td>
-						<td><c:if test="${msg.equals('Entered Leavetype already exists')}">
+						<td><c:if test="${msg.equals('Leavetype Already Exists')}">
 									<h4 style="color: red;">${msg}</h4>
 								</c:if></td>
 				
@@ -129,7 +129,7 @@
 								<div class="col-md-6 padding_col">
 									<div class="form-group">
 										<input type="text" class="form-control" id="leavetype"
-											placeholder="Enter leavetype" name="leavetype" value=""/>
+											placeholder="Enter leavetype" name="leavetype" value="" required="required"/>
 									</div>
 								</div>
 								<button type="submit"

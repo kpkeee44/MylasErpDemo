@@ -278,15 +278,17 @@ return "error occured while updating";}
 	
 
 	@Override
-	public List<EmpDetails> simulateSearchResult(String tagName) {
+	public List<EmployeeViewPage> simulateSearchResult(String tagName) {
 		// TODO Auto-generated method stub
 	
-		List<EmpDetails> emp1 = getDetails();
-		List<EmpDetails> result = new ArrayList<EmpDetails>();
+		List<EmployeeViewPage> emp1 = view(0);
+		List<EmployeeViewPage> result = new ArrayList<EmployeeViewPage>();
+		
 	
 		// iterate a list and filter by tagName
-		for (EmpDetails tag : emp1) {
+		for (EmployeeViewPage tag : emp1) {
 			if (tag.getEmplfirstname().contains(tagName)) {
+				System.out.println(tag+"clint");
 				result.add(tag);
 			}
 		}
@@ -297,15 +299,16 @@ return "error occured while updating";}
 	}
 
 	@Override
-	public List<EmpDetails> simulateSearchResultLastName(String tagName) {
+	public List<EmployeeViewPage> simulateSearchResultLastName(String tagName) {
 		
 	
-		List<EmpDetails> emp1 = getDetails();
-		List<EmpDetails> result = new ArrayList<EmpDetails>();
+		List<EmployeeViewPage> emp1 = view(0);
+		List<EmployeeViewPage> result = new ArrayList<EmployeeViewPage>();
 	
 		// iterate a list and filter by tagName
-		for (EmpDetails tag : emp1) {
+		for (EmployeeViewPage tag : emp1) {
 			if (tag.getEmpllastname().contains(tagName)) {
+				System.out.println(tag+"tagname");
 				result.add(tag);
 			}
 		}
@@ -314,6 +317,7 @@ return "error occured while updating";}
 		return result;
 		
 	}
+	
 	
 	
 	@Override

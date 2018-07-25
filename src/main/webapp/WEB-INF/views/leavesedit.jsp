@@ -108,7 +108,7 @@
 								<div class="form-group">
 									<div class="form-line">
 									<label>NumberOfDays</label> <input type="number" name="count"
-											id="count" class="form-control"  required="required" />
+											id="count" class="form-control" required="required"/>
 
 
 									</div>

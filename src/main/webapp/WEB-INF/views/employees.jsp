@@ -611,7 +611,7 @@
 		        	
 		            suggestions: $.map($.parseJSON(response), function(item) {
 		            	
-		                return { value: item.fname, data: item.id };
+		                return { value: item.emplfirstname, data: item.id };
 		            })
 		            
 		        };
@@ -637,7 +637,7 @@
 		        	
 		            suggestions: $.map($.parseJSON(response), function(item) {
 		            	
-		                return { value: item.lname, data: item.id };
+		                return { value: item.empllastname, data: item.id };
 		            })
 		            
 		        };

@@ -105,7 +105,7 @@
 								<div class="col-md-3 padding_col">
 									<div class="form-group">
 										<select id="leavetype" name="leavetype"
-											class="form-control" size="1">
+											class="form-control" size="1" required="required">
 											<option value="">Select Leave Type</option>
 											<c:forEach items="${leavetype}" var="leavetype">
 												<option value="${leavetype.getId()}">

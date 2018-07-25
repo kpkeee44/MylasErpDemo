@@ -108,9 +108,12 @@ width: 10%;
 				<div class="col-md-12 card">
 					<div class="custom_title">
 						<h2>Edit Leave Type</h2>
-						<p style="color: red;" align="center">${msg}</p>
+					<%-- 	<p style="color: red;" align="center">${msg}</p> --%>
 
 					</div>
+					 <td><c:if test="${msg.equals('Leavetype Already Exists')}">
+         <h4 style="color: red;">${msg}</h4>
+        </c:if></td>
 					<form
 						action="${contextRoot}/admin/leavetype/edit/${leavestypeedit.getId()}" method="post">
 						<hr class="custom_line">
@@ -121,25 +124,26 @@ width: 10%;
 										<div class="form-line">
 											<label>Leave Type</label> <input type="text"
 												name="leavetype" id="leavetype"
-												class="form-control">
+												class="form-control" required="required">
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-8 col-xs-8">
-                                            <ul class="list-inline">
+                                            <ul class="list-inline" style="margin-top:10px;">
+                                            <li>Status:</li>
                                                 <li class="eagle-checkbox">
                                                     <label class="eagle-check custom-radio">
                                                         <input id="active1" name="active" value="true" type="radio" class="eagle-check-input" >
                                                         <span class="eagle-check-indicator"></span>
-                                                        <span class="eagle-check-description">Active</span>
+                                                        <span class="eagle-check-description">YES</span>
                                                     </label>
                                                 </li>
                                                 <li class="eagle-checkbox">
                                                     <label class="eagle-check custom-radio">
                                                         <input id="active" name="active" value="false" type="radio" class="eagle-check-input">
                                                         <span class="eagle-check-indicator"></span>
-                                                        <span class="eagle-check-description">InActive</span>
+                                                        <span class="eagle-check-description">NO</span>
                                                     </label>
                                                 </li>
                                                
@@ -205,12 +209,15 @@ width: 10%;
  
  %> --%>
 	<script type="text/javascript">
-		var active=${leavestypeedit.getIsactive()};
+		
 		document.getElementById("leavetype").value = "${leavestypeedit.getLeavetype()}";
 		
-		if(active==true)
-		document.getElementById("active1").value = "${leavestypeedit.getIsactive()}";
-		
+		var active = "${leavestypeedit.getIsactive()}";
+		if(active == "true")
+		$('#active1').prop('checked', true);
+		else
+			$('#active').prop('checked', true);	
+		leavetype.focus(); 
 	</script>
 
 </body>
