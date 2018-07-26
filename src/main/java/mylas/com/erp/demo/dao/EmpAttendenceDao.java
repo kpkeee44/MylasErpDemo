@@ -7,7 +7,11 @@ import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.TblEmpLeavereq;
 
 public interface EmpAttendenceDao {
+<<<<<<< HEAD
 /*	public void save(TblEmpAttendanceNew tbl);
+=======
+	/*public void save(TblEmpAttendanceNew tbl);
+>>>>>>> branch 'master' of https://github.com/kpkeee44/MylasErpDemo.git
 	public void update(Boolean status,int id);
 	public String delete(int id);
 	public List<TblEmpAttendanceNew> viewbyid(String empid);

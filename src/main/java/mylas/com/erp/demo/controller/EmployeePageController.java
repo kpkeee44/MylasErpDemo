@@ -131,8 +131,8 @@ public class EmployeePageController {
 		}
 
 		String role = user.getRole();
-		List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
-		mav.addObject("attendancelist",attendances);
+		//List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
+		//mav.addObject("attendancelist",attendances);
 		mav.addObject("empservices", empservicesdao.list());
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
@@ -149,9 +149,9 @@ public class EmployeePageController {
 		}
 
 		String role = user.getRole();
-		List<TblEmpAttendanceNew> attendances =  empattreq.Search(request.getParameter("month"), request.getParameter("status"), user.getEid());
+	//	List<TblEmpAttendanceNew> attendances =  empattreq.Search(request.getParameter("month"), request.getParameter("status"), user.getEid());
 		
-		mav.addObject("attendancelist",attendances);
+		//mav.addObject("attendancelist",attendances);
 		mav.addObject("empservices", empservicesdao.list());
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
@@ -179,8 +179,8 @@ public class EmployeePageController {
 		}
 
 		String role = user.getRole();
-		List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
-		mav.addObject("attendancelist",attendances);
+		//List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
+		//mav.addObject("attendancelist",attendances);
 		mav.addObject("empservices", empservicesdao.list());
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
@@ -221,10 +221,10 @@ public class EmployeePageController {
 		}else if(attedance.getMonth().equals("Febraury") && (attedance.getYear()%4==0)) {
 			attedance.setDay29(Integer.parseInt(request.getParameter("day29")));
 		}
-		empattreq.save(attedance);
+	//	empattreq.save(attedance);
 		System.out.println("save");
-		List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
-		mav.addObject("attendancelist",attendances);
+		//List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
+		//mav.addObject("attendancelist",attendances);
 		mav.addObject("empservices", empservicesdao.list());	
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
@@ -288,7 +288,7 @@ public class EmployeePageController {
 /*	@RequestMapping(value= "/employee/timesheet/delete/{id}")
 	public ModelAndView empTimeSheetdeletePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/employee/timesheet/register");
-		String DelMsg = empattreq.delete(id);
+		//String DelMsg = empattreq.delete(id);
 		return mav;
 	}
 */
