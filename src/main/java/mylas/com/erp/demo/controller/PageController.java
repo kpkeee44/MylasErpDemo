@@ -462,11 +462,11 @@ public class PageController<JavaMailSender> {
 		mav.addObject("TransferRoleList", transferrole);
 		String role = user.getRole();
 		mav.addObject("Role",role);
-		List<TblEmpAttendanceNew> attendances =  empattreq.getDetails();
+		//List<TblEmpAttendanceNew> attendances =  empattreq.getDetails();
 		mav.addObject("User",user);
 		List<EmpDetails> emp1 = userDetails.getDetails();
 		mav.addObject("employees", emp1);
-		mav.addObject("attendancelist",attendances);
+		//mav.addObject("attendancelist",attendances);
 		return mav;		
 	}
 
@@ -858,7 +858,7 @@ public class PageController<JavaMailSender> {
 		
 		String reason = "Approved";
 		boolean status = true;
-		empattreq.update(status, id);
+		//empattreq.update(status, id);
 
 		emailSubject = "Time Sheet Request Status For:";
 		emailMessage = "A new Time Sheet Request was approved :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
@@ -877,7 +877,7 @@ public class PageController<JavaMailSender> {
 		}
 		String reason = "Decline";
 		boolean status = false;
-		empattreq.update(status, id);
+		//empattreq.update(status, id);
 		emailSubject = "Time Sheet Request Status For:";
 		emailMessage = "A new Time Sheet Request was declined :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
 		emailToRecipient = user.getEmail();
@@ -1188,11 +1188,11 @@ public class PageController<JavaMailSender> {
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		System.out.println(request.getParameter("month"));
-		List<TblEmpAttendanceNew> attendence =  empattreq.viewSearch(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("month"), request.getParameter("status"));
+		//List<TblEmpAttendanceNew> attendence =  empattreq.viewSearch(request.getParameter("firstname"), request.getParameter("lastname"), request.getParameter("month"), request.getParameter("status"));
 		List<EmpDetails> emp1 = userDetails.getDetails();
 		mav.addObject("User",user);
 		mav.addObject("employees", emp1);
-		mav.addObject("attendancelist",attendence);
+	//	mav.addObject("attendancelist",attendence);
 		return mav;		
 	}
 

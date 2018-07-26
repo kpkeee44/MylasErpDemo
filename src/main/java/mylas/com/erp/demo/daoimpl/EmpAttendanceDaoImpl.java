@@ -20,7 +20,7 @@ public class EmpAttendanceDaoImpl implements EmpAttendenceDao {
 
 
 
-	@Override
+	/*@Override
 	public void save(TblEmpAttendanceNew tbl) {
 
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
@@ -269,6 +269,6 @@ public class EmpAttendanceDaoImpl implements EmpAttendenceDao {
 		  return (attendence); 
 	}
 
-
+*/
 
 }
