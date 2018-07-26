@@ -135,14 +135,14 @@
                                                     <label class="eagle-check custom-radio">
                                                         <input id="active1" name="active" value="true" type="radio" class="eagle-check-input" >
                                                         <span class="eagle-check-indicator"></span>
-                                                        <span class="eagle-check-description">Active</span>
+                                                        <span class="eagle-check-description">Yes</span>
                                                     </label>
                                                 </li>
                                                 <li class="eagle-checkbox">
                                                     <label class="eagle-check custom-radio">
-                                                        <input id="active1" name="active" value="false" type="radio" class="eagle-check-input">
+                                                        <input id="active" name="active" value="false" type="radio" class="eagle-check-input">
                                                         <span class="eagle-check-indicator"></span>
-                                                        <span class="eagle-check-description">InActive</span>
+                                                        <span class="eagle-check-description">No</span>
                                                     </label>
                                                 </li>
                                                
@@ -235,6 +235,11 @@
 
 	<script>
 		document.getElementById("designationname").value = "${depdetailsforedit.getDesignation()}";
+		 var active = "${depdetailsforedit.getIsactive()}";
+			if(active == "true")
+			$('#active1').prop('checked', true);
+			else
+				$('#active').prop('checked', true);	
 		designationname.focus();
 	</script>
 
