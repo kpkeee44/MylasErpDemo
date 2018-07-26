@@ -9,7 +9,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
-import mylas.com.erp.demo.TblEmpAttendanceNew;
+/*import mylas.com.erp.demo.TblEmpAttendanceNew;*/
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.appservices.GetSession;
 import mylas.com.erp.demo.dao.EmpAttendenceDao;
@@ -20,7 +20,7 @@ public class EmpAttendanceDaoImpl implements EmpAttendenceDao {
 
 
 
-	@Override
+	/*@Override
 	public void save(TblEmpAttendanceNew tbl) {
 
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
@@ -268,7 +268,7 @@ public class EmpAttendanceDaoImpl implements EmpAttendenceDao {
 		  session.getTransaction().commit();
 		  return (attendence); 
 	}
-
+*/
 
 
 }

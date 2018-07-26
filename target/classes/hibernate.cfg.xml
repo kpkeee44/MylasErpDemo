@@ -18,7 +18,7 @@
  <!--  <mapping class="mylas.com.erp.demo.TblDesignation" /> -->
   <mapping class="mylas.com.erp.demo.TblDepartment" />
 <!--   <mapping class="mylas.com.erp.demo.TblEmpLeavereq" /> -->
-  <mapping class="mylas.com.erp.demo.TblEmpAttendanceNew" />
+<!--   <mapping class="mylas.com.erp.demo.TblEmpAttendanceNew" /> -->
   <mapping class="mylas.com.erp.demo.TblManRoleTransfer" />
 <!--   <mapping class="mylas.com.erp.demo.Holidays" /> -->
     <mapping class="mylas.com.erp.demo.LeaveAddition" />
@@ -33,5 +33,6 @@
      <mapping resource="mylas/com/erp/demo/Tblleaves.hbm.xml"/>
         <mapping resource="mylas/com/erp/demo/TblLeavestatus.hbm.xml"/>
          <mapping resource="mylas/com/erp/demo/Tblleavestype.hbm.xml"/>
+          <mapping resource="mylas/com/erp/demo/TblEmpAttendanceNew.hbm.xml"/>
  </session-factory>
 </hibernate-configuration>

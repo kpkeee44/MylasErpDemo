@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.EmpDetails;
-import mylas.com.erp.demo.TblEmpAttendanceNew;
+/*import mylas.com.erp.demo.TblEmpAttendanceNew;*/
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblManRoleTransfer;
 import mylas.com.erp.demo.appservices.GetSession;
@@ -20,7 +20,7 @@ import mylas.com.erp.demo.service.Client;
 
 @Repository("roleTransfer")
 public class RoletransfoeDaoImpl implements RoleTrasforDao {
-
+	/*
 	Client client = new Client();
 	
 
@@ -43,9 +43,9 @@ return "Save Failed";
 		
 		
 
-	}
+	}*/
 
-	@Override
+/*	@Override
 	public void updateStatus(int id) {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -59,8 +59,8 @@ return "Save Failed";
 
 
 	}
-
-	@Override
+*/
+	/*@Override
 	public void deleteDetails(int id) {
 		Session session = GetSession.buildSession().getSessionFactory().getCurrentSession();
 		session.beginTransaction();
@@ -98,7 +98,7 @@ return "Save Failed";
 		return null;
 	}
 
-/*	@Override
+	@Override
 	public String returnToMainManager(String manid , int id) {		
 		List<EmpDetails> employees = client.getByManid(manid);
 		List<TblEmpAttendanceNew> attrequests = empattreq.viewbymanagerid(manid);
@@ -127,10 +127,10 @@ return "Save Failed";
 		session.update(roletransfer);
 		session.getTransaction().commit();
 		return null;
-	}*/
+	}
 
 	
-	/*@Override
+	@Override
 	 public String changeMainManager(String frommanid, String tomanid, int id) {
 	  List<EmpDetails> employees = client.getByManid(frommanid);
 	  List<TblEmpAttendanceNew> attrequests = empattreq.viewbymanagerid(frommanid);
@@ -163,7 +163,7 @@ return "Save Failed";
 	  session.update(roletransfer);
 	  session.getTransaction().commit();
 	  return null;
-	 }*/
+	 }
 	
-
+*/
 }

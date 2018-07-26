@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.LeaveAddition;
-import mylas.com.erp.demo.TblEmpAttendanceNew;
+/*import mylas.com.erp.demo.TblEmpAttendanceNew;*/
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.Tblleavestype;
 import mylas.com.erp.demo.appservices.EmailSender;
@@ -48,8 +48,8 @@ public class EmployeePageController {
 	@Autowired
 	EmpLeaveRequestDao empleavereq;
 
-	@Autowired
-	EmpAttendanceDaoImpl empattreq;
+/*	@Autowired
+	EmpAttendanceDaoImpl empattreq;*/
 	
 	@Autowired
 	LeaveManiplication leave;
@@ -121,7 +121,7 @@ public class EmployeePageController {
 	/*
 	 * Test Comment
 	 */
-	@RequestMapping(value= "/employee/timesheet/register")
+	/*@RequestMapping(value= "/employee/timesheet/register")
 	public ModelAndView indvidtimesheet() {
 		ModelAndView mav = new ModelAndView("emptimesheet");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -137,9 +137,9 @@ public class EmployeePageController {
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
 		return mav;
-	}
+	}*/
 
-	@RequestMapping(value= "/employee/timesheet/search")
+	/*@RequestMapping(value= "/employee/timesheet/search")
 	public ModelAndView indvidtimesheetSearch(HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("emptimesheet");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -157,8 +157,8 @@ public class EmployeePageController {
 		mav.addObject("User", user);
 		return mav;
 	}
-	
-	@RequestMapping(value= "/employee/timesheet/register/{id}")
+	*/
+	/*@RequestMapping(value= "/employee/timesheet/register/{id}")
 	public ModelAndView indvidtimesheets(HttpSession session,@PathVariable("id") String id) {
 
 		ModelAndView mav = new ModelAndView("emptimesheet");
@@ -186,9 +186,9 @@ public class EmployeePageController {
 		mav.addObject("User", user);
 
 		return mav;
-	}
+	}*/
 
-	@RequestMapping(value= "/employee/timesheet/register", method=RequestMethod.POST)
+	/*@RequestMapping(value= "/employee/timesheet/register", method=RequestMethod.POST)
 	public ModelAndView indvidtimesheetsubmit(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		ModelAndView mav = new ModelAndView("emptimesheet");
 
@@ -240,7 +240,7 @@ public class EmployeePageController {
 		
 		
 		
-	}
+	}*/
 
 	/*
 	 * Handling EMployee Requests
@@ -285,13 +285,13 @@ public class EmployeePageController {
 		//String DelMsg = empleavereq.delete(id);
 		return mav;
 	}
-	@RequestMapping(value= "/employee/timesheet/delete/{id}")
+/*	@RequestMapping(value= "/employee/timesheet/delete/{id}")
 	public ModelAndView empTimeSheetdeletePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/employee/timesheet/register");
 		String DelMsg = empattreq.delete(id);
 		return mav;
 	}
-
+*/
 /*-----------------------------------------	employee leave requests---------------------------------------*/
 	@RequestMapping(value= "/employee/leave/register")	
 	public ModelAndView empLeavePage(HttpSession session) {
