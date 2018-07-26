@@ -7,7 +7,7 @@ import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.TblEmpLeavereq;
 
 public interface EmpAttendenceDao {
-<<<<<<< HEAD
+
 /*	public void save(TblEmpAttendanceNew tbl);
 =======
 	/*public void save(TblEmpAttendanceNew tbl);

@@ -268,12 +268,7 @@ public class EmpAttendanceDaoImpl implements EmpAttendenceDao {
 		  session.getTransaction().commit();
 		  return (attendence); 
 	}
-<<<<<<< HEAD
-*/
 
-=======
-
-*/
->>>>>>> branch 'master' of https://github.com/kpkeee44/MylasErpDemo.git
 
 }
+*/}
