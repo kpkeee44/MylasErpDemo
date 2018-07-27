@@ -1668,6 +1668,15 @@ System.out.println("concomes");
 
 		}
 	
+		@RequestMapping(value = "/lastNames", method = RequestMethod.GET)
+		public @ResponseBody
+		List<EmployeeViewPage> lastNames(@RequestParam String lastname) {
+			
+
+			return userDetails.simulateSearchResultLastName(lastname);
+
+		}
+	
 	
 
 }
