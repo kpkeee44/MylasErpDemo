@@ -33,6 +33,7 @@ import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.LeaveAddition;
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.TblDesignation;
+/*import mylas.com.erp.demo.TblEmpAttendanceNew;*/
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblHolidays;
 import mylas.com.erp.demo.TblManRoleTransfer;
@@ -272,6 +273,64 @@ public class PageController<JavaMailSender> {
 		return mav;
 
 	}
+	/*------------------Emp search------------------*/
+	@RequestMapping(value="/admin/employee/search")
+	public ModelAndView searchBars(HttpServletRequest req) {
+System.out.println("concomes");
+		String firstname = req.getParameter("firstname");
+		System.out.println(firstname);
+		String lastname = req.getParameter("lastname");
+		System.out.println("data featch");
+		System.out.println(lastname);
+		int deptid = Integer.parseInt(req.getParameter("department1"));
+		System.out.println(deptid);
+		int desid = Integer.parseInt(req.getParameter("designation1"));
+		System.out.println(desid);
+		/*List<TblDepartment> deptList = deptdao.getDetails();
+		List<TblDesignation> designList = designationImpl.getDetails();*/
+		System.out.println("data featch");
+
+		List<EmpDetails> details = userDetails.search(firstname, lastname, deptid, desid);
+				//userDetails.viewSearch(firstname, lastname, department, designation);
+		System.out.println("data store");
+		ModelAndView mav = new ModelAndView("employees");
+		mav.addObject("services", servicesdao.list());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
+	/*	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
+	/*	List<TblEmpLeavereq> allempleave = empleavereq.view();
+	//	int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
+		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
+		List<EmpDetails> emp1 = userDetails.getDetails();
+		mav.addObject("empattendances",empattendances);
+		mav.addObject("allempleave", allempleave);
+		mav.addObject("count",count);*/
+	/*	mav.addObject("TransferRoleList", transferrole);*/
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		mav.addObject("User",user);
+		String mesg = "hi";
+
+		mav.addObject("employees", details);
+
+
+		mav.addObject("dupmsg", mesg);
+		/*mav.addObject("departments", deptList);*/
+	/*	mav.addObject("designations", designList);*/
+
+		List<TblDepartment> dests = deptdao .getDetails();
+		mav.addObject("departments", dests);
+		List<TblDesignation> depts = designationImpl.getDetails();
+		System.out.println("go");
+		mav.addObject("designations", depts);
+
+		mav.addObject(user);
+		return mav;		
+	}
 	
 	
 	/*----------------holiday screen------------------*/
@@ -349,7 +408,7 @@ public class PageController<JavaMailSender> {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -358,7 +417,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("User",user);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+		/*mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		TblHolidays holidays = himpl.getHolidayById(id);
@@ -375,7 +434,7 @@ public class PageController<JavaMailSender> {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();*/
@@ -396,7 +455,7 @@ public class PageController<JavaMailSender> {
 			mav.addObject("User",user);
 			mav.addObject("allempleave", allempleave);
 			mav.addObject("count",count);*/
-			mav.addObject("TransferRoleList", transferrole);
+		/*	mav.addObject("TransferRoleList", transferrole);*/
 			String role = user.getRole();
 			mav.addObject("Role",role);
 			TblHolidays holidays = himpl.getHolidayById(id);
@@ -418,7 +477,7 @@ public class PageController<JavaMailSender> {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	/*	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 	/*	List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -426,7 +485,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+	/*	mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		mav.addObject("Role",role);
 
@@ -441,7 +500,7 @@ public class PageController<JavaMailSender> {
 		return mav;		
 	}
 
-	@RequestMapping(value="/admin/employeetimesheets/register")
+	/*@RequestMapping(value="/admin/employeetimesheets/register")
 	public ModelAndView empAttenedancePage() {
 		ModelAndView mav = new ModelAndView("allemptimesheetrequests");
 		mav.addObject("services", servicesdao.list());
@@ -451,13 +510,13 @@ public class PageController<JavaMailSender> {
 			user = ((EmpDetails)principal);
 		}
 		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
-		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
+		List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
 		List<EmpDetails> emp1 = userDetails.getDetails();
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
-		mav.addObject("count",count);*/
+		mav.addObject("count",count);
 		mav.addObject("TransferRoleList", transferrole);
 		String role = user.getRole();
 		mav.addObject("Role",role);
@@ -467,7 +526,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("employees", emp1);
 		//mav.addObject("attendancelist",attendances);
 		return mav;		
-	}
+	}*/
 
 	/*---------------Designation Srceen------------------------*/
 
@@ -488,7 +547,7 @@ public class PageController<JavaMailSender> {
 			user = ((EmpDetails)principal);
 		}
 		System.out.println(3);
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -497,7 +556,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+	/*	mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		System.out.println(5);
 		System.out.println("hai");
@@ -521,7 +580,7 @@ public class PageController<JavaMailSender> {
 		
 		mav.addObject("services", servicesdao.list());
 		
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -533,7 +592,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+	/*	mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		mav.addObject("designations", desig);
 		mav.addObject("Role",role);
@@ -553,7 +612,7 @@ public class PageController<JavaMailSender> {
 		}
 		String role = user.getRole();
 		mav.addObject("Role",role);
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	/*	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -563,7 +622,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+/*		mav.addObject("TransferRoleList", transferrole);*/
 		TblDesignation editdep = designationImpl.getById(id);
 		List<TblDepartment> depts1 = deptdao.getDetails();
 		mav.addObject("departments", depts1);
@@ -581,7 +640,7 @@ public class PageController<JavaMailSender> {
 	  if (principal instanceof EmpDetails) {
 	   user = ((EmpDetails)principal);
 	  }
-	  List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	/*  List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 	  /*List<TblEmpLeavereq> allempleave = empleavereq.view();
 	  int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 	  List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails()*/;
@@ -598,7 +657,7 @@ public class PageController<JavaMailSender> {
 	/*   mav.addObject("empattendances",empattendances);
 	   mav.addObject("allempleave", allempleave);
 	   mav.addObject("count",count);*/
-	   mav.addObject("TransferRoleList", transferrole);
+	 /*  mav.addObject("TransferRoleList", transferrole);*/
 	   String role = user.getRole();
 	   mav.addObject("Role",role);
 	   mav.addObject("User", user);
@@ -729,7 +788,7 @@ public class PageController<JavaMailSender> {
 		}
 
 		String role = user.getRole();
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -738,7 +797,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
 		List<EmpDetails> emp1 = userDetails.getDetails();
-		mav.addObject("TransferRoleList", transferrole);
+	/*	mav.addObject("TransferRoleList", transferrole);*/
 		mav.addObject("title", "HomePage");
 		mav.addObject("Role",role);
 		mav.addObject("User",user);
@@ -846,7 +905,7 @@ public class PageController<JavaMailSender> {
 
 
 
-	@RequestMapping(value= "/admin/attendance/approve/{id}")
+	/*@RequestMapping(value= "/admin/attendance/approve/{id}")
 	public ModelAndView empTimesheetApprovePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/admin/employeetimesheets/register");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -865,8 +924,8 @@ public class PageController<JavaMailSender> {
 		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		return mav;
-	}
-	@RequestMapping(value= "/admin/attendance/decline/{id}")
+	}*/
+	/*@RequestMapping(value= "/admin/attendance/decline/{id}")
 	public ModelAndView empTimesheetdeclinePage(HttpSession session,@PathVariable("id") int id) {
 		ModelAndView mav = new ModelAndView("redirect:/admin/employeetimesheets/register");
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -893,12 +952,12 @@ public class PageController<JavaMailSender> {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-	/*	List<TblEmpLeavereq> leavereq =  empleavereq.view();
+		List<TblEmpLeavereq> leavereq =  empleavereq.view();
 		String reason = request.getParameter("reason");
 		boolean status = true;
 		String UMsg = empleavereq.update(id,reason,status);
 		mav.addObject("empleave", leavereq);
-		mav.addObject("UMsg", UMsg+" "+reason);*/
+		mav.addObject("UMsg", UMsg+" "+reason);
 		mav.addObject("manservices", mandao.list());	
 		emailSubject = "Leave Request Status For:";
 		emailMessage = "A new Leave Request was approved :"+"On: "+new Date()+" By:  "+user.getEmplfirstname()+" "+user.getEmpllastname();
@@ -907,7 +966,7 @@ public class PageController<JavaMailSender> {
 		emailsender.javaMailService("bgrao@mylastech.com", "14131f0008", emailToRecipient, emailMessage, emailSubject);
 		System.out.println("send mail");
 		return mav;
-	}
+	}*/
 	@RequestMapping(value= "/admin/leave/decline/{id}")
 	public ModelAndView empLeavedeclinePage(HttpSession session,@PathVariable("id") int id,HttpServletRequest request) {
 		ModelAndView mav = new ModelAndView("redirect:/admin/leaverequests/register");
@@ -967,7 +1026,7 @@ public class PageController<JavaMailSender> {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	/*	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -975,7 +1034,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+	/*	mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
@@ -997,7 +1056,7 @@ public class PageController<JavaMailSender> {
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -1005,7 +1064,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+		/*mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		DepartmentService depserv = new DepartmentService();
@@ -1030,7 +1089,7 @@ public class PageController<JavaMailSender> {
 		}
 		String role = user.getRole();
 		mav.addObject("Role",role);
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	/*	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -1038,7 +1097,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+	/*	mav.addObject("TransferRoleList", transferrole);*/
 	  TblDepartment editdep = deptdao.getById(id); 
 		mav.addObject("depdetailsforedit",editdep);
 		mav.addObject("services", servicesdao.list());
@@ -1055,7 +1114,7 @@ public class PageController<JavaMailSender> {
 	  if (principal instanceof EmpDetails) {
 	   user = ((EmpDetails)principal);
 	  }
-	  List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	 /* List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 	/*  List<TblEmpLeavereq> allempleave = empleavereq.view();
 	  int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());*/
 	//  List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -1072,7 +1131,7 @@ public class PageController<JavaMailSender> {
 	  // mav.addObject("empattendances",empattendances);
 	  /* mav.addObject("allempleave", allempleave);
 	   mav.addObject("count",count);*/
-	   mav.addObject("TransferRoleList", transferrole);
+	  /* mav.addObject("TransferRoleList", transferrole);*/
 	   String role = user.getRole();
 	   mav.addObject("Role",role);
 	   mav.addObject("User", user);
@@ -1100,7 +1159,7 @@ public class PageController<JavaMailSender> {
 			user = ((EmpDetails)principal);
 		}
 
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -1108,7 +1167,7 @@ public class PageController<JavaMailSender> {
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+	/*	mav.addObject("TransferRoleList", transferrole);*/
 
 		String role = user.getRole();
 		mav.addObject("Role",role);
@@ -1124,61 +1183,8 @@ public class PageController<JavaMailSender> {
 	
 	
 
-	@RequestMapping(value="/admin/employee/search")
-	public ModelAndView searchBars(HttpServletRequest req) {
-System.out.println("concomes");
-		String firstname = req.getParameter("firstname");
-		System.out.println(firstname);
-		String lastname = req.getParameter("lastname");
-		System.out.println("data featch");
-		System.out.println(lastname);
-		int deptid = Integer.parseInt(req.getParameter("department1"));
-		System.out.println(deptid);
-		int desid = Integer.parseInt(req.getParameter("designation1"));
-		System.out.println(desid);
-		/*List<TblDepartment> deptList = deptdao.getDetails();
-		List<TblDesignation> designList = designationImpl.getDetails();*/
-		System.out.println("data featch");
-
-		List<EmpDetails> details = userDetails.search(firstname, lastname, deptid, desid);
-				//userDetails.viewSearch(firstname, lastname, department, designation);
-		System.out.println("data store");
-		ModelAndView mav = new ModelAndView("employees");
-		mav.addObject("services", servicesdao.list());
-		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		EmpDetails user=null;
-
-		if (principal instanceof EmpDetails) {
-			user = ((EmpDetails)principal);
-		}
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
-	/*	List<TblEmpLeavereq> allempleave = empleavereq.view();
-	//	int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
-		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
-		List<EmpDetails> emp1 = userDetails.getDetails();
-		mav.addObject("empattendances",empattendances);
-		mav.addObject("allempleave", allempleave);
-		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
-		String role = user.getRole();
-		mav.addObject("Role",role);
-		mav.addObject("User",user);
-		String mesg = "hi";
-
-		mav.addObject("employees", details);
-
-
-		mav.addObject("dupmsg", mesg);
-		/*mav.addObject("departments", deptList);*/
-	/*	mav.addObject("designations", designList);*/
-
-		List<TblDepartment> dests = deptdao .getDetails();
-		mav.addObject("departments", dests);
-
-		mav.addObject(user);
-		return mav;		
-	}
-	@RequestMapping(value="/admin/employee/timesheetSearch")	 
+	
+/*	@RequestMapping(value="/admin/employee/timesheetSearch")	 
 	public ModelAndView attendance() {
 		return new ModelAndView("redirect:/admin/employeetimesheets/register");}
 	@RequestMapping(value="/admin/employee/timesheetSearch", method=RequestMethod.POST)
@@ -1203,7 +1209,7 @@ System.out.println("concomes");
 	//	mav.addObject("attendancelist",attendence);
 		return mav;		
 	}
-
+*/
 
 	@RequestMapping(value= "/403")
 	public ModelAndView Page403() {
@@ -1493,7 +1499,7 @@ System.out.println("concomes");
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-	    List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+/*	    List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 	/*	List<TblEmpLeavereq> allempleave = empleavereq.view();
         int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -1502,7 +1508,7 @@ System.out.println("concomes");
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
 		mav.addObject("User",user);
-	    mav.addObject("TransferRoleList", transferrole);
+	/*    mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		List<Tblleavestype> leavetypes =  ltdi.viewAll();
@@ -1559,7 +1565,7 @@ System.out.println("concomes");
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+	/*	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
 	/*	List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -1567,7 +1573,7 @@ System.out.println("concomes");
         mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);*/
-		mav.addObject("TransferRoleList", transferrole);
+	/*	mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		mav.addObject("User",user);
@@ -1668,14 +1674,7 @@ System.out.println("concomes");
 
 		}
 	
-		@RequestMapping(value = "/lastNames", method = RequestMethod.GET)
-		public @ResponseBody
-		List<EmployeeViewPage> lastNamesss(@RequestParam String lastname) {
-			
-
-			return userDetails.simulateSearchResultLastName(lastname);
-
-		}
+		
 	
 	
 

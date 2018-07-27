@@ -19,6 +19,7 @@ import org.hibernate.internal.SessionImpl;
 import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.LeaveAddition;
+/*import mylas.com.erp.demo.TblEmpAttendanceNew;*/
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblEmpattendanceNew;
 import mylas.com.erp.demo.TblLeavestatus;
@@ -466,6 +467,6 @@ data.add(lea);
 		  return (attendence); 
 	}
 
-*/
 
 }
+*/}

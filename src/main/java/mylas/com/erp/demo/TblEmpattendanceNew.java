@@ -1,5 +1,6 @@
-package mylas.com.erp.demo;// default package
 // Generated Jul 26, 2018 12:22:14 PM by Hibernate Tools 5.3.0.Beta2
+package mylas.com.erp.demo;
+// Generated Jul 26, 2018 11:43:34 AM by Hibernate Tools 5.3.0.Beta2
 
 import java.util.Date;
 

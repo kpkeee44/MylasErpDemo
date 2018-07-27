@@ -17,7 +17,7 @@
   <!-- <property name="hibernate.transaction.auto_close_session">true</property> -->
  <!--  <mapping class="mylas.com.erp.demo.EmpDetails" /> -->
  <!--  <mapping class="mylas.com.erp.demo.TblDesignation" /> -->
-  <mapping class="mylas.com.erp.demo.TblDepartment" />
+  <!-- <mapping class="mylas.com.erp.demo.TblDepartment" /> -->
 <!--   <mapping class="mylas.com.erp.demo.TblEmpLeavereq" /> -->
 <!--   <mapping class="mylas.com.erp.demo.TblEmpAttendanceNew" /> -->
   <mapping class="mylas.com.erp.demo.TblManRoleTransfer" />

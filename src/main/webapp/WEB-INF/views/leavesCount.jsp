@@ -149,9 +149,9 @@
 								<table class="tablesaw table-striped table-bordered table-hover">
 									<thead class="tableheding">
 										<tr>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="3">LeaveType
+											<th data-tablesaw-sortable-col data-tablesaw-priority="3">Leave Type
 											</th>
-											<th data-tablesaw-sortable-col data-tablesaw-priority="2">TotelDays
+											<th data-tablesaw-sortable-col data-tablesaw-priority="2">Total Days
 												</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="4">Active State</th>
 											<th data-tablesaw-sortable-col data-tablesaw-priority="1"

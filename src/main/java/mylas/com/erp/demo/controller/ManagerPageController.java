@@ -574,7 +574,7 @@ public class ManagerPageController {
 		roletransfor.setFrommanid(user.getEid());
 		roletransfor.setTomanid(request.getParameter("managerId"));
 
-		String msg = roleTransfer.save(roletransfor);
+	/*	String msg = roleTransfer.save(roletransfor);*/
 		String fromdate = request.getParameter("fromdate");
 
 		String role = user.getRole();
