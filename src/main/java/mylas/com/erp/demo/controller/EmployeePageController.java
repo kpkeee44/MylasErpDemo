@@ -22,8 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.LeaveAddition;
-import mylas.com.erp.demo.TblEmpAttendanceNew;
 import mylas.com.erp.demo.TblEmpLeavereq;
+import mylas.com.erp.demo.TblEmpattendanceNew;
+import mylas.com.erp.demo.TblLeavestatus;
 import mylas.com.erp.demo.Tblleavestype;
 import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.dao.EmpLeaveRequestDao;
@@ -32,6 +33,7 @@ import mylas.com.erp.demo.dao.LeaveManiplication;
 import mylas.com.erp.demo.daoimpl.EmpAttendanceDaoImpl;
 import mylas.com.erp.demo.daoimpl.EmpLeaveRequestService;
 import mylas.com.erp.demo.daoimpl.LeavesTypeDaoImpl;
+import mylas.com.erp.demo.procedures.Attendance;
 import mylas.com.erp.demo.procedures.EmpLeaveRequestJoin;
 import mylas.com.erp.demo.service.Client;
 
@@ -56,6 +58,7 @@ public class EmployeePageController {
 
 
 	EmailSender emailsender = new EmailSender();
+	EmpAttendanceDaoImpl eadi = new EmpAttendanceDaoImpl();
 
 	static String emailToRecipient, emailSubject, emailMessage;
 	EmpLeaveRequestService elrs = new EmpLeaveRequestService();
@@ -121,6 +124,8 @@ public class EmployeePageController {
 	/*
 	 * Test Comment
 	 */
+	
+	/*----------------------empattendance---------*/
 	@RequestMapping(value= "/employee/timesheet/register")
 	public ModelAndView indvidtimesheet() {
 		ModelAndView mav = new ModelAndView("emptimesheet");
@@ -131,13 +136,35 @@ public class EmployeePageController {
 		}
 
 		String role = user.getRole();
-		//List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
-		//mav.addObject("attendancelist",attendances);
+		/*List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
+		mav.addObject("attendancelist",attendances);
+		
+*/		List<TblLeavestatus> ltypelist=empattreq.getLeavestatus();
+		List<Attendance> attendancelist=empattreq.view(0);
+		mav.addObject("attendancelist",attendancelist);
 		mav.addObject("empservices", empservicesdao.list());
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
+		mav.addObject("ltypelist", ltypelist);
 		return mav;
 	}
+	 /* @RequestMapping(value= "/employee/timesheet/register")
+		public ModelAndView indvidtimesheet() {
+			ModelAndView mav = new ModelAndView("emptimesheet");
+			Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			EmpDetails user=null;
+			if (principal instanceof EmpDetails) {
+				user = ((EmpDetails)principal);
+			}
+
+			String role = user.getRole();
+			//List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
+			//mav.addObject("attendancelist",attendances);
+			mav.addObject("empservices", empservicesdao.list());
+			mav.addObject("Role",role);
+			mav.addObject("User", user);
+			return mav;
+		}*/
 
 	@RequestMapping(value= "/employee/timesheet/search")
 	public ModelAndView indvidtimesheetSearch(HttpServletRequest request) {
@@ -152,6 +179,8 @@ public class EmployeePageController {
 	//	List<TblEmpAttendanceNew> attendances =  empattreq.Search(request.getParameter("month"), request.getParameter("status"), user.getEid());
 		
 		//mav.addObject("attendancelist",attendances);
+		String s = eadi.saveEmpAttendence(user.getCreatedby(),Integer.parseInt(request.getParameter("month")),user.getId(),Integer.parseInt(request.getParameter("year")),user.getId(),user.getCreatedby(),Integer.parseInt(request.getParameter("day1")),Integer.parseInt(request.getParameter("day2")),Integer.parseInt(request.getParameter("day3")),Integer.parseInt(request.getParameter("day4")),Integer.parseInt(request.getParameter("day5")),Integer.parseInt(request.getParameter("day6")),Integer.parseInt(request.getParameter("day7")),Integer.parseInt(request.getParameter("day8")),Integer.parseInt(request.getParameter("day9")),Integer.parseInt(request.getParameter("day10")),Integer.parseInt(request.getParameter("day11")),Integer.parseInt(request.getParameter("day12")),Integer.parseInt(request.getParameter("day13")),Integer.parseInt(request.getParameter("day14")),Integer.parseInt(request.getParameter("day15")),Integer.parseInt(request.getParameter("day16")),Integer.parseInt(request.getParameter("day17")),Integer.parseInt(request.getParameter("day18")),Integer.parseInt(request.getParameter("day19")),Integer.parseInt(request.getParameter("day20")),Integer.parseInt(request.getParameter("day21")),Integer.parseInt(request.getParameter("day22")),Integer.parseInt(request.getParameter("day23")),Integer.parseInt(request.getParameter("day24")),Integer.parseInt(request.getParameter("day25")),Integer.parseInt(request.getParameter("day26")),Integer.parseInt(request.getParameter("day27")),Integer.parseInt(request.getParameter("day28")),Integer.parseInt(request.getParameter("day29")),Integer.parseInt(request.getParameter("day30")),Integer.parseInt(request.getParameter("day31")),4);
+		
 		mav.addObject("empservices", empservicesdao.list());
 		mav.addObject("Role",role);
 		mav.addObject("User", user);
@@ -187,7 +216,6 @@ public class EmployeePageController {
 
 		return mav;
 	}
-
 	@RequestMapping(value= "/employee/timesheet/register", method=RequestMethod.POST)
 	public ModelAndView indvidtimesheetsubmit(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		ModelAndView mav = new ModelAndView("emptimesheet");
@@ -201,28 +229,44 @@ public class EmployeePageController {
 		}
 
 		String role = user.getRole();
-
-		TblEmpAttendanceNew attedance = new TblEmpAttendanceNew(null, null, null, null, Integer.parseInt(request.getParameter("day1")), Integer.parseInt(request.getParameter("day2")), Integer.parseInt(request.getParameter("day3")), Integer.parseInt(request.getParameter("day4")), Integer.parseInt(request.getParameter("day5")), Integer.parseInt(request.getParameter("day6")), Integer.parseInt(request.getParameter("day7")), Integer.parseInt(request.getParameter("day8")), Integer.parseInt(request.getParameter("day9")), Integer.parseInt(request.getParameter("day10")), Integer.parseInt(request.getParameter("day11")), Integer.parseInt(request.getParameter("day12")), Integer.parseInt(request.getParameter("day13")), Integer.parseInt(request.getParameter("day14")), Integer.parseInt(request.getParameter("day15")), Integer.parseInt(request.getParameter("day16")), Integer.parseInt(request.getParameter("day17")), Integer.parseInt(request.getParameter("day18")), Integer.parseInt(request.getParameter("day19")), Integer.parseInt(request.getParameter("day20")), Integer.parseInt(request.getParameter("day21")), Integer.parseInt(request.getParameter("day22")), Integer.parseInt(request.getParameter("day23")), Integer.parseInt(request.getParameter("day24")), Integer.parseInt(request.getParameter("day25")), Integer.parseInt(request.getParameter("day26")), Integer.parseInt(request.getParameter("day27")), Integer.parseInt(request.getParameter("day28")), null, null, null, null, null,null);
-
-		attedance.setEmpid(user.getEid());
-		attedance.setStatas(null);
-		//attedance.setManagerid(user.getManagerid());
-		attedance.setMonth(request.getParameter("month"));
-		attedance.setYear(Integer.parseInt(request.getParameter("year")));
-		
-		
-		if(attedance.getMonth().equals("January")||attedance.getMonth().equals("March")||attedance.getMonth().equals("May")||attedance.getMonth().equals("July")||attedance.getMonth().equals("August")||attedance.getMonth().equals("October")||attedance.getMonth().equals("December")) {
-			attedance.setDay29(Integer.parseInt(request.getParameter("day29")));
-			attedance.setDay30(Integer.parseInt(request.getParameter("day30")));
-			attedance.setDay31(Integer.parseInt(request.getParameter("day31")));
-		}else if(attedance.getMonth().equals("April")||attedance.getMonth().equals("June")||attedance.getMonth().equals("September")||attedance.getMonth().equals("November")) {
-			attedance.setDay29(Integer.parseInt(request.getParameter("day29")));
-			attedance.setDay30(Integer.parseInt(request.getParameter("day30")));
-		}else if(attedance.getMonth().equals("Febraury") && (attedance.getYear()%4==0)) {
-			attedance.setDay29(Integer.parseInt(request.getParameter("day29")));
+		mav.addObject("Role",role);
+		mav.addObject("User", user);
+		EmpAttendanceDaoImpl eadi = new EmpAttendanceDaoImpl();
+				
+		if(Integer.parseInt(request.getParameter("month"))==1||Integer.parseInt(request.getParameter("month"))==3||Integer.parseInt(request.getParameter("month"))==5||Integer.parseInt(request.getParameter("month"))==7||Integer.parseInt(request.getParameter("month"))==8||Integer.parseInt(request.getParameter("month"))==10||Integer.parseInt(request.getParameter("month"))==12) {
+			System.out.println("entering if31");
+			String s = eadi.saveEmpAttendence(user.getCreatedby(),Integer.parseInt(request.getParameter("month")),user.getId(),Integer.parseInt(request.getParameter("year")),user.getId(),user.getCreatedby(),Integer.parseInt(request.getParameter("day1")),Integer.parseInt(request.getParameter("day2")),Integer.parseInt(request.getParameter("day3")),Integer.parseInt(request.getParameter("day4")),Integer.parseInt(request.getParameter("day5")),Integer.parseInt(request.getParameter("day6")),Integer.parseInt(request.getParameter("day7")),Integer.parseInt(request.getParameter("day8")),Integer.parseInt(request.getParameter("day9")),Integer.parseInt(request.getParameter("day10")),Integer.parseInt(request.getParameter("day11")),Integer.parseInt(request.getParameter("day12")),Integer.parseInt(request.getParameter("day13")),Integer.parseInt(request.getParameter("day14")),Integer.parseInt(request.getParameter("day15")),Integer.parseInt(request.getParameter("day16")),Integer.parseInt(request.getParameter("day17")),Integer.parseInt(request.getParameter("day18")),Integer.parseInt(request.getParameter("day19")),Integer.parseInt(request.getParameter("day20")),Integer.parseInt(request.getParameter("day21")),Integer.parseInt(request.getParameter("day22")),Integer.parseInt(request.getParameter("day23")),Integer.parseInt(request.getParameter("day24")),Integer.parseInt(request.getParameter("day25")),Integer.parseInt(request.getParameter("day26")),Integer.parseInt(request.getParameter("day27")),Integer.parseInt(request.getParameter("day28")),Integer.parseInt(request.getParameter("day29")),Integer.parseInt(request.getParameter("day30")),Integer.parseInt(request.getParameter("day31")),4);
+			System.out.println(s);
+		}else if(Integer.parseInt(request.getParameter("month"))==4||Integer.parseInt(request.getParameter("month"))==6||Integer.parseInt(request.getParameter("month"))==9||Integer.parseInt(request.getParameter("month"))==11) {
+			System.out.println("entering elseif30");
+			String s = eadi.saveEmpAttendence(user.getCreatedby(),Integer.parseInt(request.getParameter("month")),user.getId(),Integer.parseInt(request.getParameter("year")),user.getId(),user.getCreatedby(),Integer.parseInt(request.getParameter("day1")),Integer.parseInt(request.getParameter("day2")),Integer.parseInt(request.getParameter("day3")),Integer.parseInt(request.getParameter("day4")),Integer.parseInt(request.getParameter("day5")),Integer.parseInt(request.getParameter("day6")),Integer.parseInt(request.getParameter("day7")),Integer.parseInt(request.getParameter("day8")),Integer.parseInt(request.getParameter("day9")),Integer.parseInt(request.getParameter("day10")),Integer.parseInt(request.getParameter("day11")),Integer.parseInt(request.getParameter("day12")),Integer.parseInt(request.getParameter("day13")),Integer.parseInt(request.getParameter("day14")),Integer.parseInt(request.getParameter("day15")),Integer.parseInt(request.getParameter("day16")),Integer.parseInt(request.getParameter("day17")),Integer.parseInt(request.getParameter("day18")),Integer.parseInt(request.getParameter("day19")),Integer.parseInt(request.getParameter("day20")),Integer.parseInt(request.getParameter("day21")),Integer.parseInt(request.getParameter("day22")),Integer.parseInt(request.getParameter("day23")),Integer.parseInt(request.getParameter("day24")),Integer.parseInt(request.getParameter("day25")),Integer.parseInt(request.getParameter("day26")),Integer.parseInt(request.getParameter("day27")),Integer.parseInt(request.getParameter("day28")),Integer.parseInt(request.getParameter("day29")),Integer.parseInt(request.getParameter("day30")),0,4);
+			System.out.println(s);
+		}else if(Integer.parseInt(request.getParameter("month"))==2 && (Integer.parseInt(request.getParameter("year"))%4==0)) {
+			System.out.println("entering elseif29");
+			String s = eadi.saveEmpAttendence(user.getCreatedby(),Integer.parseInt(request.getParameter("month")),user.getId(),Integer.parseInt(request.getParameter("year")),user.getId(),user.getCreatedby(),Integer.parseInt(request.getParameter("day1")),Integer.parseInt(request.getParameter("day2")),Integer.parseInt(request.getParameter("day3")),Integer.parseInt(request.getParameter("day4")),Integer.parseInt(request.getParameter("day5")),Integer.parseInt(request.getParameter("day6")),Integer.parseInt(request.getParameter("day7")),Integer.parseInt(request.getParameter("day8")),Integer.parseInt(request.getParameter("day9")),Integer.parseInt(request.getParameter("day10")),Integer.parseInt(request.getParameter("day11")),Integer.parseInt(request.getParameter("day12")),Integer.parseInt(request.getParameter("day13")),Integer.parseInt(request.getParameter("day14")),Integer.parseInt(request.getParameter("day15")),Integer.parseInt(request.getParameter("day16")),Integer.parseInt(request.getParameter("day17")),Integer.parseInt(request.getParameter("day18")),Integer.parseInt(request.getParameter("day19")),Integer.parseInt(request.getParameter("day20")),Integer.parseInt(request.getParameter("day21")),Integer.parseInt(request.getParameter("day22")),Integer.parseInt(request.getParameter("day23")),Integer.parseInt(request.getParameter("day24")),Integer.parseInt(request.getParameter("day25")),Integer.parseInt(request.getParameter("day26")),Integer.parseInt(request.getParameter("day27")),Integer.parseInt(request.getParameter("day28")),Integer.parseInt(request.getParameter("day29")),0,0,4);
+		}else if(Integer.parseInt(request.getParameter("month"))==2 && (Integer.parseInt(request.getParameter("year"))%4!=0)) {
+		System.out.println("entering elseif28");
+			String s = eadi.saveEmpAttendence(user.getCreatedby(),Integer.parseInt(request.getParameter("month")),user.getId(),Integer.parseInt(request.getParameter("year")),user.getId(),user.getCreatedby(),Integer.parseInt(request.getParameter("day1")),Integer.parseInt(request.getParameter("day2")),Integer.parseInt(request.getParameter("day3")),Integer.parseInt(request.getParameter("day4")),Integer.parseInt(request.getParameter("day5")),Integer.parseInt(request.getParameter("day6")),Integer.parseInt(request.getParameter("day7")),Integer.parseInt(request.getParameter("day8")),Integer.parseInt(request.getParameter("day9")),Integer.parseInt(request.getParameter("day10")),Integer.parseInt(request.getParameter("day11")),Integer.parseInt(request.getParameter("day12")),Integer.parseInt(request.getParameter("day13")),Integer.parseInt(request.getParameter("day14")),Integer.parseInt(request.getParameter("day15")),Integer.parseInt(request.getParameter("day16")),Integer.parseInt(request.getParameter("day17")),Integer.parseInt(request.getParameter("day18")),Integer.parseInt(request.getParameter("day19")),Integer.parseInt(request.getParameter("day20")),Integer.parseInt(request.getParameter("day21")),Integer.parseInt(request.getParameter("day22")),Integer.parseInt(request.getParameter("day23")),Integer.parseInt(request.getParameter("day24")),Integer.parseInt(request.getParameter("day25")),Integer.parseInt(request.getParameter("day26")),Integer.parseInt(request.getParameter("day27")),Integer.parseInt(request.getParameter("day28")),0,0,0,4);
 		}
 	//	empattreq.save(attedance);
 		System.out.println("save");
+		//List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
+		//mav.addObject("attendancelist",attendances);
+		mav.addObject("empservices", empservicesdao.list());	
+	
+/*		emailSubject = "New Time Sheet For:";
+		emailMessage = "A new Time Sheet For Approval has Been Sent to :"+"On: "+new Date();
+		emailToRecipient = "kpraveen@mylastech.com";
+		//System.out.println("\nReceipient?= " + emailToRecipient + ", Subject?= " + emailSubject + ", Message?= " + emailMessage + "\n");
+		emailsender.javaMailService("bgrao@mylastech.com", "Bganga@07", emailToRecipient, emailMessage, emailSubject);
+		System.out.println("send mail");*/
+		return mav;
+		
+	}
+
+
+	//	empattreq.save(attedance);
+		/*System.out.println("save");
 		//List<TblEmpAttendanceNew> attendances =  empattreq.viewbyid(user.getEid());
 		//mav.addObject("attendancelist",attendances);
 		mav.addObject("empservices", empservicesdao.list());	
@@ -240,7 +284,7 @@ public class EmployeePageController {
 		
 		
 		
-	}
+	}*/
 
 	/*
 	 * Handling EMployee Requests

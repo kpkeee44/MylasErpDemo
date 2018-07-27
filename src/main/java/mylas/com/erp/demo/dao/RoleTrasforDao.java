@@ -4,7 +4,6 @@ package mylas.com.erp.demo.dao;
 
 import java.util.List;
 
-import mylas.com.erp.demo.TblEmpAttendanceNew;
 import mylas.com.erp.demo.TblManRoleTransfer;
 
 public interface RoleTrasforDao {

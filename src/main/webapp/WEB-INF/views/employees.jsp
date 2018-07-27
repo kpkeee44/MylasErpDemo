@@ -323,9 +323,9 @@
 									<div class="form-group">
 										<select id="department1" name="department1"
 											class="form-control" size="1">
-											<option value="">Select Department</option>
+											<option value="0">Select Department</option>
 											<c:forEach items="${departments}" var="departments">
-												<option value="${departments.getDepartmentname()}">
+												<option value="${departments.getDepartmentid()}">
 													${departments.getDepartmentname()}</option>
 											</c:forEach>
 										</select>
@@ -335,9 +335,9 @@
 									<div class="form-group">
 										<select id="designation1" name="designation1"
 											class="form-control" size="1">
-											<option value="">Select Designation</option>
+											<option value="0">Select Designation</option>
 											<c:forEach items="${designations}" var="designations">
-												<option value="${designations.getDesignation()}">
+												<option value="${designations.getDesignationid()}">
 													${designations.getDesignation()}</option>
 											</c:forEach>
 										</select>

@@ -343,73 +343,40 @@ return "error occured while updating";}
 	public String saveEmpDetails(int id,String empid, String fname, String lname, String email,String uname, String pswd, String addres,String ph,String adr,
 			int crby, int upby, String role, String dept, String des,String status) {
 		// TODO Auto-generated method stub
-	/*	1@id int,
-		2@eid varchar(30),
-		3@emplfirstname varchar(30),
-		4@empllastname varchar(30),
-		5@email varchar(30),
-		6@pswd varchar(30),
-		7@isactive bit,
-		8@address varchar(50),
-		9@mobileno varchar(20),
-		10@aadharno varchar(20),
-		11@createdBy int,  
-		12@createdDate datetime,
-		13@updatedBy int,
-		14@updatedDate datetime,
-		15@role varchar(30),
-		16@department int,
-		17@designation int,
-		18@uname varchar(30),
-		19@retval int out*/
+	
 		try(Session  s=HibernateUtil.getSessionFactory().openSession())
 		{StoredProcedureQuery query=s.createStoredProcedureQuery("sp_insup_tbl_employee");
 query.registerStoredProcedureParameter(1,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(2,String.class, ParameterMode.IN);
 
 query.registerStoredProcedureParameter(3,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(4,String.class, ParameterMode.IN);
-System.out.println(01);
 query.registerStoredProcedureParameter(5,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(6,String.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(7,Boolean.class, ParameterMode.IN);query.registerStoredProcedureParameter(8,String.class, ParameterMode.IN);
-System.out.println(02);
 query.registerStoredProcedureParameter(9,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(10,String.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(11,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(12,Date.class, ParameterMode.IN);
-System.out.println(03);
 query.registerStoredProcedureParameter(13,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(14,Date.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(15,String.class, ParameterMode.IN);query.registerStoredProcedureParameter(16,Integer.class, ParameterMode.IN);
 query.registerStoredProcedureParameter(17,Integer.class, ParameterMode.IN);query.registerStoredProcedureParameter(18,String.class, ParameterMode.IN);
-
 query.registerStoredProcedureParameter(19,Integer.class, ParameterMode.OUT);
-System.out.println("04");
 int deptid=Integer.parseInt(dept);int desid=Integer.parseInt(des);
-System.out.println("05");
-
 query.setParameter(1,id);query.setParameter(2,empid);query.setParameter(3,fname);query.setParameter(4,lname);query.setParameter(5,email);query.setParameter(6,pswd);
-System.out.println("06");
 if(status.equalsIgnoreCase("false"))
-{System.out.println("08");
-	query.setParameter(7,false);
+{	query.setParameter(7,false);
 }else {
 	query.setParameter(7,true);
-	System.out.println("08t");
 }
-
 query.setParameter(8,addres);query.setParameter(9,ph);query.setParameter(10,adr);query.setParameter(11,crby);query.setParameter(12,new Date());
 query.setParameter(13,upby);query.setParameter(14,new Date());query.setParameter(15,role);
-System.out.println("h");
 query.setParameter(16,deptid);query.setParameter(17,desid);query.setParameter(18,uname);
 query.execute();
-
 int a=(int) query.getOutputParameterValue(19);
 	System.out.println(a);
 		}
 		catch(Exception e)
 		{
 			System.out.println(e);
-		
 			return "Employee already Exits";
 		}
 	return "Employee added successfully";
-		
 	}
 
 	@Override
@@ -462,8 +429,34 @@ int a=(int) query.getOutputParameterValue(19);
 		return data;
 		
 	}
-}
 
+	@Override
+	public List<EmpDetails> search(String fname, String lname, int deptid, int desid) {
+		List<EmpDetails> userList=null;
+		try(Session  session=HibernateUtil.getSessionFactory().openSession()){
+			session.beginTransaction();
+			System.out.println("123");
+			Query Q = session.createSQLQuery("EXEC sp_searchemp :fname,:lname,:deptid,:desid").addEntity(EmpDetails.class);
+			Q.setString("fname", fname);
+			Q.setString("lname", lname);
+			Q.setInteger("deptid",deptid);
+			Q.setInteger("desid",desid);
+			System.out.println(Q);
+			userList =(List<EmpDetails>)Q.list();
+			if(!userList.isEmpty()) {
+			for(EmpDetails ll:userList)
+			{
+				System.out.println(ll.getEid()+"eid");
+			}}
+			else {
+				System.out.println("nodata");
+			}
+	}catch(Exception e) {
+		System.out.println(e);
+	}
+		return userList;
+}
+}
 
 
 

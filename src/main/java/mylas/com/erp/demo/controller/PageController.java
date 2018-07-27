@@ -33,7 +33,6 @@ import mylas.com.erp.demo.EmpDetails;
 import mylas.com.erp.demo.LeaveAddition;
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.TblDesignation;
-import mylas.com.erp.demo.TblEmpAttendanceNew;
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblHolidays;
 import mylas.com.erp.demo.TblManRoleTransfer;
@@ -941,7 +940,9 @@ public class PageController<JavaMailSender> {
 		EmpLeaveRequestService elrs = new EmpLeaveRequestService();
 	          String s = elrs.saveLeaveRequest();
 		System.out.println(s);*/
-		userDetails.view(0);
+		/*empattreq.view(0);
+		empattreq.getLeavestatus();*/
+		userDetails.search(null, null, 0, 0);
 		return mav;
 	}
 
@@ -1125,16 +1126,23 @@ public class PageController<JavaMailSender> {
 
 	@RequestMapping(value="/admin/employee/search")
 	public ModelAndView searchBars(HttpServletRequest req) {
-
+System.out.println("concomes");
 		String firstname = req.getParameter("firstname");
+		System.out.println(firstname);
 		String lastname = req.getParameter("lastname");
-		String department = req.getParameter("department1");
-		String designation = req.getParameter("designation1");
-		List<TblDepartment> deptList = deptdao.getDetails();
-		List<TblDesignation> designList = designationImpl.getDetails();
+		System.out.println("data featch");
+		System.out.println(lastname);
+		int deptid = Integer.parseInt(req.getParameter("department1"));
+		System.out.println(deptid);
+		int desid = Integer.parseInt(req.getParameter("designation1"));
+		System.out.println(desid);
+		/*List<TblDepartment> deptList = deptdao.getDetails();
+		List<TblDesignation> designList = designationImpl.getDetails();*/
+		System.out.println("data featch");
 
-		List<EmpDetails> details = userDetails.viewSearch(firstname, lastname, department, designation);
-
+		List<EmpDetails> details = userDetails.search(firstname, lastname, deptid, desid);
+				//userDetails.viewSearch(firstname, lastname, department, designation);
+		System.out.println("data store");
 		ModelAndView mav = new ModelAndView("employees");
 		mav.addObject("services", servicesdao.list());
 		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -1161,8 +1169,8 @@ public class PageController<JavaMailSender> {
 
 
 		mav.addObject("dupmsg", mesg);
-		mav.addObject("departments", deptList);
-		mav.addObject("designations", designList);
+		/*mav.addObject("departments", deptList);*/
+	/*	mav.addObject("designations", designList);*/
 
 		List<TblDepartment> dests = deptdao .getDetails();
 		mav.addObject("departments", dests);

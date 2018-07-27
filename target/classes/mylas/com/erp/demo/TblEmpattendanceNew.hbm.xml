@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 14 Jun, 2018 1:44:46 PM by Hibernate Tools 5.2.8.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jul 26, 2018 12:22:14 PM by Hibernate Tools 5.3.0.Beta2 --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.TblEmpAttendanceNew" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_emp_attendance_new">
+    <class catalog="mylasfyt_krishna" dynamic-insert="false" dynamic-update="false" mutable="true" name="mylas.com.erp.demo.TblEmpattendanceNew" optimistic-lock="version" polymorphism="implicit" schema="dbo" select-before-update="false" table="tbl_empattendance_new">
         <id name="id" type="java.lang.Integer">
             <column name="id"/>
             <generator class="identity"/>
         </id>
-        <property generated="never" lazy="false" name="managerid" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="managerid"/>
+        <property generated="never" lazy="false" name="managerid" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="managerid"/>
         </property>
-        <property generated="never" lazy="false" name="empid" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="empid"/>
+        <property generated="never" lazy="false" name="monthid" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="monthid"/>
         </property>
-        <property generated="never" lazy="false" name="month" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="month"/>
+        <property generated="never" lazy="false" name="empname" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="empname"/>
         </property>
-        <property generated="never" lazy="false" name="year" optimistic-lock="true" type="java.lang.Integer" unique="false">
-            <column name="year"/>
+        <property generated="never" lazy="false" name="empno" optimistic-lock="true" type="string" unique="false">
+            <column length="50" name="empno"/>
+        </property>
+        <property generated="never" lazy="false" name="yearid" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="yearid"/>
+        </property>
+        <property generated="never" lazy="false" name="createdby" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="createdby"/>
+        </property>
+        <property generated="never" lazy="false" name="createddate" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="23" name="createddate"/>
+        </property>
+        <property generated="never" lazy="false" name="updatedby" optimistic-lock="true" type="java.lang.Integer" unique="false">
+            <column name="updatedby"/>
+        </property>
+        <property generated="never" lazy="false" name="updateddate" optimistic-lock="true" type="timestamp" unique="false">
+            <column length="23" name="updateddate"/>
         </property>
         <property generated="never" lazy="false" name="day1" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="day1"/>
@@ -111,14 +126,8 @@
         <property generated="never" lazy="false" name="day31" optimistic-lock="true" type="java.lang.Integer" unique="false">
             <column name="day31"/>
         </property>
-        <property generated="never" lazy="false" name="statas" optimistic-lock="true" type="java.lang.Boolean" unique="false">
-            <column name="statas"/>
-        </property>
-        <property generated="never" lazy="false" name="reasion" optimistic-lock="true" type="string" unique="false">
-            <column length="150" name="reasion"/>
-        </property>
-        <property generated="never" lazy="false" name="mantrans" optimistic-lock="true" type="string" unique="false">
-            <column length="50" name="mantrans"/>
+        <property generated="never" lazy="false" name="status" optimistic-lock="true" type="string" unique="false">
+            <column length="30" name="status"/>
         </property>
     </class>
 </hibernate-mapping>

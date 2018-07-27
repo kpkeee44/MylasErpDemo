@@ -30,4 +30,5 @@ public interface EmployeeDao {
 	 public String saveEmpDetails(int id,String empid,String fname,String lname,String email,String uname,String pswd,String addres,String ph,String adr,int crby,int upby,String role,String dept,String des,String status);
 	 public List<TblEmployees> getDetails1();
 	 public List<EmployeeViewPage> view(int id);
+	 public List<EmpDetails> search(String fname,String lname,int deptid,int desid);
 }

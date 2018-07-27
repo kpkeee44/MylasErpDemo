@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import mylas.com.erp.demo.EmpDetails;
-import mylas.com.erp.demo.TblEmpAttendanceNew;
 import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblManRoleTransfer;
 import mylas.com.erp.demo.appservices.GetSession;

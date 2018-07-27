@@ -55,7 +55,7 @@
 .selected {
 	background: red;
 }
-}
+
 </style>
 </head>
 <body class="theme-indigo light layout-fixed">
@@ -269,9 +269,10 @@
 														<select class="form-control" id="status" name="status"
 															size="1">
 															<option value="">Select Status</option>
-															<option value="2">Pending</option>
-															<option value="1">Approved</option>
-															<option value="0">Declined</option>
+															<c:forEach items="${ltypelist}" var="ltypelist">
+												<option value="${ltypelist.getLeavestatusid()}">
+													${ltypelist.getLeavestatus()}</option>
+											</c:forEach>
 														</select>
 													</div>
 												</div>
@@ -293,6 +294,9 @@
 															<th data-tablesaw-sortable-col
 																data-tablesaw-sortable-default-col
 																data-tablesaw-priority="persist">Month</th>
+																<th data-tablesaw-sortable-col
+																data-tablesaw-sortable-default-col
+																data-tablesaw-priority="persist">Name</th>
 															<th data-tablesaw-sortable-col data-tablesaw-priority="3">1</th>
 															<th data-tablesaw-sortable-col data-tablesaw-priority="2">2</th>
 															<th data-tablesaw-sortable-col data-tablesaw-priority="4">3
@@ -354,47 +358,45 @@
 													</thead>
 													<div class="clearfix"></div>
 
-													<c:forEach var="attlist" items="${attendancelist}">
-                                    <tbody>
-															<c:set var="green"
-																value="icon-display  fa fa-check attenedance_check_green" />
-															<c:set var="red"
-																value="icon-display  fa fa-close  attenedance_check_red" />
-															<c:set var="gray"
-																value="icon-display  fa fa-bullseye attenedance_check_darkgrey" />
+												
+                                    <tbody id="attend">
+															
 
-
-
+	<c:forEach var="attlist" items="${attendancelist}">
 															<tr>
-																<th><a href="javascript:void(0)">${attlist.getMonth()}
-																		${attlist.getYear()}</a></th>
-																<c:if test="${attlist.getDay1() == 1}">
-																	<td><i class="${green}"></i></td>
-																</c:if>
+																<td><a href="javascript:void(0)" class="green">${attlist.getMonth()}-
+																		${attlist.getYear()}${attlist.getDay1()} <i ></i></a></td>
+																		<th><a href="javascript:void(0)" class="green">${attlist.getLeavestatus()}${attlist.getEmpfname()}${attlist.getEmplname()}
+																		</a></th>
+																<%-- <c:if test="${attlist.getDay1() == 2}"> --%>
+																	<%-- <td><i class="${attlist.getDay1()}"></i></td> --%>
+																	
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay1()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay1() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay1() == 3}">
 																	<td><i class="${gray}"></i></td>
-																</c:if>
-																<c:if test="${attlist.getDay2() == 1}">
+																</c:if> --%>
+																<%-- <c:if test="${attlist.getDay2() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay2() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay2() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay2() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay2()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay3() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay3() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay3() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay3() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay3()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 
 																<c:if test="${attlist.getDay4() == 1}">
 																	<td><i class="${green}"></i></td>
@@ -402,9 +404,9 @@
 																<c:if test="${attlist.getDay4() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay4() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay4() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay4()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 
 																<c:if test="${attlist.getDay5() == 1}">
 																	<td><i class="${green}"></i></td>
@@ -412,216 +414,216 @@
 																<c:if test="${attlist.getDay5() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay5() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay5() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay5()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay6() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay6() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay6() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay6() == 3}"> --%>
+																 <td><a href="javascript:void(0)" class="${attlist.getDay6()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay7() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay7() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay7() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay7() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay7()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay8() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay8() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay8() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay8() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay8()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay9() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay9() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay9() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay9() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay9()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay10() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay10() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay10() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay10() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay10()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay11() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay11() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay11() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay11() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay11()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay12() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay12() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay12() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay12() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay12()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay13() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay13() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay13() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay13() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay13()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay14() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay14() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay14() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay14() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay14()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay15() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay15() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay15() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay15() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay15()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay16() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay16() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay16() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay16() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay16()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay17() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay17() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay17() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay17() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay17()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay18() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay18() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay18() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay18() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay18()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay19() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay19() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay19() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay19() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay19()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay20() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay20() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay20() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay20() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay20()}"><i class=""></i></a></td> 
+															<%-- 	</c:if>
 																<c:if test="${attlist.getDay21() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay21() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay21() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay21() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay21()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay22() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay22() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay22() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay22() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay22()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay23() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay23() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay23() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay23() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay23()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay24() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay24() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay24() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay24() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay24()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay25() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay25() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay25() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay25() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay25()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay26() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay26() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay26() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay26() == 3}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay26()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay27() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay27() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay27() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay27() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay27()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay28() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
 																<c:if test="${attlist.getDay28() == 2}">
 																	<td><i class="${red}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay28() == 3}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay28() == 3}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay28()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay29() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
@@ -631,9 +633,9 @@
 																<c:if test="${attlist.getDay29() == 3}">
 																	<td><i class="${gray}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay29() == null}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay29() == null}"> --%>
+																	 <td><a href="javascript:void(0)" class="${attlist.getDay29()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay30() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
@@ -643,9 +645,9 @@
 																<c:if test="${attlist.getDay30() == 3}">
 																	<td><i class="${gray}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay30() == null}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay30() == null}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay30()}"><i class=""></i></a></td> 
+																<%-- </c:if>
 																<c:if test="${attlist.getDay31() == 1}">
 																	<td><i class="${green}"></i></td>
 																</c:if>
@@ -655,30 +657,43 @@
 																<c:if test="${attlist.getDay31() == 3}">
 																	<td><i class="${gray}"></i></td>
 																</c:if>
-																<c:if test="${attlist.getDay31() == null}">
-																	<td><i class="${gray}"></i></td>
-																</c:if>
+																<c:if test="${attlist.getDay31() == null}"> --%>
+																		 <td><a href="javascript:void(0)" class="${attlist.getDay31()}"><i class=""></i></a></td> 
+															<%-- 	</c:if> --%>
 
 																<td>
-																	<div class="btn-group">
-																		<c:if test="${attlist.getStatas() == null}">
+																<div class="col-md-2 padding_col">
+													<div class="form-group">
+
+														<select class="form-control" id="status1" name="status"
+															size="1">
+															<option value="">Select Status</option>
+															<c:forEach items="${ltypelist}" var="ltypelist">
+												<option value="${ltypelist.getLeavestatusid()}">
+													${ltypelist.getLeavestatusid()}${ltypelist.getLeavestatus()}</option>
+											</c:forEach>
+														</select>
+													</div>
+												</div>
+																	<%-- <div class="btn-group">
+																		<c:if test="${attlist.getLeavestatus() == null}">
 																			<button type="button"
 																				class="btn btn-primary btn-outline btn-rounded waves-effect"
 																				data-toggle="dropdown" aria-haspopup="true"
 																				aria-expanded="false">Pending</button>
 																		</c:if>
-																		<c:if test="${attlist.getStatas() == false}">
+																		<c:if test="${attlist.getLeavestatus() == 'Approved'}">
 																			<button type="button"
 																				class="btn btn-primary  btn-outline btn-rounded waves-effect colorred">Declined
 																			</button>
 																		</c:if>
-																		<c:if test="${attlist.getStatas() == true}">
+																		<c:if test="${attlist.getLeavestatus() == 'Denied'}">
 																			<button type="button"
 																				class="btn btn-primary colorgreen btn-outline btn-rounded waves-effect "
 																				data-toggle="dropdown" aria-haspopup="true"
 																				aria-expanded="false">Approved</button>
 																		</c:if>
-																	</div>
+																	</div> --%>
 																</td>
 																<td>
 																	<ul class="tabelaction">
@@ -687,7 +702,7 @@
 																			data-toggle="dropdown" role="button"
 																			aria-haspopup="true" aria-expanded="false"> <i
 																				class="material-icons">more_vert</i>
-																		</a><c:if test="${attlist.getStatas() == null}">
+																		</a><c:if test="${attlist.getLeavestatus() == null}">
 																			<ul class="dropdown-menu pull-right">
 																				
 																					<li><a
@@ -698,9 +713,8 @@
 																	</ul>
 																</td>
 															</tr>
-
+</c:forEach>
 														</tbody>
-													</c:forEach>
 												</table>
 
 											</div>
@@ -891,7 +905,7 @@
 				$("#addnewemp").addClass("animated");
 
 			});
-
+			geticons();
 		});
 	</script>
 	</c:if>
@@ -907,6 +921,33 @@
 		 }
 
 }
+     function geticons()
+     {
+    	
+
+    	 $("#attend").children().each(function(){
+    		 $(this).children().each(function(){
+       			 if($(this).children('a').hasClass("green"))
+    				 {
+    				  $(this).children('a').children('i').addClass("icon-display  fa fa-check attenedance_check_green");
+    				 }
+    			 else if($(this).children('a').hasClass("red"))
+				 {
+    				  $(this).children('a').children('i').addClass("icon-display  fa fa-close  attenedance_check_red");
+				 }
+    			 else
+    				 {
+    				  $(this).children('a').children('i').addClass("icon-display  fa fa-bullseye attenedance_check_darkgrey");
+    				 }
+    		 });
+    	 });
+     }
+</script>
+<script>
+
+/* document.getElementById("status1").value = 1; */
+ $("#status1").val(1);
+
 </script>
 
 </body>
