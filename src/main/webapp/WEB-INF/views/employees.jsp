@@ -237,7 +237,7 @@
 										</div>
 									</div>
 									
-									<c:if test="${Role.equals('ADMIN_ROLE')}">
+								<%-- 	<c:if test="${Role.equals('ADMIN_ROLE')}"> --%>
 									<!-- 	<div class="col-md-6">
 											<div class="form-group">
 												<div class="form-line">
@@ -268,7 +268,7 @@
 												</div>
 											</div>
 										</div>
-									</c:if>
+								<%-- 	</c:if> --%>
 									<%-- <c:if test="${Role.equals('MANAGER_ROLE')}"> --%>
 										<div class="col-md-6">
 											<div class="form-group">
@@ -439,7 +439,7 @@
 									</c:if>
 									</c:if>
 								</c:forEach> --%>
-								<c:if test="${Role.equals('ADMIN_ROLE')}">
+								<%-- <c:if test="${Role.equals('ADMIN_ROLE')}"> --%>
 									<c:forEach items="${employees}" var="empl">
 										<%-- <c:if test="${empl.getManagerid() !=  manager}"> --%>
 											<%-- <c:if test="${empl.getManagerid() !=  null}"> --%>
@@ -490,7 +490,7 @@
 											<%-- </c:if> --%>
 										<%-- </c:if> --%>
 									</c:forEach>
-								</c:if>
+								<%-- </c:if> --%>
 							</tbody>
 						</table> 
 		</section>

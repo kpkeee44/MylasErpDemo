@@ -351,9 +351,9 @@
 																data-tablesaw-sortable-default-col
 																data-tablesaw-priority="persist" style="width: 11%;">STATUS
 															</th>
-															<th data-tablesaw-sortable-col
+															<!-- <th data-tablesaw-sortable-col
 																data-tablesaw-sortable-default-col
-																data-tablesaw-priority="persist">Edit</th>
+																data-tablesaw-priority="persist">Edit</th> -->
 														</tr>
 													</thead>
 													<div class="clearfix"></div>
@@ -662,7 +662,7 @@
 															<%-- 	</c:if> --%>
 
 																<td>
-																<div class="col-md-2 padding_col">
+																<div class="col-md-16 padding_col" >
 													<div class="form-group">
 
 														<select class="form-control" id="status1" name="status"
@@ -670,7 +670,7 @@
 															<option value="">Select Status</option>
 															<c:forEach items="${ltypelist}" var="ltypelist">
 												<option value="${ltypelist.getLeavestatusid()}">
-													${ltypelist.getLeavestatusid()}${ltypelist.getLeavestatus()}</option>
+													${ltypelist.getLeavestatus()}</option>
 											</c:forEach>
 														</select>
 													</div>
@@ -946,7 +946,7 @@
 <script>
 
 /* document.getElementById("status1").value = 1; */
- $("#status1").val(1);
+ $("#status1").val(4);
 
 </script>
 

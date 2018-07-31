@@ -102,7 +102,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>First Name</label> --><input type="text"
+													First Name:<input type="text"
 														name="firstname1" id="firstname1" class="form-control"
 														required="required" size="50" maxlength="50" placeholder="First Name">
 												</div>
@@ -113,7 +113,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Last Name </label> --><input type="text"
+													Last Name:<input type="text"
 														name="lastname1" id="lastname1" class="form-control"
 														required="required" size="50" maxlength="50" placeholder="Last Name">
 												</div>
@@ -124,7 +124,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Employee ID </label> --><input type="text" name="empid"
+													Employee ID:<input type="text" name="empid"
 														id="empid" class="form-control" required="required"
 														size="15" maxlength="15" placeholder="Employee ID">
 												</div>
@@ -136,7 +136,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Email</label> --><input type="email" name="email"
+													Email:<input type="email" name="email"
 														id="email" class="form-control" required="required"
 														size="50" maxlength="50" placeholder="Email">
 												</div>
@@ -147,7 +147,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Employee ID </label> --><input type="text" name="uname"
+													Username:<input type="text" name="uname"
 														id="uname" class="form-control" required="required"
 														size="15" maxlength="15" placeholder="UserName">
 												</div>
@@ -159,7 +159,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Password </label> --><input type="password" name="pswd"
+													Password:<input type="password" name="pswd"
 														id="pswd" class="form-control"
 														pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
 														title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
@@ -172,7 +172,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Confirm Password </label> --><input type="password"
+												Confirm Password:<input type="password"
 														name="cpswd" id="cpswd" class="form-control"
 														required="required" placeholder="Confirm Password">
 												</div>
@@ -183,7 +183,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Username</label> --><input type="text"
+													Aadhar Number:<input type="text"
 													 name="aadhar" id="aadhar" class="form-control"
 													  required="required" size="50" maxlength="50" placeholder="Aadhar Number">
 												</div>
@@ -195,7 +195,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Phone </label> --><input type="text" name="phone"
+													Phone:<input type="text" name="phone"
 														id="phone" class="form-control" required="required"
 														size="10" maxlength="10" placeholder="Phone" pattern="[0-9]{10}">
 												</div>
@@ -206,7 +206,7 @@
 										<div class="form-group">
 											<div class="input-group addon-line">
 												<div class="form-line">
-													<!-- <label>Phone </label> --><input type="text" name="address"
+												Address:<input type="text" name="address"
 														id="address" class="form-control" required="required"
 														size="50" maxlength="50" placeholder="Address" ">
 												</div>

@@ -50,6 +50,7 @@ import mylas.com.erp.demo.dao.RoleTrasforDao;
 import mylas.com.erp.demo.daoimpl.EmpLeaveRequestService;
 import mylas.com.erp.demo.daoimpl.LeavesTypeDaoImpl;
 import mylas.com.erp.demo.procedures.EmpLeaveRequestJoin;
+import mylas.com.erp.demo.procedures.EmployeeViewPage;
 import mylas.com.erp.demo.service.Client;
 
 @Controller
@@ -88,10 +89,105 @@ public class ManagerPageController {
 	static String emailToRecipient, emailSubject, emailMessage;
    
 	Client c = new Client();
-    
+	/*@RequestMapping(value="/admin/allemp/register")
+	public ModelAndView allEmpPage() {
+		ModelAndView mav = new ModelAndView("employees");
+		mav.addObject("services", servicesdao.list());
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
+	//	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		List<TblEmpLeavereq> allempleave = empleavereq.view();
+		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
+		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
+
+		mav.addObject("empattendances",empattendances);
+		mav.addObject("allempleave", allempleave);
+		mav.addObject("count",count);
+	//	mav.addObject("TransferRoleList", transferrole);
+		List<TblDepartment> deptList = deptdao.getDetails();
+		List<TblDesignation> designList = designationImpl.getDetails();
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		mav.addObject("User",user);
+		mav.addObject("title", "Employee Regester Page");
+		mav.addObject("userClickReg", true);
+		String mesg = "hi";
+	//	List<EmpDetails> emp1 = userDetails.getDetails();
+		List<EmployeeViewPage> emp1=userDetails.view(0);
+		mav.addObject("employees", emp1);
+		mav.addObject("dupmsg", mesg);
+		mav.addObject("departments", deptList);
+		mav.addObject("designations", designList);
+		mav.addObject(user);
+		return mav;		
+	}
+	@RequestMapping(value="/admin/allemp/register", method=RequestMethod.POST)
+	public ModelAndView EmpPage(HttpServletRequest request, HttpServletResponse response) throws ConstraintViolationException{
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
+		EmpDetails emp = new EmpDetails(null, request.getParameter("cpswd"), null, request.getParameter("empid"), request.getParameter("email"), request.getParameter("firstname1"), null, request.getParameter("lastname1"), false, null, request.getParameter("pswd"), null, request.getParameter("uname"), null, null,null,null);
+
+		emp.setLoginStatus(UserServiceImpl.Login_Status_Active);
+		emp.setRole("MANAGER_ROLE");
+		emp.setManagerid(user.getEid());
+		emp.setJdate(request.getParameter("joindate"));
 
 
-/*	@RequestMapping(value="/manager/allemp/register")
+		emp.setPhone(request.getParameter("phone"));
+		emp.setCompName(request.getParameter("company"));
+		emp.setDepartment(request.getParameter("department"));
+		emp.setDesignation("Manager");
+
+
+		ModelAndView mav = new ModelAndView("employees");
+		mav.addObject("services", servicesdao.list());
+		//String mesg = "hi";
+		System.out.println(request.getParameter("department"));
+		String mesg=userDetails.saveEmpDetails(0,request.getParameter("empid"),request.getParameter("firstname1"),request.getParameter("lastname1"),request.getParameter("email"),request.getParameter("uname"),request.getParameter("pswd"),request.getParameter("address"), request.getParameter("phone"),request.getParameter("aadhar"), user.getId(), user.getId(),"MANAGER_ROLE",request.getParameter("department"),request.getParameter("designation"),"true");
+		List<TblDesignation> designList = designationImpl.getDetails();
+		mav.addObject("designations", designList);
+		List<TblDepartment> deptList = deptdao.getDetails();
+		mav.addObject("departments", deptList);
+	//	mesg = userDetails.getConnection(emp);
+		//List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		List<TblEmpLeavereq> allempleave = empleavereq.view();
+		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
+		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
+		List<EmpDetails> emp1 = userDetails.getDetails();
+		mav.addObject("empattendances",empattendances);
+		mav.addObject("allempleave", allempleave);
+		mav.addObject("count",count);
+		//mav.addObject("TransferRoleList", transferrole);
+
+
+
+
+		//Departments
+		List<TblDepartment> dests = deptdao.getDetails();
+		mav.addObject("departments", dests);
+
+
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		List<EmployeeViewPage> emp1 = userDetails.view(0);
+		mav.addObject("employees", emp1);
+
+
+		mav.addObject("dupmsg", mesg);
+		mav.addObject("User",user);
+		//mav.addObject("employee", emp);
+
+		return mav;		
+	}*/
+
+/*--------------------manager Emp Page----------------------*/
+@RequestMapping(value="/manager/allemp/register")
 	public ModelAndView allEmpPage() {
 		ModelAndView mav = new ModelAndView("employees");
 		mav.addObject("manservices", mandao.list());	
@@ -108,23 +204,78 @@ public class ManagerPageController {
 		mav.addObject("Role",role);
 		mav.addObject("User",user);
 		String mesg = "hi";
+		mav.addObject("title", "Employee Regester Page");
+		mav.addObject("userClickReg", true);
 		List<EmpDetails> emp1 = userDetails.getDetails();
-		List<TblEmpLeavereq> allempleave = ers.view();
-		int count = ers.countEmployee(user.getEid()) + attimpl.countEmployee(user.getEid());
-		List<TblEmpAttendanceNew> empattendances =  attimpl.getDetails();
-		mav.addObject("empattendances",empattendances);
-		mav.addObject("allempleave", allempleave);
-		mav.addObject("count",count);
 		mav.addObject("employees", emp1);
 		mav.addObject("dupmsg", mesg);
 		mav.addObject("User",user);
 		mav.addObject("employees", emp1);
 		return mav;		
-	}*/
-	/*@RequestMapping(value="/manager/allemp/register", method=RequestMethod.POST)
+	}
+	@RequestMapping(value="/manager/allemp/register", method=RequestMethod.POST)
 	public ModelAndView saveEmpPage(HttpServletRequest request, HttpServletResponse response) throws ConstraintViolationException{
 
-		EmpDetails emp = new EmpDetails(null, request.getParameter("cpswd"), null, request.getParameter("empid"), request.getParameter("email"), request.getParameter("firstname1"), null, request.getParameter("lastname1"), false, null, request.getParameter("pswd"), null, request.getParameter("uname"), null,null,null,null);
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		EmpDetails user=null;
+		if (principal instanceof EmpDetails) {
+			user = ((EmpDetails)principal);
+		}
+		/*EmpDetails emp = new EmpDetails(null, request.getParameter("cpswd"), null, request.getParameter("empid"), request.getParameter("email"), request.getParameter("firstname1"), null, request.getParameter("lastname1"), false, null, request.getParameter("pswd"), null, request.getParameter("uname"), null, null,null,null);
+
+		emp.setLoginStatus(UserServiceImpl.Login_Status_Active);
+		emp.setRole("MANAGER_ROLE");
+		emp.setManagerid(user.getEid());
+		emp.setJdate(request.getParameter("joindate"));
+
+
+		emp.setPhone(request.getParameter("phone"));
+		emp.setCompName(request.getParameter("company"));
+		emp.setDepartment(request.getParameter("department"));
+		emp.setDesignation("Manager");*/
+
+
+		ModelAndView mav = new ModelAndView("employees");
+		//String mesg = "hi";
+		System.out.println(request.getParameter("department"));
+		String mesg=userDetails.saveEmpDetails(0,request.getParameter("empid"),request.getParameter("firstname1"),request.getParameter("lastname1"),request.getParameter("email"),request.getParameter("uname"),request.getParameter("pswd"),request.getParameter("address"), request.getParameter("phone"),request.getParameter("aadhar"), user.getId(), user.getId(),"MANAGER_ROLE",request.getParameter("department"),request.getParameter("designation"),"true");
+		List<TblDesignation> designList = designationImpl.getDetails();
+		mav.addObject("designations", designList);
+		List<TblDepartment> deptList = deptdao.getDetails();
+		mav.addObject("departments", deptList);
+		mav.addObject("manservices", mandao.list());
+	//	mesg = userDetails.getConnection(emp);
+		//List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblEmpLeavereq> allempleave = empleavereq.view();
+		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
+		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
+		List<EmpDetails> emp1 = userDetails.getDetails();
+		mav.addObject("empattendances",empattendances);
+		mav.addObject("allempleave", allempleave);
+		mav.addObject("count",count);*/
+		//mav.addObject("TransferRoleList", transferrole);
+
+
+
+
+		//Departments
+		/*List<TblDepartment> dests = deptdao.getDetails();
+		mav.addObject("departments", dests);
+*/
+
+		String role = user.getRole();
+		mav.addObject("Role",role);
+		List<EmployeeViewPage> emp1 = userDetails.view(0);
+		mav.addObject("employees", emp1);
+
+
+		mav.addObject("dupmsg", mesg);
+		mav.addObject("User",user);
+		return mav;
+	}
+		//mav.addObject("employee", emp);
+
+		/*EmpDetails emp = new EmpDetails(null, request.getParameter("cpswd"), null, request.getParameter("empid"), request.getParameter("email"), request.getParameter("firstname1"), null, request.getParameter("lastname1"), false, null, request.getParameter("pswd"), null, request.getParameter("uname"), null,null,null,null);
 
 		emp.setLoginStatus(UserServiceImpl.Login_Status_Active);
 		emp.setRole("EMPLOYEE_ROLE");

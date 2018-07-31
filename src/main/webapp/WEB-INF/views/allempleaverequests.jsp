@@ -148,7 +148,7 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-md-2 padding_col">
+									<!-- <div class="col-md-2 padding_col">
 										<div class="form-group">
 
 											<select class="form-control" size="1" name="status"
@@ -159,7 +159,7 @@
 												<option value="0">Declined</option>
 											</select>
 										</div>
-									</div>
+									</div> -->
 
 
 									<div class="col-md-2 ">
@@ -339,8 +339,20 @@
 														<td>${empleaves.getTodate()}</td>
 														<td>${empleaves.getLeavecount()}days</td>
 														<td>${empleaves.getLeavereason()}</td>
+<td><div class="col-md-6 padding_col">
+													<div class="form-group">
 
-														<td>
+														<select class="form-control" id="status1" name="status"
+															size="1">
+															<option value="">Select Status</option>
+															<c:forEach items="${ltypelist}" var="ltypelist">
+												<option value="${ltypelist.getLeavestatusid()}">
+													${ltypelist.getLeavestatus()}</option>
+											</c:forEach>
+														</select>
+													</div>
+												</div></td>
+													<%-- 	<td>
 
 															<div class="btn-group">
 
@@ -355,13 +367,13 @@
 																		class="btn btn-primary  btn-outline btn-rounded waves-effect colorred"
 																		data-toggle="dropdown" aria-haspopup="true"
 																		aria-expanded="false">Declined</button>
-										<%-- 							<ul class="dropdown-menu pull-right">
+																	<ul class="dropdown-menu pull-right">
 																		<li><a
 																			href="${contextRoot}/admin/leavereq/edit/${empleaveslist.getId()}">
 																				Edit</a></li>
 
 
-																	</ul> --%>
+																	</ul>
 																</c:if>
 																<c:if test="${empleaveslist.getLeavestatus() == 'Approved'}">
 																	<button type="button"
@@ -369,15 +381,15 @@
 																		data-toggle="dropdown" aria-haspopup="true"
 																		aria-haspopup="true" aria-expanded="false">Approved
 																	</button>
-									<%-- 								<ul class="dropdown-menu pull-right">
+																	<ul class="dropdown-menu pull-right">
 																		<li><a
 																			href="${contextRoot}/admin/leavereq/edit/${empleaveslist.getId()}">
 																				Edit</a></li>
 
 
-																	</ul> --%>
+																	</ul>
 																</c:if>
-																<%-- <c:set var="eid" value="${User.getEid()}"></c:set>
+																<c:set var="eid" value="${User.getEid()}"></c:set>
 																<c:if
 																	test="${empleaveslist.getManagerid() == eid || empleaveslist.getMantrans() == eid}">
 																	<c:if test="${empleaveslist.getLeavestatus() == null}">
@@ -401,10 +413,10 @@
 																				</button></li>
 
 																		</ul>
-																	</c:if> --%>
+																	</c:if>
 																	
 																	</div>
-																	</td>
+																	</td> --%>
 																	</tr>
 																	</tbody>
 																</c:if>
@@ -666,8 +678,11 @@
 			}
 
 		}
-	</script>
 
+	</script>
+<script>
+$("#status1").val(4);
+</script>
 
 
 
@@ -706,67 +721,56 @@
 		}
 	</script>
 	<script>
-		$(document).ready(
-				function() {
+	$(document).ready(function() {
 
-					$('#firstname').autocomplete(
-							{
-								serviceUrl : '${contextRoot}/getTags',
-								paramName : "firstname",
-								delimiter : ",",
-								transformResult : function(response) {
-
-									return {
-
-										suggestions : $.map($
-												.parseJSON(response), function(
-												item) {
-
-											return {
-												value : item.fname,
-												data : item.id
-											};
-										})
-
-									};
-
-								}
-
-							});
-
-				});
+		$('#firstname').autocomplete({
+			
+			serviceUrl: '${contextRoot}/getTags',
+			paramName: "firstname",
+			delimiter: ",",
+		    transformResult: function(response) {
+		    	
+		        return {
+		        	
+		            suggestions: $.map($.parseJSON(response), function(item) {
+		            	
+		                return { value: item.emplfirstname, data: item.id };
+		            })
+		            
+		        };
+		        
+		    }
+		    
+		});
+		
+		
+	});
 	</script>
 	<script>
-		$(document).ready(
-				function() {
+	$(document).ready(function() {
 
-					$('#lastname').autocomplete(
-							{
-
-								serviceUrl : '${contextRoot}/lastNames',
-								paramName : "lastname",
-								delimiter : ",",
-								transformResult : function(response) {
-
-									return {
-
-										suggestions : $.map($
-												.parseJSON(response), function(
-												item) {
-
-											return {
-												value : item.lname,
-												data : item.id
-											};
-										})
-
-									};
-
-								}
-
-							});
-
-				});
+		$('#lastname').autocomplete({
+			
+			serviceUrl: '${contextRoot}/lastNames',
+			paramName: "lastname",
+			delimiter: ",",
+		    transformResult: function(response) {
+		    	
+		        return {
+		        	
+		            suggestions: $.map($.parseJSON(response), function(item) {
+		            	
+		                return { value: item.empllastname, data: item.id };
+		            })
+		            
+		        };
+		        
+		    }
+		    
+		});
+		
+		
+	});
 	</script>
 	<script type="text/javascript">
 		function displayhistory(id) {

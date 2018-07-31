@@ -5,11 +5,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,15 +25,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import mylas.com.erp.demo.EmpDetails;
-
 import mylas.com.erp.demo.LeaveAddition;
 import mylas.com.erp.demo.TblDepartment;
 import mylas.com.erp.demo.TblDesignation;
-/*import mylas.com.erp.demo.TblEmpAttendanceNew;*/
-import mylas.com.erp.demo.TblEmpLeavereq;
 import mylas.com.erp.demo.TblHolidays;
+import mylas.com.erp.demo.TblLeavestatus;
 import mylas.com.erp.demo.TblManRoleTransfer;
-import mylas.com.erp.demo.Tblleaves;
 import mylas.com.erp.demo.Tblleavestype;
 import mylas.com.erp.demo.appservices.EmailSender;
 import mylas.com.erp.demo.appservices.UserServiceImpl;
@@ -55,12 +48,11 @@ import mylas.com.erp.demo.dao.ServicesDao;
 import mylas.com.erp.demo.daoimpl.EmpAttendanceDaoImpl;
 import mylas.com.erp.demo.daoimpl.EmpLeaveRequestService;
 import mylas.com.erp.demo.daoimpl.LeavesTypeDaoImpl;
-import mylas.com.erp.demo.exceptions.UserBlockedException;
 import mylas.com.erp.demo.operations.LoginOperations;
+import mylas.com.erp.demo.procedures.Attendance;
 import mylas.com.erp.demo.procedures.EmpLeaveRequestJoin;
 import mylas.com.erp.demo.procedures.EmployeeViewPage;
 import mylas.com.erp.demo.service.DepartmentService;
-import mylas.com.erp.demo.service.DesignationService;
 
 
 
@@ -391,7 +383,7 @@ System.out.println("concomes");
 		System.out.println(dt1);
 		String name=request.getParameter("holiday");
 		//(int id,String name,Date dt,boolean active,String eid,Date cdt,String upby,Date update);
-		String msg=himpl.saveHoliday(0,name,dt1,request.getParameter("active"),user.getId(),new Date(),user.getId(),null);
+		String msg=himpl.saveHoliday(0,name,dt1,"true",user.getId(),new Date(),user.getId(),new Date());
 		List<TblHolidays> holidays = himpl.viewAll();
 		mav.addObject("HolidaysList",holidays);
 		mav.addObject("services", servicesdao.list());
@@ -493,14 +485,18 @@ System.out.println("concomes");
 
 	//	mav.addObject("employees", emp1);
 		//mav.addObject("empleave", leavereq);
-		 List<EmpLeaveRequestJoin> empleaves = elrs.viewAll(0);
-	        mav.addObject("empleaves",empleaves);
+		List<TblLeavestatus> ltypelist=empattreq.getLeavestatus();
+		List<Tblleavestype> leavetypes = ltdi.viewAll();
+		 mav.addObject("leavetypes",leavetypes);
+        List<EmpLeaveRequestJoin> empleaves = elrs.viewAll(0);
+        mav.addObject("empleaves",empleaves);
+    	mav.addObject("ltypelist", ltypelist);
 		mav.addObject("services", servicesdao.list());
 		mav.addObject("User",user);
 		return mav;		
 	}
 
-	/*@RequestMapping(value="/admin/employeetimesheets/register")
+	@RequestMapping(value="/admin/employeetimesheets/register")
 	public ModelAndView empAttenedancePage() {
 		ModelAndView mav = new ModelAndView("allemptimesheetrequests");
 		mav.addObject("services", servicesdao.list());
@@ -509,7 +505,7 @@ System.out.println("concomes");
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-		List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
+		/*List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();
 		List<TblEmpLeavereq> allempleave = empleavereq.view();
 		int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
@@ -517,16 +513,21 @@ System.out.println("concomes");
 		mav.addObject("empattendances",empattendances);
 		mav.addObject("allempleave", allempleave);
 		mav.addObject("count",count);
-		mav.addObject("TransferRoleList", transferrole);
+		mav.addObject("TransferRoleList", transferrole);*/
 		String role = user.getRole();
 		mav.addObject("Role",role);
 		//List<TblEmpAttendanceNew> attendances =  empattreq.getDetails();
 		mav.addObject("User",user);
+		List<TblLeavestatus> ltypelist=empattreq.getLeavestatus();
+		List<Attendance> attendancelist=empattreq.view(0);
+		mav.addObject("attendancelist",attendancelist);
+		/*mav.addObject("empservices", empservicesdao.list());*/
+		mav.addObject("ltypelist", ltypelist);
 		List<EmpDetails> emp1 = userDetails.getDetails();
 		mav.addObject("employees", emp1);
 		//mav.addObject("attendancelist",attendances);
 		return mav;		
-	}*/
+	}
 
 	/*---------------Designation Srceen------------------------*/
 
