@@ -293,7 +293,7 @@ System.out.println("concomes");
 		if (principal instanceof EmpDetails) {
 			user = ((EmpDetails)principal);
 		}
-	/*	List<TblManRoleTransfer> transferrole = roleTransfer.viewAll();*/
+	
 	/*	List<TblEmpLeavereq> allempleave = empleavereq.view();
 	//	int count = empleavereq.countEmployee(user.getEid()) + empattreq.countEmployee(user.getEid());
 		List<TblEmpAttendanceNew> empattendances =  empattreq.getDetails();
